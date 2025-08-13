@@ -83,6 +83,10 @@ app.use(express.static(publicDir));
 app.get("/dashboard", requireAuth, (_req, res) => {
   return res.sendFile(path.join(privateDir, "dashboard.html"));
 });
+app.get("/profile", requireAuth, (_req, res) => {
+  return res.sendFile(path.join(privateDir, "profile.html"));
+});
+
 
 // SPA fallback
 app.get("*", (req, res) => {
