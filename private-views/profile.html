@@ -13,40 +13,15 @@
 </head>
 <body>
   <h1>Profile Management</h1>
+
   <div id="profileInfo">
     <p>Email: <span id="email"></span></p>
     <p>UID: <span id="uid"></span></p>
   </div>
 
   <h2>Activity History</h2>
-<ul id="activityList"></ul>
-<div class="msg" id="activityMsg"></div>
-
-<script>
-async function loadActivity() {
-  const listEl = document.getElementById('activityList');
-  const msgEl = document.getElementById('activityMsg');
-  listEl.innerHTML = '';
-  msgEl.textContent = '';
-  try {
-    const res = await fetch('/api/activity');
-    if (!res.ok) { msgEl.textContent = 'Failed to load activity'; return; }
-    const activities = await res.json();
-    if (activities.length === 0) { msgEl.textContent = 'No activity yet'; return; }
-
-    activities.forEach(a => {
-      const li = document.createElement('li');
-      li.textContent = `${new Date(a.timestamp).toLocaleString()} — ${a.type} ${a.extra || ''}`;
-      listEl.appendChild(li);
-    });
-  } catch (e) {
-    msgEl.textContent = 'Error loading activity';
-  }
-}
-
-loadActivity();
-</script>
-
+  <ul id="activityList"></ul>
+  <div class="msg" id="activityMsg"></div>
 
   <h2>Change Password</h2>
   <div class="msg" id="passMsg"></div>
@@ -65,44 +40,43 @@ loadActivity();
   <script>
     const emailEl = document.getElementById('email');
     const uidEl = document.getElementById('uid');
-    const displayNameEl = document.getElementById('displayName');
-
-    const nameMsg = document.getElementById('nameMsg');
     const passMsg = document.getElementById('passMsg');
     const deleteMsg = document.getElementById('deleteMsg');
+    const activityListEl = document.getElementById('activityList');
+    const activityMsgEl = document.getElementById('activityMsg');
 
-    async function loadProfile() {
-      try {
-        const res = await fetch('/api/me');
-        if (!res.ok) { window.location.href='/login.html'; return; }
-        const user = await res.json();
-        emailEl.textContent = user.email || '';
-        uidEl.textContent = user.uid || '';
-        displayNameEl.textContent = user.name || '';
-      } catch {
-        window.location.href = '/login.html';
-      }
+    // Ensure Firebase auth is ready
+    async function initProfile() {
+      window.__auth.auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          window.location.href = '/login.html';
+          return;
+        }
+
+        // Load profile info
+        emailEl.textContent = user.email;
+        uidEl.textContent = user.uid;
+
+        // Load activity history
+        try {
+          const res = await fetch('/api/activity');
+          if (!res.ok) { activityMsgEl.textContent = 'Failed to load activity'; return; }
+          const activities = await res.json();
+          if (!activities.length) { activityMsgEl.textContent = 'No activity yet'; return; }
+
+          activityListEl.innerHTML = '';
+          activities.forEach(a => {
+            const li = document.createElement('li');
+            li.textContent = `${new Date(a.timestamp).toLocaleString()} — ${a.type}${a.extra ? ' — ' + a.extra : ''}`;
+            activityListEl.appendChild(li);
+          });
+        } catch (e) {
+          activityMsgEl.textContent = 'Error loading activity';
+        }
+      });
     }
 
-    loadProfile();
-
-    // Update display name
-    document.getElementById('updateNameBtn').addEventListener('click', async () => {
-      nameMsg.textContent = '';
-      const newName = document.getElementById('newName').value.trim();
-      if (!newName) { nameMsg.textContent = 'Enter a new display name'; return; }
-
-      try {
-        const user = window.__auth.auth.currentUser;
-        await user.updateProfile({ displayName: newName });
-        displayNameEl.textContent = newName;
-        nameMsg.style.color = 'green';
-        nameMsg.textContent = 'Display name updated!';
-      } catch (e) {
-        nameMsg.style.color = 'red';
-        nameMsg.textContent = e.message || 'Failed to update';
-      }
-    });
+    initProfile();
 
     // Change password (requires re-authentication)
     document.getElementById('changePassBtn').addEventListener('click', async () => {
