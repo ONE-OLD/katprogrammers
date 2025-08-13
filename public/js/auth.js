@@ -32,29 +32,46 @@ onIdTokenChanged(auth, async (user) => {
   }
 });
 
-// Expose auth functions globally
+// --------- Activity logging helper ---------
+async function logActivity(type, extra = "") {
+  try {
+    const user = auth.currentUser;
+    if (!user) return;
+    await fetch('/api/logActivity', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uid: user.uid, type, extra })
+    });
+  } catch {}
+}
+
+// --------- Expose auth functions globally ---------
 window.__auth = {
   auth,
 
   // LOGIN
   async loginWithEmail(email, password) {
     await signInWithEmailAndPassword(auth, email, password);
+    await logActivity('login');
     return true;
   },
 
   // SIGNUP
   async signupWithEmail(email, password) {
     await createUserWithEmailAndPassword(auth, email, password);
+    await logActivity('signup');
     return true;
   },
 
   // LOGOUT
   async logout() {
     await signOut(auth);
+    await logActivity('logout');
   },
 
   // FORGOT PASSWORD
   async sendResetEmail(email) {
     await sendPasswordResetEmail(auth, email);
+    await logActivity('password_reset', email);
   }
 };
