@@ -43,6 +43,38 @@ async function requireAuth(req, res, next) {
     return res.redirect("/login.html");
   }
 }
+import { getFirestore } from 'firebase-admin/firestore';  // add at the top with other imports
+
+// After initFirebaseAdmin()
+const db = getFirestore();
+
+// ---- Activity logging endpoints ----
+app.post('/api/logActivity', requireAuth, async (req, res) => {
+  try {
+    const { uid, type, extra } = req.body;
+    const ref = db.collection('users').doc(uid).collection('activity');
+    await ref.add({
+      type,
+      extra: extra || '',
+      timestamp: new Date().toISOString()
+    });
+    return res.json({ ok: true });
+  } catch (e) {
+    return res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/activity', requireAuth, async (req, res) => {
+  try {
+    const ref = db.collection('users').doc(req.user.uid).collection('activity');
+    const snapshot = await ref.orderBy('timestamp', 'desc').limit(50).get();
+    const activities = snapshot.docs.map(doc => doc.data());
+    return res.json(activities);
+  } catch (e) {
+    return res.status(500).json({ error: e.message });
+  }
+});
+
 
 // API endpoints
 app.post("/sessionLogin", async (req, res) => {
