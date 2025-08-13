@@ -16,13 +16,37 @@
   <div id="profileInfo">
     <p>Email: <span id="email"></span></p>
     <p>UID: <span id="uid"></span></p>
-    <p>Display Name: <span id="displayName"></span></p>
   </div>
 
-  <h2>Update Display Name</h2>
-  <div class="msg" id="nameMsg"></div>
-  <input id="newName" type="text" placeholder="New display name" />
-  <button id="updateNameBtn">Update Name</button>
+  <h2>Activity History</h2>
+<ul id="activityList"></ul>
+<div class="msg" id="activityMsg"></div>
+
+<script>
+async function loadActivity() {
+  const listEl = document.getElementById('activityList');
+  const msgEl = document.getElementById('activityMsg');
+  listEl.innerHTML = '';
+  msgEl.textContent = '';
+  try {
+    const res = await fetch('/api/activity');
+    if (!res.ok) { msgEl.textContent = 'Failed to load activity'; return; }
+    const activities = await res.json();
+    if (activities.length === 0) { msgEl.textContent = 'No activity yet'; return; }
+
+    activities.forEach(a => {
+      const li = document.createElement('li');
+      li.textContent = `${new Date(a.timestamp).toLocaleString()} — ${a.type} ${a.extra || ''}`;
+      listEl.appendChild(li);
+    });
+  } catch (e) {
+    msgEl.textContent = 'Error loading activity';
+  }
+}
+
+loadActivity();
+</script>
+
 
   <h2>Change Password</h2>
   <div class="msg" id="passMsg"></div>
