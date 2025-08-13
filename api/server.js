@@ -1,5 +1,4 @@
 // /api/server.js
-import 'dotenv/config'; // automatically loads .env
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
