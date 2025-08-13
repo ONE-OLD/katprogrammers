@@ -57,6 +57,15 @@ app.post("/sessionLogin", async (req, res) => {
     return res.status(401).json({ error: "Invalid token" });
   }
 });
+// Prevent caching so browser back button doesn't show protected pages after logout
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+  res.set("Pragma", "no-cache");
+  res.set("Expires", "0");
+  res.set("Surrogate-Control", "no-store");
+  next();
+});
+
 
 app.post("/sessionLogout", (_req, res) => {
   res.clearCookie("session", { path: "/" });
