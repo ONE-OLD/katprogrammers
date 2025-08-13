@@ -1,4 +1,6 @@
 // utils/auth.js
+import 'dotenv/config'; // automatically loads .env
+
 import admin from "firebase-admin";
 
 let initialized = false;
@@ -34,3 +36,4 @@ export async function createSessionCookie(idToken) {
   const expiresIn = 1000 * 60 * 60 * 24 * 5; // 5 days
   return a.auth().createSessionCookie(idToken, { expiresIn });
 }
+
