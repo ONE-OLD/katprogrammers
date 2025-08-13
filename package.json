@@ -1,0 +1,25 @@
+{
+  "name": "vercel-express-website",
+  "version": "1.0.0",
+  "description": "A serverless Express application hosted on Vercel with Firebase authentication.",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase-admin": "^9.11.0",
+    "dotenv": "^10.0.0",
+    "serverless-http": "^2.7.0",
+    "cookie-parser": "^1.4.5",
+    "body-parser": "^1.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "license": "MIT"
+}
