@@ -48,6 +48,20 @@ import { getFirestore } from 'firebase-admin/firestore';  // add at the top with
 // After initFirebaseAdmin()
 const db = getFirestore();
 
+
+// API endpoints
+app.post("/sessionLogin", async (req, res) => {
+  const { idToken } = req.body || {};
+  if (!idToken) return res.status(400).json({ error: "Missing idToken" });
+
+  try {
+    const sessionCookie = await createSessionCookie(idToken);
+    res.cookie("session", sessionCookie, cookieOpts);
+    return res.json({ ok: true });
+  } catch {
+    return res.status(401).json({ error: "Invalid token" });
+  }
+});
 // ---- Activity logging endpoints ----
 app.post('/api/logActivity', requireAuth, async (req, res) => {
   try {
@@ -76,19 +90,6 @@ app.get('/api/activity', requireAuth, async (req, res) => {
 });
 
 
-// API endpoints
-app.post("/sessionLogin", async (req, res) => {
-  const { idToken } = req.body || {};
-  if (!idToken) return res.status(400).json({ error: "Missing idToken" });
-
-  try {
-    const sessionCookie = await createSessionCookie(idToken);
-    res.cookie("session", sessionCookie, cookieOpts);
-    return res.json({ ok: true });
-  } catch {
-    return res.status(401).json({ error: "Invalid token" });
-  }
-});
 // Prevent caching so browser back button doesn't show protected pages after logout
 app.use((req, res, next) => {
   res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
