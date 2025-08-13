@@ -12,23 +12,46 @@
 <body>
   <h2>Login</h2>
   <input id="email" type="email" placeholder="Email" />
-  <input id="password" type="password" placeholder="Password" />
-  <button id="loginBtn">Sign In</button>
-  <p><a href="/">← Back home</a></p>
+<input id="password" type="password" placeholder="Password" />
+<button id="loginBtn">Sign In</button>
+<button id="signupBtn">Sign Up</button>
+<button id="forgotBtn">Forgot Password?</button>
 
-  <script type="module" src="/js/auth.js"></script>
-  <script>
-    document.getElementById('loginBtn').addEventListener('click', async () => {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      try {
-        await window.__auth.loginWithEmail(email, password);
-        // After session cookie is set, go to protected page
-        window.location.href = '/dashboard';
-      } catch (e) {
-        alert('Login failed: ' + (e?.message || e));
-      }
-    });
-  </script>
+<script type="module" src="/js/auth.js"></script>
+<script>
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    try {
+      await window.__auth.loginWithEmail(email, password);
+      window.location.href = '/dashboard';
+    } catch (e) {
+      alert('Login failed: ' + (e?.message || e));
+    }
+  });
+
+  document.getElementById('signupBtn').addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    try {
+      await window.__auth.signupWithEmail(email, password);
+      alert('Signup successful! Please login.');
+    } catch (e) {
+      alert('Signup failed: ' + (e?.message || e));
+    }
+  });
+
+  document.getElementById('forgotBtn').addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    if (!email) return alert('Enter your email for password reset.');
+    try {
+      await window.__auth.sendResetEmail(email);
+      alert('Password reset email sent!');
+    } catch (e) {
+      alert('Failed: ' + (e?.message || e));
+    }
+  });
+</script>
+
 </body>
 </html>
