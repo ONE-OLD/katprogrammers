@@ -1,24 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
-    <link rel="stylesheet" href="/styles.css"> <!-- Link to your CSS file -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile</title>
+  <style>
+    body { font-family: sans-serif; max-width: 420px; margin: 40px auto; }
+    input, button { width: 100%; padding: 10px; margin: 8px 0; }
+    h2 { margin-top: 20px; }
+    .msg { color: red; margin: 5px 0; min-height: 18px; }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>User Profile</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Welcome to your profile!</h2>
-            <p>This is where you can view and edit your personal information.</p>
-            <!-- Add more profile-related content here -->
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Your Website Name</p>
-    </footer>
+  <h1>Profile Management</h1>
+  <div id="profileInfo">
+    <p>Email: <span id="email"></span></p>
+    <p>UID: <span id="uid"></span></p>
+    <p>Display Name: <span id="displayName"></span></p>
+  </div>
+
+  <h2>Update Display Name</h2>
+  <div class="msg" id="nameMsg"></div>
+  <input id="newName" type="text" placeholder="New display name" />
+  <button id="updateNameBtn">Update Name</button>
+
+  <h2>Change Password</h2>
+  <div class="msg" id="passMsg"></div>
+  <input id="currentPass" type="password" placeholder="Current password" />
+  <input id="newPass" type="password" placeholder="New password" />
+  <button id="changePassBtn">Change Password</button>
+
+  <h2>Danger Zone</h2>
+  <div class="msg" id="deleteMsg"></div>
+  <button id="deleteAccountBtn" style="background:red;color:white;">Delete Account</button>
+
+  <button id="logoutBtn">Logout</button>
+  <p><a href="/dashboard">← Back to Dashboard</a></p>
+
+  <script type="module" src="/js/auth.js"></script>
+  <script>
+    const emailEl = document.getElementById('email');
+    const uidEl = document.getElementById('uid');
+    const displayNameEl = document.getElementById('displayName');
+
+    const nameMsg = document.getElementById('nameMsg');
+    const passMsg = document.getElementById('passMsg');
+    const deleteMsg = document.getElementById('deleteMsg');
+
+    async function loadProfile() {
+      try {
+        const res = await fetch('/api/me');
+        if (!res.ok) { window.location.href='/login.html'; return; }
+        const user = await res.json();
+        emailEl.textContent = user.email || '';
+        uidEl.textContent = user.uid || '';
+        displayNameEl.textContent = user.name || '';
+      } catch {
+        window.location.href = '/login.html';
+      }
+    }
+
+    loadProfile();
+
+    // Update display name
+    document.getElementById('updateNameBtn').addEventListener('click', async () => {
+      nameMsg.textContent = '';
+      const newName = document.getElementById('newName').value.trim();
+      if (!newName) { nameMsg.textContent = 'Enter a new display name'; return; }
+
+      try {
+        const user = window.__auth.auth.currentUser;
+        await user.updateProfile({ displayName: newName });
+        displayNameEl.textContent = newName;
+        nameMsg.style.color = 'green';
+        nameMsg.textContent = 'Display name updated!';
+      } catch (e) {
+        nameMsg.style.color = 'red';
+        nameMsg.textContent = e.message || 'Failed to update';
+      }
+    });
+
+    // Change password (requires re-authentication)
+    document.getElementById('changePassBtn').addEventListener('click', async () => {
+      passMsg.textContent = '';
+      const current = document.getElementById('currentPass').value;
+      const newPass = document.getElementById('newPass').value;
+      if (!current || !newPass) { passMsg.textContent = 'Fill both fields'; return; }
+
+      try {
+        const user = window.__auth.auth.currentUser;
+        const cred = window.__auth.auth.EmailAuthProvider.credential(user.email, current);
+        await user.reauthenticateWithCredential(cred);
+        await user.updatePassword(newPass);
+        passMsg.style.color = 'green';
+        passMsg.textContent = 'Password updated!';
+      } catch (e) {
+        passMsg.style.color = 'red';
+        passMsg.textContent = e.message || 'Failed to change password';
+      }
+    });
+
+    // Delete account
+    document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+      if (!confirm('Are you sure? This cannot be undone.')) return;
+      try {
+        const user = window.__auth.auth.currentUser;
+        await user.delete();
+        await window.__auth.logout();
+        window.location.href = '/login.html';
+      } catch (e) {
+        deleteMsg.style.color = 'red';
+        deleteMsg.textContent = e.message || 'Failed to delete account';
+      }
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await window.__auth.logout();
+      window.location.href = '/login.html';
+    });
+  </script>
 </body>
 </html>
