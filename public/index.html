@@ -1,36 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Vercel Express Website</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home</title>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Our Website</h1>
-        <nav>
-            <ul>
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/apps">Apps</a></li>
-                <li><a href="/tutorials">Tutorials</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>About Us</h2>
-            <p>This website is built using Express and Firebase, hosted on Vercel. It provides various resources and tools for learning and development.</p>
-        </section>
-        <section>
-            <h2>Get Started</h2>
-            <p>To access protected content, please log in.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Vercel Express Website. All rights reserved.</p>
-    </footer>
+  <h1>Welcome</h1>
+  <p>This is a public page.</p>
+  <nav>
+    <a href="/login.html">Login</a> |
+    <a href="/dashboard">Dashboard (protected)</a>
+  </nav>
+  <script type="module" src="/js/auth.js"></script>
 </body>
 </html>
