@@ -1,29 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="/styles.css"> <!-- Link to a CSS file for styling -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
 </head>
 <body>
-    <header>
-        <h1>Dashboard</h1>
-        <nav>
-            <ul>
-                <li><a href="/apps">Apps</a></li>
-                <li><a href="/tutorials">Tutorials</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/sessionLogout">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h2>Welcome to your Dashboard</h2>
-        <p>This is a protected area. Only authenticated users can access this content.</p>
-    </main>
-    <footer>
-        <p>&copy; 2023 Your Website Name</p>
-    </footer>
+  <h1>Dashboard (protected)</h1>
+  <p id="whoami">Loading user…</p>
+  <button id="logoutBtn">Logout</button>
+  <p><a href="/">← Home</a></p>
+
+  <script type="module" src="/js/auth.js"></script>
+  <script>
+    async function loadUser() {
+      try {
+        const res = await fetch('/api/me');
+        if (!res.ok) {
+          window.location.href = '/login.html';
+          return;
+        }
+        const me = await res.json();
+        document.getElementById('whoami').textContent = `Signed in as: ${me.email || me.uid}`;
+      } catch (e) {
+        window.location.href = '/login.html';
+      }
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await window.__auth.logout();
+      window.location.href = '/';
+    });
+
+    loadUser();
+  </script>
 </body>
 </html>
