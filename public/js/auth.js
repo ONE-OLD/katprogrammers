@@ -3,9 +3,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/fireba
 
   // TODO: replace with your project config
   const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID"
+    apiKey: "AIzaSyD-gCHlAYiX3zJiAeSSSNbQ1qhXJMHLeSQ",
+    authDomain: "katprogrammers-1e30e.firebaseapp.com",
+    projectId: "katprogrammers-1e30e"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -37,3 +37,4 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/fireba
       await signOut(auth); // server cookie cleared via onIdTokenChanged
     }
   };
+
