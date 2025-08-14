@@ -94,7 +94,7 @@
             margin-bottom: 5px;
         }
 
-        .sidebar-links a {
+        .sidebar-links button {
             display: flex;
             align-items: center;
             padding: 12px 20px;
@@ -1114,5 +1114,14 @@
         });
         document.getElementById('profileLogoutBtn').addEventListener('click', logout);
     </script>
+    <script>
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+      // Reload page if it was loaded from bfcache (back-forward cache)
+      window.location.reload();
+    }
+  });
+</script>
+
 </body>
 </html>
