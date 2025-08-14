@@ -928,7 +928,7 @@
             <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
             <div class="sidebar-bottom">
                 <li><a href="about.html"><span><i class="fa-solid fa-circle-user"></i></span><p>About</p></a></li>
-                <li><a onclick="logout()"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></a></li>
+                <li><button id="profileLogoutBtn"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></button></li>
             </div>
         </ul>
         <div class="theme-toggle-container">
@@ -1112,7 +1112,7 @@
             document.body.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         });
-        
+        document.getElementById('profileLogoutBtn').addEventListener('click', logout);
     </script>
 </body>
 </html>
