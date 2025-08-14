@@ -914,7 +914,120 @@
     </style>
 </head>
 <body data-theme="dark">
-    <!-- Chat Button -->
+    <!-- Sidebar remains unchanged -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="https://via.placeholder.com/40" alt="KAT-PROGRAMMERS Logo">
+            <h2>KAT-PROGRAMMERS</h2>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
+            <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
+            <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
+            <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
+            <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
+            <div class="sidebar-bottom">
+                <li><a href="about.html"><span><i class="fa-solid fa-circle-user"></i></span><p>About</p></a></li>
+                <li><a onclick="logout()"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></a></li>
+            </div>
+        </ul>
+        <div class="theme-toggle-container">
+            <span class="theme-toggle-label">Theme</span>
+            <button class="theme-toggle" id="themeToggle"></button>
+        </div>
+    </aside>
+
+    <!-- Main Content - Replaced with modern course cards -->
+    <div class="min-h-screen">
+        <div class="course-container">
+            <div class="course-header">
+                <h1>Explore Our Programming Courses</h1>
+                <p>Master in-demand programming skills with our comprehensive courses taught by industry experts</p>
+            </div>
+            
+            <div class="course-grid">
+                <!-- HTML Course Card -->
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="HTML">
+                    </div>
+                    <div class="course-content">
+                        <span class="course-tag">Web Development</span>
+                        <h2>HTML</h2>
+                        <p>HTML (Hypertext Markup Language) is the standard markup language used to create web pages. It provides a structure and content for web documents, enabling browsers to render and display them correctly.</p>
+                        <a href="html.html" class="course-btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- CSS Course Card -->
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="CSS">
+                    </div>
+                    <div class="course-content">
+                        <span class="course-tag">Web Design</span>
+                        <h2>CSS</h2>
+                        <p>CSS (Cascading Style Sheets) is a stylesheet language used to describe the presentation and layout of a document written in HTML. It defines how HTML elements should be displayed, such as colors, fonts, spacing, and positioning.</p>
+                        <a href="css.html" class="course-btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- JavaScript Course Card -->
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="JavaScript">
+                    </div>
+                    <div class="course-content">
+                        <span class="course-tag">Web Development</span>
+                        <h2>JAVASCRIPT</h2>
+                        <p>JavaScript is a versatile programming language commonly used for adding interactivity and dynamic functionality to websites. It enables developers to create responsive and engaging user experiences.</p>
+                        <a href="javascript.html" class="course-btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Python Course Card -->
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80" alt="Python">
+                    </div>
+                    <div class="course-content">
+                        <span class="course-tag">Data Science</span>
+                        <h2>PYTHON</h2>
+                        <p>Python is a high-level, interpreted programming language known for its simplicity and readability. It is widely used for web development, data analysis, artificial intelligence, and automation.</p>
+                        <a href="python.html" class="course-btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- MySQL Course Card -->
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="MySQL">
+                    </div>
+                    <div class="course-content">
+                        <span class="course-tag">Database</span>
+                        <h2>MY SQL</h2>
+                        <p>MySQL is a relational database management system used for storing and managing structured data. It is known for its reliability, scalability, and ease of use.</p>
+                        <a href="mysql.html" class="course-btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- C++ Course Card -->
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1610563166150-b34df4f3bcd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80" alt="C++">
+                    </div>
+                    <div class="course-content">
+                        <span class="course-tag">System Programming</span>
+                        <h2>C++</h2>
+                        <p>C++ is a powerful and versatile programming language known for its performance and efficiency. It is widely used for system development, game development, and other applications that require high-level control over hardware.</p>
+                        <a href="cpp.html" class="course-btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Button and Container remain unchanged -->
     <div class="cont-btn" id="activechat" onclick="activeChat()">
         <i class="fa-brands fa-rocketchat fa-bounce"></i> 
         <p>Get in Touch</p>
@@ -922,7 +1035,6 @@
         <img class="img1" src="https://randomuser.me/api/portraits/men/22.jpg" alt="">
     </div>
 
-    <!-- Chat Container -->
     <div class="chat-container" id="chat-container">
         <span onclick="closeChat()"><i class="fa-regular fa-circle-xmark"></i></span>
         <form action="" id="contact-form">
@@ -946,68 +1058,6 @@
         </div>
     </div>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="https://via.placeholder.com/40" alt="KAT-PROGRAMMERS Logo">
-            <h2>KAT-PROGRAMMERS</h2>
-        </div>
-        <ul class="sidebar-links">
-            <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
-            <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
-            <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
-            <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
-            <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
-            <div class="sidebar-bottom">
-                <li><a href="about.html"><span><i class="fa-solid fa-circle-user"></i></span><p>About</p></a></li>
-                <li><a onclick="logout()"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></a></li>
-            </div>
-        </ul>
-        <div class="theme-toggle-container">
-            <span class="theme-toggle-label">Theme</span>
-            <button class="theme-toggle" id="themeToggle"></button>
-        </div>
-    </aside>
-
-    <!-- Main Content -->
-   <div class="content">
-        <div class="content1">
-            <img src="images/html logo- Websites, Applications and Software.jpg" alt="">
-            <h2>HTML</h2>
-            <p>HTML (Hypertext Markup Language) is the standard markup language used to create web pages. It provides a structure and content for web documents, enabling browsers to render and display them correctly.</p>
-            <a href="html.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-        <div class="content1">
-            <img src="images/css.jpg" alt="">
-            <h2>CSS</h2>
-            <p>CSS (Cascading Style Sheets) is a stylesheet language used to describe the presentation and layout of a document written in HTML. It defines how HTML elements should be displayed, such as colors, fonts, spacing, and positioning.</p>
-            <a href="css.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-        <div class="content1">
-            <img src="images/JavaScript.jpg" alt="">
-            <h2>JAVASCRIPT</h2>
-            <p>JavaScript is a versatile programming language commonly used for adding interactivity and dynamic functionality to websites. It enables developers to create responsive and engaging user experiences by reacting to events, manipulating the content, and validating user input.</p>
-            <a href="javascript.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-        <div class="content1">
-            <img src="images/Python - MI PORTAL.jpg" alt="">
-            <h2>PYTHON</h2>
-            <p>Python is a high-level, interpreted programming language known for its simplicity and readability. It is widely used for web development, data analysis, artificial intelligence, and automation.</p>
-            <a href="python.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-        <div class="content1">
-            <img src="images/MySQL Logo.jpg" alt="">
-            <h2>MY SQL</h2>
-            <p>MySQL is a relational database management system used for storing and managing structured data. It is known for its reliability, scalability, and ease of use.</p>
-            <a href="mysql.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-        <div class="content1">
-            <img src="images/C++.jpg" alt="">
-            <h2>C++</h2>
-            <p>C++ is a powerful and versatile programming language known for its performance and efficiency. It is widely used for system development, game development, and other applications that require high-level control over hardware.</p>
-            <a href="cpp.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-    </div>
 
 
     <script>
