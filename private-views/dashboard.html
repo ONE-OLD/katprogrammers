@@ -1082,11 +1082,13 @@
         }
         
         // Logout function
-        function logout() {
-            localStorage.clear();
-            sessionStorage.clear();
-            window.location.replace("logout.html");
-        }
+        async function logout() {
+      await fetch('/sessionLogout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+      window.location.href = '/';
+    }
         
         
         
