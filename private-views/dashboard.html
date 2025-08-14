@@ -15,15 +15,17 @@
   <script>
     async function loadUser() {
       try {
-        const res = await fetch('/api/me');
+        const res = await fetch('/api/me', { 
+          credentials: 'include'  // FIX: Added credentials
+        });
         if (!res.ok) {
-          window.location.href = '/login.html';
+          window.location.href = '/login';
           return;
         }
         const me = await res.json();
         document.getElementById('whoami').textContent = `Signed in as: ${me.email || me.uid}`;
       } catch (e) {
-        window.location.href = '/login.html';
+        window.location.href = '/login';
       }
     }
 
