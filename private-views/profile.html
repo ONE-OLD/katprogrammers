@@ -1,107 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Profile</title>
-  <script type="module" src="/utils/auth.js"></script>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <h1>Profile Page</h1>
+  <h1>Profile</h1>
 
   <div id="userInfo">
-    <p>Email: <span id="userEmail"></span></p>
+    <p><strong>Email:</strong> <span id="email"></span></p>
+    <p><strong>UID:</strong> <span id="uid"></span></p>
   </div>
 
-  <h2>Activity History</h2>
-  <ul id="activityList">
-    <li>Loading activity...</li>
-  </ul>
+  <hr>
 
-  <h2>Account Management</h2>
-  <button id="changePasswordBtn">Change Password</button>
-  <button id="deleteAccountBtn">Delete Account</button>
+  <h2>Change Password</h2>
+  <form id="passwordForm">
+    <input type="password" id="newPassword" placeholder="New Password" required>
+    <button type="submit">Change Password</button>
+  </form>
+
+  <hr>
+
+  <h2>Danger Zone</h2>
+  <button id="deleteBtn" style="background: red; color: white;">Delete Account</button>
+
+  <hr>
+
   <button id="logoutBtn">Logout</button>
 
-  <script type="module">
-    import {
-      getAuth,
-      onAuthStateChanged,
-      EmailAuthProvider,
-      reauthenticateWithCredential,
-      updatePassword,
-      deleteUser
-    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+  <hr>
 
-    const auth = getAuth();
+  <h2>Activity</h2>
+  <ul id="activityList"></ul>
 
-    // Show logged-in user's email
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = "/login.html";
-        return;
-      }
-      document.getElementById("userEmail").textContent = user.email;
+  <script>
+    async function api(url, options = {}) {
+      const res = await fetch(url, {
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        ...options
+      });
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+      return res.json();
+    }
 
-      // Load activity history
-      try {
-        const res = await fetch("/api/activity");
-        if (!res.ok) throw new Error("Failed to load activity");
-        const data = await res.json();
-        const list = document.getElementById("activityList");
-        list.innerHTML = "";
-        if (data.length === 0) {
-          list.innerHTML = "<li>No activity found</li>";
-        } else {
-          data.forEach(act => {
-            const li = document.createElement("li");
-            li.textContent = `${act.date} - ${act.action}`;
-            list.appendChild(li);
-          });
-        }
-      } catch (err) {
-        console.error(err);
-        document.getElementById("activityList").innerHTML = "<li>Error loading activity</li>";
-      }
-    });
+    // Load user info
+    async function loadUser() {
+      const data = await api("/api/me");
+      document.getElementById("email").textContent = data.email;
+      document.getElementById("uid").textContent = data.uid;
+    }
+
+    // Load activity
+    async function loadActivity() {
+      const activities = await api("/api/activity");
+      const list = document.getElementById("activityList");
+      list.innerHTML = "";
+      activities.forEach(act => {
+        const li = document.createElement("li");
+        li.textContent = `${act.timestamp} — ${act.type}`;
+        list.appendChild(li);
+      });
+    }
 
     // Change password
-    document.getElementById("changePasswordBtn").addEventListener("click", async () => {
-      const user = auth.currentUser;
-      if (!user) return;
-
-      const currentPassword = prompt("Enter your current password:");
-      const newPassword = prompt("Enter your new password:");
-      if (!currentPassword || !newPassword) return;
-
+    document.getElementById("passwordForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const newPassword = document.getElementById("newPassword").value;
       try {
-        const cred = EmailAuthProvider.credential(user.email, currentPassword);
-        await reauthenticateWithCredential(user, cred);
-        await updatePassword(user, newPassword);
-        alert("Password updated successfully!");
+        await api("/api/changePassword", {
+          method: "POST",
+          body: JSON.stringify({ newPassword })
+        });
+        alert("Password changed successfully");
+        document.getElementById("newPassword").value = "";
       } catch (err) {
-        console.error(err);
         alert("Failed to change password: " + err.message);
       }
     });
 
     // Delete account
-    document.getElementById("deleteAccountBtn").addEventListener("click", async () => {
+    document.getElementById("deleteBtn").addEventListener("click", async () => {
       if (!confirm("Are you sure you want to delete your account? This cannot be undone.")) return;
       try {
-        await deleteUser(auth.currentUser);
-        await window.__auth.logout();
+        await api("/api/deleteAccount", { method: "DELETE" });
+        alert("Account deleted");
         window.location.href = "/";
       } catch (err) {
-        console.error(err);
         alert("Failed to delete account: " + err.message);
       }
     });
 
     // Logout
     document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await window.__auth.logout();
+      await api("/sessionLogout", { method: "POST" });
       window.location.href = "/";
     });
+
+    // Initial load
+    loadUser();
+    loadActivity();
   </script>
 </body>
 </html>
