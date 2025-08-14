@@ -1,18 +1,106 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-  <h1>Welcome</h1>
-  <p>This is a public page.</p>
-  <nav>
-    <a href="/login">Login</a> |
-    <a href="/dashboard">Dashboard (protected)</a> |
-    <a href="/profile">Profile</a>
-  </nav>
+<body data-theme="dark">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="index.html" class="logo">
+      <i class="fas fa-shield-alt"></i>
+      <span>AuthPortal</span>
+    </a>
+    
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="index.html" class="nav-link active">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="dashboard.html" class="nav-link">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="profile.html" class="nav-link">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="login.html" class="nav-link">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Login</span>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="theme-toggle-container">
+      <button class="theme-toggle" id="themeToggle"></button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <h1 class="page-title">Welcome to AuthPortal</h1>
+    
+    <div class="card">
+      <p>This is a public page accessible to all visitors. Explore our secure authentication system with dark/light theme support.</p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+        <a href="login.html" class="btn btn-primary">Login</a>
+        <a href="dashboard.html" class="btn btn-secondary">Dashboard</a>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2 class="card-title">Features</h2>
+      <ul style="list-style: none; padding-left: 1rem;">
+        <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+          <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
+          <span>Secure authentication with session management</span>
+        </li>
+        <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+          <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
+          <span>Dark/light theme with persistent settings</span>
+        </li>
+        <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+          <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
+          <span>User profile management</span>
+        </li>
+        <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+          <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
+          <span>Password reset functionality</span>
+        </li>
+        <li style="display: flex; align-items: flex-start;">
+          <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
+          <span>Activity tracking</span>
+        </li>
+      </ul>
+    </div>
+  </main>
   <script type="module" src="/js/auth.js"></script>
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    
+    document.body.setAttribute('data-theme', currentTheme);
+    
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  </script>
+
 </body>
 </html>
