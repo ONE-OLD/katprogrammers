@@ -657,7 +657,152 @@
                 bottom: 100px;
             }
         }
-
+/* ===== COURSE GRID STYLES ===== */
+        .course-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .course-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .course-header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+        }
+        
+        .course-header p {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+        }
+        
+        .course-card {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: var(--shadow);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-primary);
+        }
+        
+        .course-image {
+            height: 180px;
+            width: 100%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .course-card:hover .course-image img {
+            transform: scale(1.05);
+        }
+        
+        .course-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .course-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .course-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .course-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            width: fit-content;
+        }
+        
+        .course-btn:hover {
+            background: var(--accent-secondary);
+            transform: translateX(5px);
+        }
+        
+        .course-btn i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .course-btn:hover i {
+            transform: translateX(3px);
+        }
+        
+        .course-tag {
+            display: inline-block;
+            background: rgba(187, 134, 252, 0.2);
+            color: var(--accent-primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            align-self: flex-start;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .course-header h1 {
+                font-size: 2rem;
+            }
+        }
         @media (max-width: 480px) {
             .cont-btn p {
                 display: none;
@@ -906,6 +1051,52 @@
         }
         
         
+        
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message sent successfully! Our team will contact you soon.');
+            this.reset();
+            closeChat();
+        });
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        document.body.setAttribute('data-theme', currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        // Chat functionality
+        function activeChat() {
+            document.getElementById("chat-container").style.display = "block";
+        }
+        
+        function closeChat() {
+            document.getElementById("chat-container").style.display = "none";
+        }
+        
+        // Navigation functions
+        function navigateToHome() {
+            window.location.href = 'home.html';
+        }
+        
+        function navigateToTutorial(page) {
+            window.location.href = page;
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.replace("logout.html");
+        }
         
         // Form submission
         document.getElementById('contact-form').addEventListener('submit', function(e) {
