@@ -3,32 +3,781 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C++ Tutorial - KAT-PROGRAMMERS</title>
-    <link rel="stylesheet" href="courses.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script>
-        function logout() {
-      // Clear session or authentication data (e.g., localStorage, cookies)
-      localStorage.clear();
-      sessionStorage.clear();
-      
-      // Redirect to login page
-      window.location.replace("logout.html");
-    }
-        function activeChat() {
-        document.getElementById("chat-container").style.display = "block";
-    }
-    function closeChat() {
-        document.getElementById("chat-container").style.display = "none";
-    }
-    
+    <title>KAT-PROGRAMMERS Course Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== BASE STYLES ===== */
+        :root {
+            /* Dark Theme (Default) */
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-surface: #252525;
+            --bg-card: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent-primary: #bb86fc;
+            --accent-secondary: #03dac6;
+            --error: #cf6679;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --border-radius: 8px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --transition: all 0.3s ease;
+        }
 
-    </script>
+        [data-theme="light"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #e0e0e0;
+            --bg-surface: #ffffff;
+            --bg-card: #fafafa;
+            --text-primary: #121212;
+            --text-secondary: #4a4a4a;
+            --accent-primary: #6200ea;
+            --accent-secondary: #018786;
+            --error: #b00020;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        /* ===== SIDEBAR STYLES ===== */
+        .sidebar {
+            width: 250px;
+            background-color: var(--bg-secondary);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid var(--bg-surface);
+        }
+
+        .sidebar-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .sidebar-links {
+            padding: 15px 0;
+        }
+
+        .sidebar-links li {
+            list-style: none;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-links a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .sidebar-links a:hover,
+        .sidebar-links a.active {
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .sidebar-links span {
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-links p {
+            font-size: 0.9rem;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            border-top: 1px solid var(--bg-surface);
+            padding-top: 15px;
+        }
+
+        /* ===== CHAT BUTTON STYLES ===== */
+        .cont-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .cont-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .cont-btn img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 5px;
+        }
+
+        .cont-btn img.img1 {
+            margin-left: -15px;
+        }
+
+        /* ===== CHAT CONTAINER STYLES ===== */
+        .chat-container {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            background: var(--bg-surface);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .chat-container span {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .chat-container form {
+            padding: 20px;
+        }
+
+        .chat-container h1 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .chat-container .p {
+            margin: 10px 0 5px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .chat-container input,
+        .chat-container textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--bg-secondary);
+            border-radius: var(--border-radius);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .chat-container textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .chat-container button[type="submit"] {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .chat-container button[type="submit"]:hover {
+            background: var(--accent-secondary);
+        }
+
+        .chat-container .p1 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .chat-container .con {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--bg-secondary);
+        }
+
+        .chat-container .con a {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .chat-container .con a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* ===== MAIN CONTENT STYLES ===== */
+        .min-h-screen {
+            min-height: 100vh;
+            margin-left: 250px;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        /* Header styles */
+        header {
+            border-bottom: 1px solid var(--bg-surface);
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .space-x-3 > * + * {
+            margin-left: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-primary);
+            border: none;
+        }
+
+        .btn-ghost:hover {
+            color: var(--accent-primary);
+        }
+
+        .w-8 {
+            width: 32px;
+        }
+
+        .h-8 {
+            height: 32px;
+        }
+
+        .rounded-lg {
+            border-radius: var(--border-radius);
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .text-white {
+            color: var(--text-primary);
+        }
+
+        .bg-gradient-to-r {
+            background-image: linear-gradient(to right, var(--tw-gradient-stops));
+        }
+
+        .px-4 {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .py-2 {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+        .rounded-full {
+            border-radius: 9999px;
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        /* Course content styles */
+        .py-8 {
+            padding-top: 32px;
+            padding-bottom: 32px;
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .gap-8 {
+            gap: 32px;
+        }
+
+        .lg\:grid-cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .bg-white\/5 {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .border {
+            border-width: 1px;
+        }
+
+        .border-white\/10 {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .rounded-xl {
+            border-radius: 12px;
+        }
+
+        .p-6 {
+            padding: 24px;
+        }
+
+        .sticky {
+            position: sticky;
+        }
+
+        .top-8 {
+            top: 32px;
+        }
+
+        .text-xs {
+            font-size: 0.75rem;
+        }
+
+        .ml-8 {
+            margin-left: 32px;
+        }
+
+        .space-y-4 > * + * {
+            margin-top: 16px;
+        }
+
+        .space-y-2 > * + * {
+            margin-top: 8px;
+        }
+
+        .text-gray-400 {
+            color: var(--text-secondary);
+        }
+
+        .hover\:text-white:hover {
+            color: var(--text-primary);
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .transition-colors {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        /* Code examples */
+        .space-y-6 > * + * {
+            margin-top: 24px;
+        }
+
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--bg-surface);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-surface);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.875rem;
+        }
+
+        .bg-gray-900 {
+            background-color: #111827;
+        }
+
+        .overflow-x-auto {
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .text-green-400 {
+            color: #34d399;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        /* Next steps */
+        .mt-8 {
+            margin-top: 32px;
+        }
+
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .sm\:flex-row {
+            flex-direction: row;
+        }
+
+        .text-white {
+            color: var(--text-primary);
+        }
+
+        .px-6 {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .py-3 {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .duration-300 {
+            transition-duration: 300ms;
+        }
+
+        /* Language-specific code colors */
+        .text-purple-400 {
+            color: #a78bfa;
+        }
+
+        .text-blue-400 {
+            color: #60a5fa;
+        }
+
+        .text-yellow-300 {
+            color: #fcd34d;
+        }
+
+        /* Copy button styles */
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Theme toggle button */
+        .theme-toggle-container {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle-label {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-surface);
+            border: none;
+            width: 50px;
+            height: 26px;
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent-secondary);
+            transform: translateX(var(--toggle-position, 0));
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .theme-toggle::before {
+            --toggle-position: 24px;
+        }
+
+        /* ===== RESPONSIVE STYLES ===== */
+        @media (max-width: 1024px) {
+            .lg\:col-span-1 {
+                grid-column: span 1 / span 1;
+            }
+            
+            .lg\:col-span-3 {
+                grid-column: span 3 / span 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar-header h2,
+            .sidebar-links p {
+                display: none;
+            }
+            
+            .sidebar-links a {
+                justify-content: center;
+                padding: 12px 0;
+            }
+            
+            .sidebar-links span {
+                margin-right: 0;
+                font-size: 1.3rem;
+            }
+            
+            .min-h-screen {
+                margin-left: 70px;
+            }
+            
+            .md\:grid-cols-3 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+            
+            .chat-container {
+                width: 90%;
+                right: 5%;
+                bottom: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cont-btn p {
+                display: none;
+            }
+            
+            .cont-btn {
+                padding: 12px;
+            }
+            
+            header .flex {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .bg-gradient-to-r {
+                margin-top: 10px;
+            }
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .mb-6 {
+            margin-bottom: 24px;
+        }
+
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+
+        /* Gradient backgrounds */
+        .from-green-500 {
+            --tw-gradient-from: #10b981;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(16, 185, 129, 0));
+        }
+
+        .to-emerald-500 {
+            --tw-gradient-to: #10b981;
+        }
+
+        .from-orange-500 {
+            --tw-gradient-from: #f97316;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(249, 115, 22, 0));
+        }
+
+        .to-red-500 {
+            --tw-gradient-to: #ef4444;
+        }
+
+        .from-indigo-500 {
+            --tw-gradient-from: #6366f1;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(99, 102, 241, 0));
+        }
+
+        .to-purple-500 {
+            --tw-gradient-to: #8b5cf6;
+        }
+
+        .from-blue-500 {
+            --tw-gradient-from: #3b82f6;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+        }
+
+        .to-cyan-500 {
+            --tw-gradient-to: #06b6d4;
+        }
+
+        .from-yellow-400 {
+            --tw-gradient-from: #facc15;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(250, 204, 21, 0));
+        }
+
+        .to-orange-500 {
+            --tw-gradient-to: #f97316;
+        }
+
+        .from-cyan-500 {
+            --tw-gradient-from: #06b6d4;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(6, 182, 212, 0));
+        }
+
+        .to-blue-500 {
+            --tw-gradient-to: #3b82f6;
+        }
+
+        .hover\:from-indigo-600:hover {
+            --tw-gradient-from: #4f46e5;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(79, 70, 229, 0));
+        }
+
+        .hover\:to-purple-600:hover {
+            --tw-gradient-to: #7c3aed;
+        }
+    </style>
 </head>
-<body>
-    <div class="cont-btn" id="activechat" onclick="activeChat()"><i class="fa-brands fa-rocketchat fa-bounce"></i> <p>Get in Touch</p><img src="images/founder/arsene.jpg" alt=""><img class="img1" src="images/founder/donald.JPEG" alt=""></div>
+<body data-theme="dark">
+    <!-- Chat Button -->
+    <div class="cont-btn" id="activechat" onclick="activeChat()">
+        <i class="fa-brands fa-rocketchat fa-bounce"></i> 
+        <p>Get in Touch</p>
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
+        <img class="img1" src="https://randomuser.me/api/portraits/men/22.jpg" alt="">
+    </div>
+
+    <!-- Chat Container -->
     <div class="chat-container" id="chat-container">
         <span onclick="closeChat()"><i class="fa-regular fa-circle-xmark"></i></span>
         <form action="" id="contact-form">
@@ -52,9 +801,10 @@
         </div>
     </div>
 
+    <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
-            <img src="logo.png" alt="KAT-PROGRAMMERS Logo">
+            <img src="https://via.placeholder.com/40" alt="KAT-PROGRAMMERS Logo">
             <h2>KAT-PROGRAMMERS</h2>
         </div>
         <ul class="sidebar-links">
@@ -68,8 +818,13 @@
                 <li><a onclick="logout()"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></a></li>
             </div>
         </ul>
+        <div class="theme-toggle-container">
+            <span class="theme-toggle-label">Theme</span>
+            <button class="theme-toggle" id="themeToggle"></button>
+        </div>
     </aside>
 
+    <!-- Main Content -->
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <!-- Header -->
         <header class="border-b border-white/10 backdrop-blur-md bg-white/5">
@@ -82,7 +837,7 @@
                         <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center text-lg">
                             ⚙️
                         </div>
-                        <h1 class="text-2xl font-bold text-white">C++ Tutorial</h1>
+                        <h1 class="text-2xl font-bold text-white">Course Title</h1>
                     </div>
                     <div class="bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-2 rounded-full">
                         <span class="text-white font-medium">Advanced Level</span>
@@ -101,51 +856,16 @@
                             <div class="space-y-2">
                                 <div class="flex items-center space-x-2">
                                     <div class="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-xs text-white font-bold">1</div>
-                                    <h4 class="text-white font-medium text-sm">C++ Fundamentals</h4>
+                                    <h4 class="text-white font-medium text-sm">Section Title</h4>
                                 </div>
                                 <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Basic Syntax</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Data Types</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Variables</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Operators</li>
+                                    <li class="hover:text-white cursor-pointer transition-colors">Lesson 1</li>
+                                    <li class="hover:text-white cursor-pointer transition-colors">Lesson 2</li>
+                                    <li class="hover:text-white cursor-pointer transition-colors">Lesson 3</li>
+                                    <li class="hover:text-white cursor-pointer transition-colors">Lesson 4</li>
                                 </ul>
                             </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-xs text-white font-bold">2</div>
-                                    <h4 class="text-white font-medium text-sm">Control Structures</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Conditionals</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Loops</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Switch Statements</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Functions</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-xs text-white font-bold">3</div>
-                                    <h4 class="text-white font-medium text-sm">Object-Oriented Programming</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Classes & Objects</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Inheritance</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Polymorphism</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Encapsulation</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-xs text-white font-bold">4</div>
-                                    <h4 class="text-white font-medium text-sm">Advanced Topics</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Pointers & References</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Memory Management</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">STL Containers</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Templates</li>
-                                </ul>
-                            </div>
+                            <!-- Additional sections here -->
                         </div>
                     </div>
                 </div>
@@ -154,9 +874,9 @@
                 <div class="lg:col-span-3">
                     <!-- Introduction -->
                     <div class="bg-white/5 border border-white/10 rounded-xl p-6 mb-8">
-                        <h2 class="text-white text-3xl font-bold mb-4">Learn C++ - System Programming Language</h2>
+                        <h2 class="text-white text-3xl font-bold mb-4">Learn Programming Language</h2>
                         <p class="text-gray-300 text-lg mb-6">
-                            Master system programming with C++. Learn object-oriented programming, memory management, and high-performance computing.
+                            Comprehensive course description explaining what the course covers and who it's for.
                         </p>
                         
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -180,12 +900,11 @@
                         <div>
                             <h3 class="text-white text-xl mb-4">What You'll Learn:</h3>
                             <ul class="text-gray-300 space-y-2">
-                                <li>• C++ syntax and fundamental concepts</li>
-                                <li>• Object-oriented programming principles</li>
-                                <li>• Memory management and pointers</li>
-                                <li>• Standard Template Library (STL)</li>
-                                <li>• Advanced features like templates and lambdas</li>
-                                <li>• Best practices for performance optimization</li>
+                                <li>• Syntax and fundamental concepts</li>
+                                <li>• Core programming principles</li>
+                                <li>• Memory management</li>
+                                <li>• Advanced features</li>
+                                <li>• Best practices for optimization</li>
                             </ul>
                         </div>
                     </div>
@@ -196,20 +915,11 @@
                         <div class="bg-white/5 border border-white/10 rounded-xl p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-white text-xl font-bold">Hello World Program</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="#include <iostream>
-using namespace std;
-
-int main() {
-    cout << \"Hello, World!\" << endl;
-    return 0;
-}"
-                                    data-title="Hello World Program">
-                                    📋 Copy
+                                <button class="btn btn-outline btn-sm copy-btn">
+                                    <i class="fa-regular fa-copy"></i> Copy
                                 </button>
                             </div>
-                            <p class="text-gray-300 mb-4">Your first C++ program</p>
+                            <p class="text-gray-300 mb-4">Your first program</p>
                             <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
                                 <pre><code class="text-green-400 text-sm">#include &lt;iostream&gt;
 using namespace std;
@@ -221,264 +931,23 @@ int main() {
                             </div>
                         </div>
 
-                        <!-- Example 2 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">Variables and Data Types</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="#include <iostream>
-using namespace std;
-
-int main() {
-    // Integer types
-    int age = 25;
-    long population = 7800000000L;
-    
-    // Floating point types
-    double price = 99.99;
-    float temperature = 23.5f;
-    
-    // Character and string
-    char grade = 'A';
-    string name = \"John Doe\";
-    
-    // Boolean
-    bool isStudent = true;
-    
-    // Output
-    cout << \"Name: \" << name << endl;
-    cout << \"Age: \" << age << endl;
-    cout << \"Grade: \" << grade << endl;
-    
-    return 0;
-}"
-                                    data-title="Variables and Data Types">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Working with different data types in C++</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-green-400 text-sm">#include &lt;iostream&gt;
-using namespace std;
-
-int main() {
-    // Integer types
-    int age = 25;
-    long population = 7800000000L;
-    
-    // Floating point types
-    double price = 99.99;
-    float temperature = 23.5f;
-    
-    // Character and string
-    char grade = 'A';
-    string name = "John Doe";
-    
-    // Boolean
-    bool isStudent = true;
-    
-    // Output
-    cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; endl;
-    cout &lt;&lt; "Age: " &lt;&lt; age &lt;&lt; endl;
-    cout &lt;&lt; "Grade: " &lt;&lt; grade &lt;&lt; endl;
-    
-    return 0;
-}</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Example 3 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">Classes and Objects</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="#include <iostream>
-#include <string>
-using namespace std;
-
-class Student {
-private:
-    string name;
-    int age;
-    double gpa;
-
-public:
-    // Constructor
-    Student(string n, int a, double g) {
-        name = n;
-        age = a;
-        gpa = g;
-    }
-    
-    // Methods
-    void displayInfo() {
-        cout << \"Name: \" << name << endl;
-        cout << \"Age: \" << age << endl;
-        cout << \"GPA: \" << gpa << endl;
-    }
-    
-    void setGPA(double newGPA) {
-        gpa = newGPA;
-    }
-    
-    double getGPA() {
-        return gpa;
-    }
-};
-
-int main() {
-    Student student1(\"Alice\", 20, 3.8);
-    student1.displayInfo();
-    return 0;
-}"
-                                    data-title="Classes and Objects">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Object-oriented programming with classes</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-green-400 text-sm">#include &lt;iostream&gt;
-#include &lt;string&gt;
-using namespace std;
-
-class Student {
-private:
-    string name;
-    int age;
-    double gpa;
-
-public:
-    // Constructor
-    Student(string n, int a, double g) {
-        name = n;
-        age = a;
-        gpa = g;
-    }
-    
-    // Methods
-    void displayInfo() {
-        cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; endl;
-        cout &lt;&lt; "Age: " &lt;&lt; age &lt;&lt; endl;
-        cout &lt;&lt; "GPA: " &lt;&lt; gpa &lt;&lt; endl;
-    }
-    
-    void setGPA(double newGPA) {
-        gpa = newGPA;
-    }
-    
-    double getGPA() {
-        return gpa;
-    }
-};
-
-int main() {
-    Student student1("Alice", 20, 3.8);
-    student1.displayInfo();
-    return 0;
-}</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Example 4 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">STL Vectors and Algorithms</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="#include <iostream>
-#include <vector>
-#include <algorithm>
-using namespace std;
-
-int main() {
-    // Create vector
-    vector<int> numbers = {5, 2, 8, 1, 9, 3};
-    
-    // Add elements
-    numbers.push_back(7);
-    numbers.push_back(4);
-    
-    // Sort the vector
-    sort(numbers.begin(), numbers.end());
-    
-    // Print sorted vector
-    cout << \"Sorted numbers: \";
-    for(int num : numbers) {
-        cout << num << \" \";
-    }
-    cout << endl;
-    
-    // Find element
-    auto it = find(numbers.begin(), numbers.end(), 5);
-    if(it != numbers.end()) {
-        cout << \"Found 5 at position: \" << distance(numbers.begin(), it) << endl;
-    }
-    
-    return 0;
-}"
-                                    data-title="STL Vectors and Algorithms">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Using the Standard Template Library</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-green-400 text-sm">#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-int main() {
-    // Create vector
-    vector&lt;int&gt; numbers = {5, 2, 8, 1, 9, 3};
-    
-    // Add elements
-    numbers.push_back(7);
-    numbers.push_back(4);
-    
-    // Sort the vector
-    sort(numbers.begin(), numbers.end());
-    
-    // Print sorted vector
-    cout &lt;&lt; "Sorted numbers: ";
-    for(int num : numbers) {
-        cout &lt;&lt; num &lt;&lt; " ";
-    }
-    cout &lt;&lt; endl;
-    
-    // Find element
-    auto it = find(numbers.begin(), numbers.end(), 5);
-    if(it != numbers.end()) {
-        cout &lt;&lt; "Found 5 at position: " &lt;&lt; distance(numbers.begin(), it) &lt;&lt; endl;
-    }
-    
-    return 0;
-}</code></pre>
-                            </div>
-                        </div>
+                        <!-- Additional code examples here -->
                     </div>
 
                     <!-- Next Steps -->
                     <div class="bg-white/5 border border-white/10 rounded-xl p-6 mt-8">
                         <h3 class="text-white text-xl font-bold mb-2">Continue Learning</h3>
                         <p class="text-gray-300 mb-4">
-                            Explore Python for versatility or dive into database management with MySQL!
+                            Explore other languages to expand your programming skills!
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <button 
-                                class="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
-                                onclick="navigateToTutorial('python.html')">
+                            <button class="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
                                 Next: Learn Python →
                             </button>
-                            <button 
-                                class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
-                                onclick="navigateToTutorial('mysql.html')">
+                            <button class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
                                 Learn MySQL →
                             </button>
-                            <button 
-                                class="btn btn-outline"
-                                onclick="navigateToHome()">
+                            <button class="btn btn-outline">
                                 Back to All Courses
                             </button>
                         </div>
@@ -487,12 +956,71 @@ int main() {
             </div>
         </div>
     </div>
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script>
-  emailjs.init("6CSR1CAXwOHcVmcbZ"); // Replace with your actual public key
-</script>
-<script src="email.js"></script>
 
-    <script src="script.js"></script>
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        document.body.setAttribute('data-theme', currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        // Chat functionality
+        function activeChat() {
+            document.getElementById("chat-container").style.display = "block";
+        }
+        
+        function closeChat() {
+            document.getElementById("chat-container").style.display = "none";
+        }
+        
+        // Navigation functions
+        function navigateToHome() {
+            window.location.href = 'home.html';
+        }
+        
+        function navigateToTutorial(page) {
+            window.location.href = page;
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.replace("logout.html");
+        }
+        
+        // Copy button functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const codeBlock = this.closest('.rounded-xl').querySelector('code');
+                const codeText = codeBlock.innerText;
+                
+                navigator.clipboard.writeText(codeText).then(() => {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                });
+            });
+        });
+        
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message sent successfully! Our team will contact you soon.');
+            this.reset();
+            closeChat();
+        });
+    </script>
 </body>
 </html>
