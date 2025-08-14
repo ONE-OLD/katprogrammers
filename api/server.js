@@ -1,4 +1,3 @@
-// /api/server.js
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -38,14 +37,23 @@ const cookieOpts = {
 // Auth middleware
 async function requireAuth(req, res, next) {
   const sessionCookie = req.cookies.session || null;
-  if (!sessionCookie) return res.redirect("/login.html");
+  
+  if (!sessionCookie) {
+    if (req.path.startsWith('/api')) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    return res.redirect("/login");
+  }
 
   try {
     const decoded = await verifySessionCookie(sessionCookie);
     req.user = decoded;
     return next();
   } catch {
-    return res.redirect("/login.html");
+    if (req.path.startsWith('/api')) {
+      return res.status(401).json({ error: 'Invalid session' });
+    }
+    return res.redirect("/login");
   }
 }
 
@@ -105,13 +113,11 @@ app.get("/api/activity", requireAuth, async (req, res) => {
 });
 
 // ---------------- ACCOUNT ACTIONS ----------------
-// Change password (requires passing newPassword in body)
 app.post("/api/changePassword", requireAuth, async (req, res) => {
   try {
     const { newPassword } = req.body;
-    if (!newPassword) {
-      return res.status(400).json({ error: "Missing newPassword" });
-    }
+    if (!newPassword) return res.status(400).json({ error: "Missing newPassword" });
+    
     await adminAuth.updateUser(req.user.uid, { password: newPassword });
     await logActivity(req.user.uid, "password_changed");
     return res.json({ ok: true });
@@ -120,7 +126,6 @@ app.post("/api/changePassword", requireAuth, async (req, res) => {
   }
 });
 
-// Delete account
 app.delete("/api/deleteAccount", requireAuth, async (req, res) => {
   try {
     await adminAuth.deleteUser(req.user.uid);
@@ -157,27 +162,26 @@ const privateDir = path.join(__dirname, "../private-views");
 
 app.use(express.static(publicDir));
 
-app.get("/login", requireAuth, (_req, res) => {
-  return res.sendFile(path.join(publicDir, "login.html"));
-});
-
+// Serve protected views without .html
 app.get("/dashboard", requireAuth, (_req, res) => {
-  return res.sendFile(path.join(privateDir, "dashboard.html"));
+  res.sendFile(path.join(privateDir, "dashboard.html"));
 });
 
 app.get("/profile", requireAuth, (_req, res) => {
-  return res.sendFile(path.join(privateDir, "profile.html"));
+  res.sendFile(path.join(privateDir, "profile.html"));
+});
+
+// Serve login publicly
+app.get("/login", (_req, res) => {
+  res.sendFile(path.join(publicDir, "login.html"));
 });
 
 // ---------------- FALLBACK ----------------
 app.get("*", (req, res) => {
-  const potentialFile = path.join(publicDir, req.path);
-  if (potentialFile.startsWith(publicDir)) {
-    try {
-      return res.sendFile(potentialFile);
-    } catch {}
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'Not found' });
   }
-  return res.sendFile(path.join(publicDir, "index.html"));
+  res.sendFile(path.join(publicDir, "index.html"));
 });
 
 export default app;
