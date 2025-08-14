@@ -36,72 +36,78 @@
   <ul id="activityList"></ul>
 
   <script>
-    async function api(url, options = {}) {
-      const res = await fetch(url, {
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        ...options
-      });
-      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-      return res.json();
-    }
+async function loadProfile() {
+  const res = await fetch('/api/me', { credentials: 'include' });
+  if (res.ok) {
+    const data = await res.json();
+    document.getElementById('profileEmail').textContent = data.email;
+  } else {
+    window.location.href = '/login.html';
+  }
+}
 
-    // Load user info
-    async function loadUser() {
-      const data = await api("/api/me");
-      document.getElementById("email").textContent = data.email;
-      document.getElementById("uid").textContent = data.uid;
-    }
+async function loadActivity() {
+  const res = await fetch('/api/activity', { credentials: 'include' });
+  if (res.ok) {
+    const data = await res.json();
+    const list = document.getElementById('activityList');
+    list.innerHTML = data.map(a => `<li>${a.type} - ${a.timestamp}</li>`).join('');
+  } else {
+    console.error('Failed to load activity');
+  }
+}
 
-    // Load activity
-    async function loadActivity() {
-      const activities = await api("/api/activity");
-      const list = document.getElementById("activityList");
-      list.innerHTML = "";
-      activities.forEach(act => {
-        const li = document.createElement("li");
-        li.textContent = `${act.timestamp} — ${act.type}`;
-        list.appendChild(li);
-      });
-    }
+document.getElementById('changePasswordBtn').addEventListener('click', async () => {
+  const newPassword = prompt('Enter your new password:');
+  if (!newPassword) return;
 
-    // Change password
-    document.getElementById("passwordForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const newPassword = document.getElementById("newPassword").value;
-      try {
-        await api("/api/changePassword", {
-          method: "POST",
-          body: JSON.stringify({ newPassword })
-        });
-        alert("Password changed successfully");
-        document.getElementById("newPassword").value = "";
-      } catch (err) {
-        alert("Failed to change password: " + err.message);
-      }
-    });
+  const res = await fetch('/api/changePassword', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ newPassword })
+  });
 
-    // Delete account
-    document.getElementById("deleteBtn").addEventListener("click", async () => {
-      if (!confirm("Are you sure you want to delete your account? This cannot be undone.")) return;
-      try {
-        await api("/api/deleteAccount", { method: "DELETE" });
-        alert("Account deleted");
-        window.location.href = "/";
-      } catch (err) {
-        alert("Failed to delete account: " + err.message);
-      }
-    });
+  if (res.ok) {
+    alert('Password changed successfully! Please log in again.');
+    await logout();
+  } else {
+    const err = await res.json().catch(() => ({}));
+    alert('Failed to change password: ' + (err.error || 'Unknown error'));
+  }
+});
 
-    // Logout
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await api("/sessionLogout", { method: "POST" });
-      window.location.href = "/";
-    });
+document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+  if (!confirm('Are you sure you want to delete your account? This cannot be undone!')) return;
 
-    // Initial load
-    loadUser();
-    loadActivity();
-  </script>
+  const res = await fetch('/api/deleteAccount', {
+    method: 'DELETE',
+    credentials: 'include'
+  });
+
+  if (res.ok) {
+    alert('Account deleted.');
+    window.location.href = '/';
+  } else {
+    const err = await res.json().catch(() => ({}));
+    alert('Failed to delete account: ' + (err.error || 'Unknown error'));
+  }
+});
+
+async function logout() {
+  await fetch('/sessionLogout', {
+    method: 'POST',
+    credentials: 'include'
+  });
+  window.location.href = '/';
+}
+
+document.getElementById('logoutBtn').addEventListener('click', logout);
+
+// Load on page start
+loadProfile();
+loadActivity();
+</script>
+
 </body>
 </html>
