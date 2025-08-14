@@ -169,10 +169,28 @@ app.get("/private/dashboard", requireAuth, (_req, res) => {
   res.sendFile(path.join(privateDir, "dashboard.html"));
 });
 
-app.get("/profile", requireAuth, (_req, res) => {
+app.get("/private/profile", requireAuth, (_req, res) => {
   res.sendFile(path.join(privateDir, "profile.html"));
 });
 
+app.get("/private/html", requireAuth, (_req, res) => {
+  res.sendFile(path.join(privateDir, "html.html"));
+});
+app.get("/private/css", requireAuth, (_req, res) => {
+  res.sendFile(path.join(privateDir, "css.html"));
+});
+app.get("/private/javascript", requireAuth, (_req, res) => {
+  res.sendFile(path.join(privateDir, "javascript.html"));
+});
+app.get("/private/cpp", requireAuth, (_req, res) => {
+  res.sendFile(path.join(privateDir, "cpp.html"));
+});
+app.get("/private/python", requireAuth, (_req, res) => {
+  res.sendFile(path.join(privateDir, "python.html"));
+});
+app.get("/private/mysql", requireAuth, (_req, res) => {
+  res.sendFile(path.join(privateDir, "mysql.html"));
+});
 // Serve login publicly
 app.get("/login", (_req, res) => {
   res.sendFile(path.join(publicDir, "login.html"));
