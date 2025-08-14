@@ -170,13 +170,7 @@
       }
     });
 
-    async function logout() {
-      await fetch('/sessionLogout', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      window.location.href = '/';
-    }
+    
 
     // FIXED: Correct logout button
     document.getElementById('profileLogoutBtn').addEventListener('click', logout);
