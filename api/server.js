@@ -165,7 +165,7 @@ app.use('/private', express.static(privateDir));
 app.use(express.static(publicDir));
 
 // Serve protected views without .html
-app.get("/dashboard", requireAuth, (_req, res) => {
+app.get("/private/dashboard", requireAuth, (_req, res) => {
   res.sendFile(path.join(privateDir, "dashboard.html"));
 });
 
