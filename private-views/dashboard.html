@@ -914,6 +914,14 @@
             --tw-gradient-to: #7c3aed;
         }
     </style>
+    <script>
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+      // Reload page if it was loaded from bfcache (back-forward cache)
+      window.location.reload();
+    }
+  });
+</script>
 </head>
 <body data-theme="dark">
     <!-- Sidebar remains unchanged -->
@@ -929,7 +937,7 @@
             <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
             <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
             <div class="sidebar-bottom">
-                <li><a href="about.html"><span><i class="fa-solid fa-circle-user"></i></span><p>About</p></a></li>
+                <li><a href="/private/profile"><span><i class="fa-solid fa-circle-user"></i></span><p>Profile</p></a></li>
                 <li><button id="profileLogoutBtn"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></button></li>
             </div>
         </ul>
@@ -1116,14 +1124,7 @@
         });
         document.getElementById('profileLogoutBtn').addEventListener('click', logout);
     </script>
-    <script>
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-      // Reload page if it was loaded from bfcache (back-forward cache)
-      window.location.reload();
-    }
-  });
-</script>
+    
 
 </body>
 </html>
