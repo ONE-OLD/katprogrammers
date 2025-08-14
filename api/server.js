@@ -157,6 +157,10 @@ const privateDir = path.join(__dirname, "../private-views");
 
 app.use(express.static(publicDir));
 
+app.get("/login", requireAuth, (_req, res) => {
+  return res.sendFile(path.join(publicDir, "login.html"));
+});
+
 app.get("/dashboard", requireAuth, (_req, res) => {
   return res.sendFile(path.join(privateDir, "dashboard.html"));
 });
