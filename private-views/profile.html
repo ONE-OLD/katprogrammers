@@ -179,5 +179,14 @@
     loadProfile();
     loadActivity();
   </script>
+  <script>
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+      // Reload page if it was loaded from bfcache (back-forward cache)
+      window.location.reload();
+    }
+  });
+</script>
+
 </body>
 </html>
