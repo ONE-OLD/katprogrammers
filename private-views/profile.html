@@ -11,42 +11,26 @@
 <body data-theme="dark">
   <!-- Sidebar -->
   <aside class="sidebar">
-    <a href="/" class="logo">
-      <i class="fas fa-shield-alt"></i>
-      <span>AuthPortal</span>
-    </a>
-    
-    <ul class="nav-menu">
-      <li class="nav-item">
-        <a href="/" class="nav-link">
-          <i class="fas fa-home"></i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/dashboard" class="nav-link">
-          <i class="fas fa-tachometer-alt"></i>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/profile" class="nav-link active">
-          <i class="fas fa-user"></i>
-          <span>Profile</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link">
-          <i class="fas fa-sign-in-alt"></i>
-          <span>Login</span>
-        </a>
-      </li>
-    </ul>
-    
-    <div class="theme-toggle-container">
-      <button class="theme-toggle" id="themeToggle"></button>
-    </div>
-  </aside>
+        <div class="sidebar-header">
+            <img src="https://via.placeholder.com/40" alt="KAT-PROGRAMMERS Logo">
+            <h2>KAT-PROGRAMMERS</h2>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
+            <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
+            <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
+            <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
+            <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
+            <div class="sidebar-bottom">
+                <li><a href="/private/profile"><span><i class="fa-solid fa-circle-user"></i></span><p>Profile</p></a></li>
+                <li><button id="profileLogoutBtn"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></button></li>
+            </div>
+        </ul>
+        <div class="theme-toggle-container">
+            
+            <button class="theme-toggle" id="themeToggle"></button>
+        </div>
+    </aside>
 
   <!-- Main Content -->
   <main class="main-content">
