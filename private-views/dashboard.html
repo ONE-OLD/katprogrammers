@@ -8,6 +8,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body data-theme="dark">
+  <div class="cont-btn" id="activechat" onclick="activeChat()"><i class="fa-brands fa-rocketchat fa-bounce"></i> <p>Get in Touch</p><img src="images/founder/arsene.jpg" alt=""><img class="img1" src="images/founder/donald.JPEG" alt=""></div>
+    <div class="chat-container" id="chat-container">
+        <span onclick="closeChat()"><i class="fa-regular fa-circle-xmark"></i></span>
+        <form action="" id="contact-form">
+            <h1>Get In Touch</h1>
+            <div id="popup" class="popup"></div>
+            <p class="p">Names *</p>
+            <input type="text" name="name" id="names" placeholder="Full names" required><br>
+            <p class="p">E-mail *</p>
+            <input type="email" name="email" id="email" placeholder="E-mail" required> 
+            <p class="p">Subject *</p>
+            <input type="text" name="subject" placeholder="Subject" required><br>
+            <p class="p">Message *</p>
+            <textarea name="message" id="message" placeholder="Text a message..." required></textarea> 
+            <button type="submit">Send</button>
+            <p class="p1">* Feedback will get to you in less than 24hrs!</p>
+        </form>
+        <div class="con">
+            <p><a href="tel:+250792575986"><i class="fa-solid fa-phone"></i></a></p>
+            <p><a href="mailto:katprogrammers@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a></p>
+            <p><a href="https://www.instagram.com/kat_programmers" target="_blank"><i class="fa-brands fa-instagram"></i></a></p>
+        </div>
+    </div>
   <!-- Sidebar -->
   <aside class="sidebar">
     <a href="/" class="logo">
@@ -59,21 +82,51 @@
       
       <hr>
       
-      <h2 class="card-title">Recent Activity</h2>
-      <ul class="activity-list">
-        <li class="activity-item">
-          <span class="activity-type">Login</span>
-          <span class="activity-time">Today, 10:30 AM</span>
-        </li>
-        <li class="activity-item">
-          <span class="activity-type">Password Changed</span>
-          <span class="activity-time">Yesterday, 2:15 PM</span>
-        </li>
-        <li class="activity-item">
-          <span class="activity-type">Profile Updated</span>
-          <span class="activity-time">April 15, 9:45 AM</span>
-        </li>
-      </ul>
+      <div class="introduction">
+        <h1 class="h1">MASTER PROGRAMMING</h1>
+        <h1 class="headlanguage">LANGUAGES</h1>
+        <p>Learn HTML, CSS, JavaScript, C++, Python, and MySQL with comprehensive tutorials, hands-on examples, and real-world projects. Start your programming journey today!</p>
+    </div>
+
+    <div class="content">
+        <div class="content1">
+            <img src="images/html logo- Websites, Applications and Software.jpg" alt="">
+            <h2>HTML</h2>
+            <p>HTML (Hypertext Markup Language) is the standard markup language used to create web pages. It provides a structure and content for web documents, enabling browsers to render and display them correctly.</p>
+            <a href="html.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="content1">
+            <img src="images/css.jpg" alt="">
+            <h2>CSS</h2>
+            <p>CSS (Cascading Style Sheets) is a stylesheet language used to describe the presentation and layout of a document written in HTML. It defines how HTML elements should be displayed, such as colors, fonts, spacing, and positioning.</p>
+            <a href="css.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="content1">
+            <img src="images/JavaScript.jpg" alt="">
+            <h2>JAVASCRIPT</h2>
+            <p>JavaScript is a versatile programming language commonly used for adding interactivity and dynamic functionality to websites. It enables developers to create responsive and engaging user experiences by reacting to events, manipulating the content, and validating user input.</p>
+            <a href="javascript.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="content1">
+            <img src="images/Python - MI PORTAL.jpg" alt="">
+            <h2>PYTHON</h2>
+            <p>Python is a high-level, interpreted programming language known for its simplicity and readability. It is widely used for web development, data analysis, artificial intelligence, and automation.</p>
+            <a href="python.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="content1">
+            <img src="images/MySQL Logo.jpg" alt="">
+            <h2>MY SQL</h2>
+            <p>MySQL is a relational database management system used for storing and managing structured data. It is known for its reliability, scalability, and ease of use.</p>
+            <a href="mysql.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="content1">
+            <img src="images/C++.jpg" alt="">
+            <h2>C++</h2>
+            <p>C++ is a powerful and versatile programming language known for its performance and efficiency. It is widely used for system development, game development, and other applications that require high-level control over hardware.</p>
+            <a href="cpp.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </div>
+
       
       <hr>
       
@@ -129,5 +182,10 @@
 
     loadUser();
   </script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  emailjs.init("6CSR1CAXwOHcVmcbZ"); // Replace with your actual public key
+</script>
+<script src="email.js"></script>
 </body>
 </html>
