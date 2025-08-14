@@ -36,78 +36,79 @@
   <ul id="activityList"></ul>
 
   <script>
-async function loadProfile() {
-  const res = await fetch('/api/me', { credentials: 'include' });
-  if (res.ok) {
-    const data = await res.json();
-    document.getElementById('profileEmail').textContent = data.email;
-  } else {
-    window.location.href = '/login.html';
-  }
-}
+    async function loadProfile() {
+      const res = await fetch('/api/me', { credentials: 'include' });
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById('email').textContent = data.email;
+        document.getElementById('uid').textContent = data.uid;
+      } else {
+        window.location.href = '/login';
+      }
+    }
 
-async function loadActivity() {
-  const res = await fetch('/api/activity', { credentials: 'include' });
-  if (res.ok) {
-    const data = await res.json();
-    const list = document.getElementById('activityList');
-    list.innerHTML = data.map(a => `<li>${a.type} - ${a.timestamp}</li>`).join('');
-  } else {
-    console.error('Failed to load activity');
-  }
-}
+    async function loadActivity() {
+      const res = await fetch('/api/activity', { credentials: 'include' });
+      if (res.ok) {
+        const data = await res.json();
+        const list = document.getElementById('activityList');
+        list.innerHTML = data.map(a => `<li>${a.type} - ${new Date(a.timestamp).toLocaleString()}</li>`).join('');
+      }
+    }
 
-document.getElementById('changePasswordBtn').addEventListener('click', async () => {
-  const newPassword = prompt('Enter your new password:');
-  if (!newPassword) return;
+    // FIX: Form submit handler
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const newPassword = document.getElementById('newPassword').value;
+      if (!newPassword) return;
 
-  const res = await fetch('/api/changePassword', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ newPassword })
-  });
+      const res = await fetch('/api/changePassword', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ newPassword })
+      });
 
-  if (res.ok) {
-    alert('Password changed successfully! Please log in again.');
-    await logout();
-  } else {
-    const err = await res.json().catch(() => ({}));
-    alert('Failed to change password: ' + (err.error || 'Unknown error'));
-  }
-});
+      if (res.ok) {
+        alert('Password changed successfully! Please log in again.');
+        await logout();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        alert('Failed to change password: ' + (err.error || 'Unknown error'));
+      }
+    });
 
-document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
-  if (!confirm('Are you sure you want to delete your account? This cannot be undone!')) return;
+    // FIX: Corrected button ID
+    document.getElementById('deleteBtn').addEventListener('click', async () => {
+      if (!confirm('Are you sure you want to delete your account? This cannot be undone!')) return;
 
-  const res = await fetch('/api/deleteAccount', {
-    method: 'DELETE',
-    credentials: 'include'
-  });
+      const res = await fetch('/api/deleteAccount', {
+        method: 'DELETE',
+        credentials: 'include'
+      });
 
-  if (res.ok) {
-    alert('Account deleted.');
-    window.location.href = '/';
-  } else {
-    const err = await res.json().catch(() => ({}));
-    alert('Failed to delete account: ' + (err.error || 'Unknown error'));
-  }
-});
+      if (res.ok) {
+        alert('Account deleted.');
+        window.location.href = '/';
+      } else {
+        const err = await res.json().catch(() => ({}));
+        alert('Failed to delete account: ' + (err.error || 'Unknown error'));
+      }
+    });
 
-async function logout() {
-  await fetch('/sessionLogout', {
-    method: 'POST',
-    credentials: 'include'
-  });
-  window.location.href = '/';
-}
+    async function logout() {
+      await fetch('/sessionLogout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+      window.location.href = '/';
+    }
 
-document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('logoutBtn').addEventListener('click', logout);
 
-// Load on page start
-loadProfile();
-loadActivity();
-</script>
-
+    // Load on page start
+    loadProfile();
+    loadActivity();
+  </script>
 </body>
 </html>
