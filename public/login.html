@@ -1,58 +1,121 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login / Signup</title>
-  <style>
-    body { font-family: sans-serif; max-width: 420px; margin: 40px auto; }
-    input, button { width: 100%; padding: 10px; margin: 8px 0; }
-    .flip-container { perspective: 1000px; }
-    .flipper { transition: 0.6s; transform-style: preserve-3d; position: relative; }
-    .flipped .flipper { transform: rotateY(180deg); }
-    .front, .back { backface-visibility: hidden; position: absolute; top:0; left:0; width:100%; }
-    .back { transform: rotateY(180deg); }
-    .msg { color: red; margin: 5px 0; min-height: 18px; }
-    #forgotPopup { display:none; position:fixed; top:0; left:0;width:100%; height:100%; background:rgba(0,0,0,0.5);}
-    #forgotPopup .content { background:#fff; padding:20px; max-width:300px; margin:100px auto; border-radius:8px; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-  <h2 id="formTitle">Login</h2>
-  <div class="flip-container" id="flipContainer">
-    <div class="flipper">
-      <!-- Login Form -->
-      <div class="front">
-        <div class="msg" id="loginMsg"></div>
-        <input id="loginEmail" type="email" placeholder="Email" />
-        <input id="loginPassword" type="password" placeholder="Password" />
-        <button id="loginBtn">Sign In</button>
-        <button id="gotoSignup">Sign Up</button>
-        <button id="forgotBtn">Forgot Password?</button>
-      </div>
-      <!-- Signup Form -->
-      <div class="back">
-        <div class="msg" id="signupMsg"></div>
-        <input id="signupEmail" type="email" placeholder="Email" />
-        <input id="signupPassword" type="password" placeholder="Password" />
-        <input id="signupConfirm" type="password" placeholder="Confirm Password" />
-        <button id="signupBtn">Sign Up</button>
-        <button id="gotoLogin">Back to Login</button>
+<body data-theme="dark">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="index.html" class="logo">
+      <i class="fas fa-shield-alt"></i>
+      <span>AuthPortal</span>
+    </a>
+    
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="index.html" class="nav-link">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="dashboard.html" class="nav-link">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="profile.html" class="nav-link">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="login.html" class="nav-link active">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Login</span>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="theme-toggle-container">
+      <button class="theme-toggle" id="themeToggle"></button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <h1 class="page-title">Login / Signup</h1>
+    
+    <div class="flip-container" id="flipContainer">
+      <div class="flipper">
+        <!-- Login Form -->
+        <div class="front">
+          <div class="auth-form">
+            <div class="auth-msg" id="loginMsg"></div>
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <input type="email" id="loginEmail" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" placeholder="Enter your password">
+            </div>
+            <div class="auth-action">
+              <button id="loginBtn" class="btn btn-primary auth-btn">Sign In</button>
+              <button id="gotoSignup" class="btn btn-secondary auth-btn">Sign Up</button>
+            </div>
+            <button id="forgotBtn" class="btn btn-secondary" style="width:100%; margin-top:1rem;">
+              <i class="fas fa-key"></i> Forgot Password?
+            </button>
+          </div>
+        </div>
+        
+        <!-- Signup Form -->
+        <div class="back">
+          <div class="auth-form">
+            <div class="auth-msg" id="signupMsg"></div>
+            <div class="form-group">
+              <label for="signupEmail">Email</label>
+              <input type="email" id="signupEmail" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+              <label for="signupPassword">Password</label>
+              <input type="password" id="signupPassword" placeholder="Create a password">
+            </div>
+            <div class="form-group">
+              <label for="signupConfirm">Confirm Password</label>
+              <input type="password" id="signupConfirm" placeholder="Confirm your password">
+            </div>
+            <div class="auth-action">
+              <button id="signupBtn" class="btn btn-primary auth-btn">Sign Up</button>
+              <button id="gotoLogin" class="btn btn-secondary auth-btn">Back to Login</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- Forgot Password Popup -->
-  <div id="forgotPopup">
-    <div class="content">
-      <h3>Reset Password</h3>
-      <div class="msg" id="forgotMsg"></div>
-      <input id="forgotEmail" type="email" placeholder="Enter your email" />
-      <button id="sendResetBtn">Send Reset Email</button>
-      <button id="closeForgot">Cancel</button>
+    
+    <!-- Forgot Password Popup -->
+    <div id="forgotPopup" class="popup" style="display: none;">
+      <div class="popup-content">
+        <h3 class="popup-title">Reset Password</h3>
+        <div class="auth-msg" id="forgotMsg"></div>
+        <div class="form-group">
+          <label for="forgotEmail">Email Address</label>
+          <input type="email" id="forgotEmail" placeholder="Enter your email">
+        </div>
+        <div class="popup-actions">
+          <button id="closeForgot" class="btn btn-secondary">Cancel</button>
+          <button id="sendResetBtn" class="btn btn-primary">Send Reset Email</button>
+        </div>
+      </div>
     </div>
-  </div>
-
+  </main>
   <script type="module" src="/js/auth.js"></script>
   <script>
     const flipContainer = document.getElementById('flipContainer');
@@ -60,6 +123,19 @@
     const signupMsg = document.getElementById('signupMsg');
     const forgotMsg = document.getElementById('forgotMsg');
     const forgotPopup = document.getElementById('forgotPopup');
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    
+    document.body.setAttribute('data-theme', currentTheme);
+    
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
 
     // Flip to signup
     document.getElementById('gotoSignup').addEventListener('click', () => {
