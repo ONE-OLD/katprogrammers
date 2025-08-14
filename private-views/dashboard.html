@@ -1,23 +1,792 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAT-PROGRAMMERS Course Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== BASE STYLES ===== */
+        :root {
+            /* Dark Theme (Default) */
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-surface: #252525;
+            --bg-card: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent-primary: #bb86fc;
+            --accent-secondary: #03dac6;
+            --error: #cf6679;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --border-radius: 8px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #e0e0e0;
+            --bg-surface: #ffffff;
+            --bg-card: #fafafa;
+            --text-primary: #121212;
+            --text-secondary: #4a4a4a;
+            --accent-primary: #6200ea;
+            --accent-secondary: #018786;
+            --error: #b00020;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        /* ===== SIDEBAR STYLES ===== */
+        .sidebar {
+            width: 250px;
+            background-color: var(--bg-secondary);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid var(--bg-surface);
+        }
+
+        .sidebar-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .sidebar-links {
+            padding: 15px 0;
+        }
+
+        .sidebar-links li {
+            list-style: none;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-links a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .sidebar-links a:hover,
+        .sidebar-links a.active {
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .sidebar-links span {
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-links p {
+            font-size: 0.9rem;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            border-top: 1px solid var(--bg-surface);
+            padding-top: 15px;
+        }
+
+        /* ===== CHAT BUTTON STYLES ===== */
+        .cont-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .cont-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .cont-btn img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 5px;
+        }
+
+        .cont-btn img.img1 {
+            margin-left: -15px;
+        }
+
+        /* ===== CHAT CONTAINER STYLES ===== */
+        .chat-container {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            background: var(--bg-surface);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .chat-container span {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .chat-container form {
+            padding: 20px;
+        }
+
+        .chat-container h1 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .chat-container .p {
+            margin: 10px 0 5px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .chat-container input,
+        .chat-container textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--bg-secondary);
+            border-radius: var(--border-radius);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .chat-container textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .chat-container button[type="submit"] {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .chat-container button[type="submit"]:hover {
+            background: var(--accent-secondary);
+        }
+
+        .chat-container .p1 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .chat-container .con {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--bg-secondary);
+        }
+
+        .chat-container .con a {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .chat-container .con a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* ===== MAIN CONTENT STYLES ===== */
+        .min-h-screen {
+            min-height: 100vh;
+            margin-left: 250px;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        /* Header styles */
+        header {
+            border-bottom: 1px solid var(--bg-surface);
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .space-x-3 > * + * {
+            margin-left: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-primary);
+            border: none;
+        }
+
+        .btn-ghost:hover {
+            color: var(--accent-primary);
+        }
+
+        .w-8 {
+            width: 32px;
+        }
+
+        .h-8 {
+            height: 32px;
+        }
+
+        .rounded-lg {
+            border-radius: var(--border-radius);
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .text-white {
+            color: var(--text-primary);
+        }
+
+        .bg-gradient-to-r {
+            background-image: linear-gradient(to right, var(--tw-gradient-stops));
+        }
+
+        .px-4 {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .py-2 {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+        .rounded-full {
+            border-radius: 9999px;
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        /* Course content styles */
+        .py-8 {
+            padding-top: 32px;
+            padding-bottom: 32px;
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .gap-8 {
+            gap: 32px;
+        }
+
+        .lg\:grid-cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .bg-white\/5 {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .border {
+            border-width: 1px;
+        }
+
+        .border-white\/10 {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .rounded-xl {
+            border-radius: 12px;
+        }
+
+        .p-6 {
+            padding: 24px;
+        }
+
+        .sticky {
+            position: sticky;
+        }
+
+        .top-8 {
+            top: 32px;
+        }
+
+        .text-xs {
+            font-size: 0.75rem;
+        }
+
+        .ml-8 {
+            margin-left: 32px;
+        }
+
+        .space-y-4 > * + * {
+            margin-top: 16px;
+        }
+
+        .space-y-2 > * + * {
+            margin-top: 8px;
+        }
+
+        .text-gray-400 {
+            color: var(--text-secondary);
+        }
+
+        .hover\:text-white:hover {
+            color: var(--text-primary);
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .transition-colors {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        /* Code examples */
+        .space-y-6 > * + * {
+            margin-top: 24px;
+        }
+
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--bg-surface);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-surface);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.875rem;
+        }
+
+        .bg-gray-900 {
+            background-color: #111827;
+        }
+
+        .overflow-x-auto {
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .text-green-400 {
+            color: #34d399;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        /* Next steps */
+        .mt-8 {
+            margin-top: 32px;
+        }
+
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .sm\:flex-row {
+            flex-direction: row;
+        }
+
+        .text-white {
+            color: var(--text-primary);
+        }
+
+        .px-6 {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .py-3 {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .duration-300 {
+            transition-duration: 300ms;
+        }
+
+        /* Language-specific code colors */
+        .text-purple-400 {
+            color: #a78bfa;
+        }
+
+        .text-blue-400 {
+            color: #60a5fa;
+        }
+
+        .text-yellow-300 {
+            color: #fcd34d;
+        }
+
+        /* Copy button styles */
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Theme toggle button */
+        .theme-toggle-container {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle-label {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-surface);
+            border: none;
+            width: 50px;
+            height: 26px;
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent-secondary);
+            transform: translateX(var(--toggle-position, 0));
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .theme-toggle::before {
+            --toggle-position: 24px;
+        }
+
+        /* ===== RESPONSIVE STYLES ===== */
+        @media (max-width: 1024px) {
+            .lg\:col-span-1 {
+                grid-column: span 1 / span 1;
+            }
+            
+            .lg\:col-span-3 {
+                grid-column: span 3 / span 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar-header h2,
+            .sidebar-links p {
+                display: none;
+            }
+            
+            .sidebar-links a {
+                justify-content: center;
+                padding: 12px 0;
+            }
+            
+            .sidebar-links span {
+                margin-right: 0;
+                font-size: 1.3rem;
+            }
+            
+            .min-h-screen {
+                margin-left: 70px;
+            }
+            
+            .md\:grid-cols-3 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+            
+            .chat-container {
+                width: 90%;
+                right: 5%;
+                bottom: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cont-btn p {
+                display: none;
+            }
+            
+            .cont-btn {
+                padding: 12px;
+            }
+            
+            header .flex {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .bg-gradient-to-r {
+                margin-top: 10px;
+            }
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .mb-6 {
+            margin-bottom: 24px;
+        }
+
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+
+        /* Gradient backgrounds */
+        .from-green-500 {
+            --tw-gradient-from: #10b981;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(16, 185, 129, 0));
+        }
+
+        .to-emerald-500 {
+            --tw-gradient-to: #10b981;
+        }
+
+        .from-orange-500 {
+            --tw-gradient-from: #f97316;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(249, 115, 22, 0));
+        }
+
+        .to-red-500 {
+            --tw-gradient-to: #ef4444;
+        }
+
+        .from-indigo-500 {
+            --tw-gradient-from: #6366f1;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(99, 102, 241, 0));
+        }
+
+        .to-purple-500 {
+            --tw-gradient-to: #8b5cf6;
+        }
+
+        .from-blue-500 {
+            --tw-gradient-from: #3b82f6;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
+        }
+
+        .to-cyan-500 {
+            --tw-gradient-to: #06b6d4;
+        }
+
+        .from-yellow-400 {
+            --tw-gradient-from: #facc15;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(250, 204, 21, 0));
+        }
+
+        .to-orange-500 {
+            --tw-gradient-to: #f97316;
+        }
+
+        .from-cyan-500 {
+            --tw-gradient-from: #06b6d4;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(6, 182, 212, 0));
+        }
+
+        .to-blue-500 {
+            --tw-gradient-to: #3b82f6;
+        }
+
+        .hover\:from-indigo-600:hover {
+            --tw-gradient-from: #4f46e5;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(79, 70, 229, 0));
+        }
+
+        .hover\:to-purple-600:hover {
+            --tw-gradient-to: #7c3aed;
+        }
+    </style>
 </head>
 <body data-theme="dark">
-  <div class="cont-btn" id="activechat" onclick="activeChat()"><i class="fa-brands fa-rocketchat fa-bounce"></i> <p>Get in Touch</p><img src="images/founder/arsene.jpg" alt=""><img class="img1" src="images/founder/donald.JPEG" alt=""></div>
+    <!-- Chat Button -->
+    <div class="cont-btn" id="activechat" onclick="activeChat()">
+        <i class="fa-brands fa-rocketchat fa-bounce"></i> 
+        <p>Get in Touch</p>
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
+        <img class="img1" src="https://randomuser.me/api/portraits/men/22.jpg" alt="">
+    </div>
+
+    <!-- Chat Container -->
     <div class="chat-container" id="chat-container">
         <span onclick="closeChat()"><i class="fa-regular fa-circle-xmark"></i></span>
         <form action="" id="contact-form">
             <h1>Get In Touch</h1>
             <div id="popup" class="popup"></div>
             <p class="p">Names *</p>
-            <input type="text" name="name" id="names" placeholder="Full names" required><br>
+            <input type="text" name="name" placeholder="Full names" required><br>
             <p class="p">E-mail *</p>
-            <input type="email" name="email" id="email" placeholder="E-mail" required> 
+            <input type="email" name="email" placeholder="E-mail" required> 
             <p class="p">Subject *</p>
             <input type="text" name="subject" placeholder="Subject" required><br>
             <p class="p">Message *</p>
@@ -31,161 +800,120 @@
             <p><a href="https://www.instagram.com/kat_programmers" target="_blank"><i class="fa-brands fa-instagram"></i></a></p>
         </div>
     </div>
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <a href="/" class="logo">
-      <i class="fas fa-shield-alt"></i>
-      <span>AuthPortal</span>
-    </a>
-    
-    <ul class="nav-menu">
-      <li class="nav-item">
-        <a href="/" class="nav-link">
-          <i class="fas fa-home"></i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/dashboard" class="nav-link active">
-          <i class="fas fa-tachometer-alt"></i>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/profile" class="nav-link">
-          <i class="fas fa-user"></i>
-          <span>Profile</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link">
-          <i class="fas fa-sign-in-alt"></i>
-          <span>Login</span>
-        </a>
-      </li>
-    </ul>
-    
-    <div class="theme-toggle-container">
-      <button class="theme-toggle" id="themeToggle"></button>
-    </div>
-  </aside>
 
-  <!-- Main Content -->
-  <main class="main-content">
-    <h1 class="page-title">Dashboard</h1>
-    
-    <div class="card">
-      <div class="info-item">
-        <span class="info-label">Signed in as:</span>
-        <span class="info-value" id="whoami">Loading...</span>
-      </div>
-      
-      <hr>
-      
-      <div class="introduction">
-        <h1 class="h1">MASTER PROGRAMMING</h1>
-        <h1 class="headlanguage">LANGUAGES</h1>
-        <p>Learn HTML, CSS, JavaScript, C++, Python, and MySQL with comprehensive tutorials, hands-on examples, and real-world projects. Start your programming journey today!</p>
-    </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="https://via.placeholder.com/40" alt="KAT-PROGRAMMERS Logo">
+            <h2>KAT-PROGRAMMERS</h2>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
+            <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
+            <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
+            <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
+            <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
+            <div class="sidebar-bottom">
+                <li><a href="about.html"><span><i class="fa-solid fa-circle-user"></i></span><p>About</p></a></li>
+                <li><a onclick="logout()"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></a></li>
+            </div>
+        </ul>
+        <div class="theme-toggle-container">
+            <span class="theme-toggle-label">Theme</span>
+            <button class="theme-toggle" id="themeToggle"></button>
+        </div>
+    </aside>
 
-    <div class="content">
+    <!-- Main Content -->
+   <div class="content">
         <div class="content1">
             <img src="images/html logo- Websites, Applications and Software.jpg" alt="">
             <h2>HTML</h2>
             <p>HTML (Hypertext Markup Language) is the standard markup language used to create web pages. It provides a structure and content for web documents, enabling browsers to render and display them correctly.</p>
-            <a href="/private/html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="html.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="content1">
             <img src="images/css.jpg" alt="">
             <h2>CSS</h2>
             <p>CSS (Cascading Style Sheets) is a stylesheet language used to describe the presentation and layout of a document written in HTML. It defines how HTML elements should be displayed, such as colors, fonts, spacing, and positioning.</p>
-            <a href="/private/css" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="css.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="content1">
             <img src="images/JavaScript.jpg" alt="">
             <h2>JAVASCRIPT</h2>
             <p>JavaScript is a versatile programming language commonly used for adding interactivity and dynamic functionality to websites. It enables developers to create responsive and engaging user experiences by reacting to events, manipulating the content, and validating user input.</p>
-            <a href="/private/javascript" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="javascript.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="content1">
             <img src="images/Python - MI PORTAL.jpg" alt="">
             <h2>PYTHON</h2>
             <p>Python is a high-level, interpreted programming language known for its simplicity and readability. It is widely used for web development, data analysis, artificial intelligence, and automation.</p>
-            <a href="/private/python" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="python.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="content1">
             <img src="images/MySQL Logo.jpg" alt="">
             <h2>MY SQL</h2>
             <p>MySQL is a relational database management system used for storing and managing structured data. It is known for its reliability, scalability, and ease of use.</p>
-            <a href="/private/mysql" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="mysql.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="content1">
             <img src="images/C++.jpg" alt="">
             <h2>C++</h2>
             <p>C++ is a powerful and versatile programming language known for its performance and efficiency. It is widely used for system development, game development, and other applications that require high-level control over hardware.</p>
-            <a href="/private/cpp" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="cpp.html" class="btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </div>
 
-      
-      <hr>
-      
-      <button class="btn btn-primary" id="logoutBtn">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </button>
-    </div>
-  </main>
 
-
-  <script type="module" src="/js/auth.js"></script>
-  <script>
-
-    // Theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    
-    document.body.setAttribute('data-theme', currentTheme);
-    
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = document.body.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
-      document.body.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-    });
-    
-    // Logout functionality
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      window.location.href = 'index.html';
-    });
-    
-        async function loadUser() {
-      try {
-        const res = await fetch('/api/me', { 
-          credentials: 'include'  // FIX: Added credentials
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        document.body.setAttribute('data-theme', currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
         });
-        if (!res.ok) {
-          window.location.href = '/login';
-          return;
+        
+        // Chat functionality
+        function activeChat() {
+            document.getElementById("chat-container").style.display = "block";
         }
-        const me = await res.json();
-        document.getElementById('whoami').textContent = `Signed in as: ${me.email || me.uid}`;
-      } catch (e) {
-        window.location.href = '/login';
-      }
-    }
-
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-      await window.__auth.logout();
-      window.location.href = '/';
-    });
-
-    loadUser();
-  </script>
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script>
-  emailjs.init("6CSR1CAXwOHcVmcbZ"); // Replace with your actual public key
-</script>
-<script src="email.js"></script>
+        
+        function closeChat() {
+            document.getElementById("chat-container").style.display = "none";
+        }
+        
+        // Navigation functions
+        function navigateToHome() {
+            window.location.href = 'home.html';
+        }
+        
+        function navigateToTutorial(page) {
+            window.location.href = page;
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.replace("logout.html");
+        }
+        
+        
+        
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message sent successfully! Our team will contact you soon.');
+            this.reset();
+            closeChat();
+        });
+    </script>
 </body>
 </html>
