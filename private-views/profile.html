@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
-  <link rel="stylesheet" href="styles.css">
+  <!-- Fixed CSS path -->
+  <link rel="stylesheet" href="/private/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body data-theme="dark">
@@ -91,22 +92,13 @@
       <hr>
       
       <h2 class="card-title">Recent Activity</h2>
-      <ul class="activity-list" id="activityList">
-        <li class="activity-item">
-          <span class="activity-type"></span>
-          <span class="activity-time"></span>
-        </li>
-        <li class="activity-item">
-          <span class="activity-type"></span>
-          <span class="activity-time"></span>
-        </li>
-      </ul>
+      <!-- Removed placeholder items; will populate dynamically -->
+      <ul class="activity-list" id="activityList"></ul>
     </div>
   </main>
 
-
   <script>
-    // Theme toggle functionality
+    // Theme toggle functionality (unchanged)
     const themeToggle = document.getElementById('themeToggle');
     const currentTheme = localStorage.getItem('theme') || 'dark';
     
@@ -119,6 +111,7 @@
       document.body.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
     });
+
     async function loadProfile() {
       const res = await fetch('/api/me', { credentials: 'include' });
       if (res.ok) {
@@ -139,7 +132,6 @@
       }
     }
 
-    // FIX: Form submit handler
     document.getElementById('passwordForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const newPassword = document.getElementById('newPassword').value;
@@ -161,7 +153,6 @@
       }
     });
 
-    // FIX: Corrected button ID
     document.getElementById('deleteBtn').addEventListener('click', async () => {
       if (!confirm('Are you sure you want to delete your account? This cannot be undone!')) return;
 
@@ -187,7 +178,8 @@
       window.location.href = '/';
     }
 
-    document.getElementById('logoutBtn').addEventListener('click', logout);
+    // FIXED: Correct logout button
+    document.getElementById('profileLogoutBtn').addEventListener('click', logout);
 
     // Load on page start
     loadProfile();
