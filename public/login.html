@@ -76,17 +76,38 @@
 
     // Login
     document.getElementById('loginBtn').addEventListener('click', async () => {
-      loginMsg.textContent = '';
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value;
-      if (!email || !password) { loginMsg.textContent = 'Email & password required'; return; }
-      try {
-        await window.__auth.loginWithEmail(email, password);
-        window.location.href = '/dashboard';
-      } catch (e) {
-        loginMsg.textContent = e.message || 'Login failed';
-      }
-    });
+  loginMsg.textContent = '';
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if (!email || !password) { 
+    loginMsg.textContent = 'Email & password required'; 
+    return; 
+  }
+
+  try {
+    // Firebase client login
+    await window.__auth.loginWithEmail(email, password);
+
+    // Get current user and ID token
+    const user = window.__auth.auth.currentUser;
+    if (user) {
+      const idToken = await user.getIdToken(true); // Force refresh
+
+      // Send ID token to server to create session cookie
+      await fetch("/sessionLogin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken })
+      });
+
+      // Redirect after session cookie is set
+      window.location.href = "/dashboard";
+    }
+  } catch (e) {
+    loginMsg.textContent = e.message || 'Login failed';
+  }
+});
+
 
     // Signup
     document.getElementById('signupBtn').addEventListener('click', async () => {
