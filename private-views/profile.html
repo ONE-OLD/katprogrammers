@@ -1,41 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-  <h1>Profile</h1>
+<body data-theme="dark">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="index.html" class="logo">
+      <i class="fas fa-shield-alt"></i>
+      <span>AuthPortal</span>
+    </a>
+    
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="index.html" class="nav-link">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="dashboard.html" class="nav-link">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="profile.html" class="nav-link active">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="login.html" class="nav-link">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Login</span>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="theme-toggle-container">
+      <button class="theme-toggle" id="themeToggle"></button>
+    </div>
+  </aside>
 
-  <div id="userInfo">
-    <p><strong>Email:</strong> <span id="email"></span></p>
-    <p><strong>UID:</strong> <span id="uid"></span></p>
-  </div>
+  <!-- Main Content -->
+  <main class="main-content">
+    <h1 class="page-title">User Profile</h1>
+    
+    <div class="card">
+      <h2 class="card-title">Account Information</h2>
+      <div class="info-item">
+        <span class="info-label">Email:</span>
+        <span class="info-value" id="email">Loading...</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">User ID:</span>
+        <span class="info-value" id="uid">Loading...</span>
+      </div>
+      
+      <hr>
+      
+      <h2 class="card-title">Change Password</h2>
+      <form id="passwordForm">
+        <div class="form-group">
+          <label for="newPassword">New Password</label>
+          <input type="password" id="newPassword" placeholder="Enter new password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-key"></i> Change Password
+        </button>
+      </form>
+      
+      <hr>
+      
+      <h2 class="card-title">Danger Zone</h2>
+      <button id="deleteBtn" class="btn btn-danger">
+        <i class="fas fa-trash-alt"></i> Delete Account
+      </button>
+      
+      <hr>
+      
+      <button id="profileLogoutBtn" class="btn btn-secondary">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+      
+      <hr>
+      
+      <h2 class="card-title">Recent Activity</h2>
+      <ul class="activity-list" id="activityList">
+        <li class="activity-item">
+          <span class="activity-type"></span>
+          <span class="activity-time"></span>
+        </li>
+        <li class="activity-item">
+          <span class="activity-type"></span>
+          <span class="activity-time"></span>
+        </li>
+      </ul>
+    </div>
+  </main>
 
-  <hr>
-
-  <h2>Change Password</h2>
-  <form id="passwordForm">
-    <input type="password" id="newPassword" placeholder="New Password" required>
-    <button type="submit">Change Password</button>
-  </form>
-
-  <hr>
-
-  <h2>Danger Zone</h2>
-  <button id="deleteBtn" style="background: red; color: white;">Delete Account</button>
-
-  <hr>
-
-  <button id="logoutBtn">Logout</button>
-
-  <hr>
-
-  <h2>Activity</h2>
-  <ul id="activityList"></ul>
 
   <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    
+    document.body.setAttribute('data-theme', currentTheme);
+    
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
     async function loadProfile() {
       const res = await fetch('/api/me', { credentials: 'include' });
       if (res.ok) {
