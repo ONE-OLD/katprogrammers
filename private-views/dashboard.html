@@ -1061,19 +1061,7 @@
 
 
     <script>
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'dark';
         
-        document.body.setAttribute('data-theme', currentTheme);
-        
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        });
         
         // Chat functionality
         function activeChat() {
@@ -1123,38 +1111,6 @@
             localStorage.setItem('theme', newTheme);
         });
         
-        // Chat functionality
-        function activeChat() {
-            document.getElementById("chat-container").style.display = "block";
-        }
-        
-        function closeChat() {
-            document.getElementById("chat-container").style.display = "none";
-        }
-        
-        // Navigation functions
-        function navigateToHome() {
-            window.location.href = 'home.html';
-        }
-        
-        function navigateToTutorial(page) {
-            window.location.href = page;
-        }
-        
-        // Logout function
-        function logout() {
-            localStorage.clear();
-            sessionStorage.clear();
-            window.location.replace("logout.html");
-        }
-        
-        // Form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Message sent successfully! Our team will contact you soon.');
-            this.reset();
-            closeChat();
-        });
     </script>
 </body>
 </html>
