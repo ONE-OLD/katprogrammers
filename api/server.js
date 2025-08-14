@@ -159,7 +159,8 @@ app.use((req, res, next) => {
 // ---------------- STATIC FILES ----------------
 const publicDir = path.join(__dirname, "../public");
 const privateDir = path.join(__dirname, "../private-views");
-app.use('/private', express.static(path.join(__dirnamePath, 'private-views')));
+app.use('/private', express.static(privateDir));
+
 
 app.use(express.static(publicDir));
 
