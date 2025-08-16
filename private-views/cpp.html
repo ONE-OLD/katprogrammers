@@ -1,1026 +1,614 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAT-PROGRAMMERS Course Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* ===== BASE STYLES ===== */
-        :root {
-            /* Dark Theme (Default) */
-            --bg-primary: #121212;
-            --bg-secondary: #1e1e1e;
-            --bg-surface: #252525;
-            --bg-card: #2d2d2d;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --accent-primary: #bb86fc;
-            --accent-secondary: #03dac6;
-            --error: #cf6679;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --border-radius: 8px;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            --transition: all 0.3s ease;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KAT-PROGRAMMERS Course Platform</title>
+  <link rel="icon" href="./assets/images/image (1).png" />
+  <link rel="stylesheet" href="courses.css">
+  <!-- Font Awesome (deferred for performance) -->
+  <link
+    rel="preload"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </noscript>
 
-        [data-theme="light"] {
-            --bg-primary: #f5f5f5;
-            --bg-secondary: #e0e0e0;
-            --bg-surface: #ffffff;
-            --bg-card: #fafafa;
-            --text-primary: #121212;
-            --text-secondary: #4a4a4a;
-            --accent-primary: #6200ea;
-            --accent-secondary: #018786;
-            --error: #b00020;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            transition: var(--transition);
-        }
-
-        /* ===== SIDEBAR STYLES ===== */
-        .sidebar {
-            width: 250px;
-            background-color: var(--bg-secondary);
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            overflow-y: auto;
-            transition: var(--transition);
-            z-index: 100;
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 1px solid var(--bg-surface);
-        }
-
-        .sidebar-header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .sidebar-header h2 {
-            font-size: 1.2rem;
-            color: var(--text-primary);
-        }
-
-        .sidebar-links {
-            padding: 15px 0;
-        }
-
-        .sidebar-links li {
-            list-style: none;
-            margin-bottom: 5px;
-        }
-
-        .sidebar-links a {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .sidebar-links a:hover,
-        .sidebar-links a.active {
-            background-color: var(--accent-primary);
-            color: var(--bg-primary);
-        }
-
-        .sidebar-links span {
-            margin-right: 15px;
-            font-size: 1.1rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        .sidebar-links p {
-            font-size: 0.9rem;
-        }
-
-        .sidebar-bottom {
-            margin-top: auto;
-            border-top: 1px solid var(--bg-surface);
-            padding-top: 15px;
-        }
-
-        /* ===== CHAT BUTTON STYLES ===== */
-        .cont-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--accent-primary);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            z-index: 100;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .cont-btn:hover {
-            transform: translateY(-3px);
-        }
-
-        .cont-btn img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-left: 5px;
-        }
-
-        .cont-btn img.img1 {
-            margin-left: -15px;
-        }
-
-        /* ===== CHAT CONTAINER STYLES ===== */
-        .chat-container {
-            display: none;
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 350px;
-            background: var(--bg-surface);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            z-index: 100;
-            overflow: hidden;
-        }
-
-        .chat-container span {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-        }
-
-        .chat-container form {
-            padding: 20px;
-        }
-
-        .chat-container h1 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--text-primary);
-        }
-
-        .chat-container .p {
-            margin: 10px 0 5px;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-
-        .chat-container input,
-        .chat-container textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--bg-secondary);
-            border-radius: var(--border-radius);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-
-        .chat-container textarea {
-            height: 100px;
-            resize: vertical;
-        }
-
-        .chat-container button[type="submit"] {
-            background: var(--accent-primary);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            width: 100%;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .chat-container button[type="submit"]:hover {
-            background: var(--accent-secondary);
-        }
-
-        .chat-container .p1 {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .chat-container .con {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 15px;
-            background: var(--bg-secondary);
-        }
-
-        .chat-container .con a {
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .chat-container .con a:hover {
-            color: var(--accent-primary);
-        }
-
-        /* ===== MAIN CONTENT STYLES ===== */
-        .min-h-screen {
-            min-height: 100vh;
-            margin-left: 250px;
-            padding: 20px;
-            transition: var(--transition);
-        }
-
-        /* Header styles */
-        header {
-            border-bottom: 1px solid var(--bg-surface);
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 90;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .flex {
-            display: flex;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .justify-between {
-            justify-content: space-between;
-        }
-
-        .space-x-3 > * + * {
-            margin-left: 12px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 16px;
-            border-radius: var(--border-radius);
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--text-primary);
-            border: none;
-        }
-
-        .btn-ghost:hover {
-            color: var(--accent-primary);
-        }
-
-        .w-8 {
-            width: 32px;
-        }
-
-        .h-8 {
-            height: 32px;
-        }
-
-        .rounded-lg {
-            border-radius: var(--border-radius);
-        }
-
-        .text-lg {
-            font-size: 1.125rem;
-        }
-
-        .text-2xl {
-            font-size: 1.5rem;
-        }
-
-        .font-bold {
-            font-weight: 700;
-        }
-
-        .text-white {
-            color: var(--text-primary);
-        }
-
-        .bg-gradient-to-r {
-            background-image: linear-gradient(to right, var(--tw-gradient-stops));
-        }
-
-        .px-4 {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-
-        .py-2 {
-            padding-top: 8px;
-            padding-bottom: 8px;
-        }
-
-        .rounded-full {
-            border-radius: 9999px;
-        }
-
-        .font-medium {
-            font-weight: 500;
-        }
-
-        /* Course content styles */
-        .py-8 {
-            padding-top: 32px;
-            padding-bottom: 32px;
-        }
-
-        .grid {
-            display: grid;
-        }
-
-        .grid-cols-1 {
-            grid-template-columns: repeat(1, minmax(0, 1fr));
-        }
-
-        .gap-8 {
-            gap: 32px;
-        }
-
-        .lg\:grid-cols-4 {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
-
-        .bg-white\/5 {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .border {
-            border-width: 1px;
-        }
-
-        .border-white\/10 {
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .rounded-xl {
-            border-radius: 12px;
-        }
-
-        .p-6 {
-            padding: 24px;
-        }
-
-        .sticky {
-            position: sticky;
-        }
-
-        .top-8 {
-            top: 32px;
-        }
-
-        .text-xs {
-            font-size: 0.75rem;
-        }
-
-        .ml-8 {
-            margin-left: 32px;
-        }
-
-        .space-y-4 > * + * {
-            margin-top: 16px;
-        }
-
-        .space-y-2 > * + * {
-            margin-top: 8px;
-        }
-
-        .text-gray-400 {
-            color: var(--text-secondary);
-        }
-
-        .hover\:text-white:hover {
-            color: var(--text-primary);
-        }
-
-        .cursor-pointer {
-            cursor: pointer;
-        }
-
-        .transition-colors {
-            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            transition-duration: 150ms;
-        }
-
-        /* Code examples */
-        .space-y-6 > * + * {
-            margin-top: 24px;
-        }
-
-        .mb-4 {
-            margin-bottom: 16px;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--bg-surface);
-            color: var(--text-primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--bg-surface);
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.875rem;
-        }
-
-        .bg-gray-900 {
-            background-color: #111827;
-        }
-
-        .overflow-x-auto {
-            overflow-x: auto;
-        }
-
-        pre {
-            margin: 0;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        code {
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .text-green-400 {
-            color: #34d399;
-        }
-
-        .text-sm {
-            font-size: 0.875rem;
-        }
-
-        /* Next steps */
-        .mt-8 {
-            margin-top: 32px;
-        }
-
-        .mb-2 {
-            margin-bottom: 8px;
-        }
-
-        .flex-col {
-            flex-direction: column;
-        }
-
-        .sm\:flex-row {
-            flex-direction: row;
-        }
-
-        .text-white {
-            color: var(--text-primary);
-        }
-
-        .px-6 {
-            padding-left: 24px;
-            padding-right: 24px;
-        }
-
-        .py-3 {
-            padding-top: 12px;
-            padding-bottom: 12px;
-        }
-
-        .font-semibold {
-            font-weight: 600;
-        }
-
-        .duration-300 {
-            transition-duration: 300ms;
-        }
-
-        /* Language-specific code colors */
-        .text-purple-400 {
-            color: #a78bfa;
-        }
-
-        .text-blue-400 {
-            color: #60a5fa;
-        }
-
-        .text-yellow-300 {
-            color: #fcd34d;
-        }
-
-        /* Copy button styles */
-        .copy-btn {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-primary);
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            transition: var(--transition);
-        }
-
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Theme toggle button */
-        .theme-toggle-container {
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .theme-toggle-label {
-            font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-
-        .theme-toggle {
-            background: var(--bg-surface);
-            border: none;
-            width: 50px;
-            height: 26px;
-            border-radius: 50px;
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            padding: 2px;
-        }
-
-        .theme-toggle::before {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: var(--accent-secondary);
-            transform: translateX(var(--toggle-position, 0));
-            transition: var(--transition);
-        }
-
-        [data-theme="light"] .theme-toggle::before {
-            --toggle-position: 24px;
-        }
-
-        /* ===== RESPONSIVE STYLES ===== */
-        @media (max-width: 1024px) {
-            .lg\:col-span-1 {
-                grid-column: span 1 / span 1;
-            }
-            
-            .lg\:col-span-3 {
-                grid-column: span 3 / span 3;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-            }
-            
-            .sidebar-header h2,
-            .sidebar-links p {
-                display: none;
-            }
-            
-            .sidebar-links a {
-                justify-content: center;
-                padding: 12px 0;
-            }
-            
-            .sidebar-links span {
-                margin-right: 0;
-                font-size: 1.3rem;
-            }
-            
-            .min-h-screen {
-                margin-left: 70px;
-            }
-            
-            .md\:grid-cols-3 {
-                grid-template-columns: repeat(1, minmax(0, 1fr));
-            }
-            
-            .chat-container {
-                width: 90%;
-                right: 5%;
-                bottom: 100px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .cont-btn p {
-                display: none;
-            }
-            
-            .cont-btn {
-                padding: 12px;
-            }
-            
-            header .flex {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .bg-gradient-to-r {
-                margin-top: 10px;
-            }
-        }
-
-        /* ===== UTILITY CLASSES ===== */
-        .mb-6 {
-            margin-bottom: 24px;
-        }
-
-        .text-3xl {
-            font-size: 1.875rem;
-        }
-
-        .text-xl {
-            font-size: 1.25rem;
-        }
-
-        .text-lg {
-            font-size: 1.125rem;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .text-2xl {
-            font-size: 1.5rem;
-        }
-
-        /* Gradient backgrounds */
-        .from-green-500 {
-            --tw-gradient-from: #10b981;
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(16, 185, 129, 0));
-        }
-
-        .to-emerald-500 {
-            --tw-gradient-to: #10b981;
-        }
-
-        .from-orange-500 {
-            --tw-gradient-from: #f97316;
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(249, 115, 22, 0));
-        }
-
-        .to-red-500 {
-            --tw-gradient-to: #ef4444;
-        }
-
-        .from-indigo-500 {
-            --tw-gradient-from: #6366f1;
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(99, 102, 241, 0));
-        }
-
-        .to-purple-500 {
-            --tw-gradient-to: #8b5cf6;
-        }
-
-        .from-blue-500 {
-            --tw-gradient-from: #3b82f6;
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
-        }
-
-        .to-cyan-500 {
-            --tw-gradient-to: #06b6d4;
-        }
-
-        .from-yellow-400 {
-            --tw-gradient-from: #facc15;
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(250, 204, 21, 0));
-        }
-
-        .to-orange-500 {
-            --tw-gradient-to: #f97316;
-        }
-
-        .from-cyan-500 {
-            --tw-gradient-from: #06b6d4;
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(6, 182, 212, 0));
-        }
-
-        .to-blue-500 {
-            --tw-gradient-to: #3b82f6;
-        }
-
-        .hover\:from-indigo-600:hover {
-            --tw-gradient-from: #4f46e5;
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(79, 70, 229, 0));
-        }
-
-        .hover\:to-purple-600:hover {
-            --tw-gradient-to: #7c3aed;
-        }
-    </style>
 </head>
-<body data-theme="dark">
-    <!-- Chat Button -->
-    <div class="cont-btn" id="activechat" onclick="activeChat()">
-        <i class="fa-brands fa-rocketchat fa-bounce"></i> 
-        <p>Get in Touch</p>
-        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
-        <img class="img1" src="https://randomuser.me/api/portraits/men/22.jpg" alt="">
-    </div>
+<body>
+  <!-- Mobile Sidebar Toggle -->
 
-    <!-- Chat Container -->
-    <div class="chat-container" id="chat-container">
-        <span onclick="closeChat()"><i class="fa-regular fa-circle-xmark"></i></span>
-        <form action="" id="contact-form">
-            <h1>Get In Touch</h1>
-            <div id="popup" class="popup"></div>
-            <p class="p">Names *</p>
-            <input type="text" name="name" placeholder="Full names" required><br>
-            <p class="p">E-mail *</p>
-            <input type="email" name="email" placeholder="E-mail" required> 
-            <p class="p">Subject *</p>
-            <input type="text" name="subject" placeholder="Subject" required><br>
-            <p class="p">Message *</p>
-            <textarea name="message" id="message" placeholder="Text a message..." required></textarea> 
-            <button type="submit">Send</button>
-            <p class="p1">* Feedback will get to you in less than 24hrs!</p>
-        </form>
-        <div class="con">
-            <p><a href="tel:+250792575986"><i class="fa-solid fa-phone"></i></a></p>
-            <p><a href="mailto:katprogrammers@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a></p>
-            <p><a href="https://www.instagram.com/kat_programmers" target="_blank"><i class="fa-brands fa-instagram"></i></a></p>
-        </div>
-    </div>
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
+  <div class="shell">
     <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="https://via.placeholder.com/40" alt="KAT-PROGRAMMERS Logo">
-            <h2>KAT-PROGRAMMERS</h2>
+    <aside class="sidebar sidebar--offcanvas" id="sidebar" aria-label="Primary">
+      <div class="sidebar__hdr">
+        <img src="./assets/images/image (1).png" alt="KAT-PROGRAMMERS logo" />
+        <div class="sidebar__title">KAT-PROGRAMMERS</div>
+      </div>
+      
+      <nav class="sidebar__nav" role="navigation">
+        <div class="nav__group" aria-label="Main links">
+          <a class="nav__link" href="/dashboard"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+          <a class="nav__link" href="/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
+          <a class="nav__link" href="/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
+          <a class="nav__link" href="/certificate" aria-current="page"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
+          <a class="nav__link" href="/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
         </div>
-        <ul class="sidebar-links">
-            <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
-            <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
-            <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
-            <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
-            <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
-            <div class="sidebar-bottom">
-                <li><a href="about.html"><span><i class="fa-solid fa-circle-user"></i></span><p>About</p></a></li>
-                <li><a onclick="logout()"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></a></li>
-            </div>
-        </ul>
-        <div class="theme-toggle-container">
-            <span class="theme-toggle-label">Theme</span>
-            <button class="theme-toggle" id="themeToggle"></button>
+        <!-- Add this inside your sidebar, just before the footer section -->
+<div class="user-info" style="padding: 16px; border-top: 1px solid var(--bg-surface);">
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center;">
+      <i class="fa-solid fa-user" style="color: white;"></i>
+    </div>
+    <div>
+      <div style="font-size: 0.85rem; color: var(--text-secondary);">Logged in as:</div>
+      <div id="userEmail" style="font-weight: 600; font-size: 0.9rem;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Add this script to fetch and display the user email
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const response = await fetch('/api/me', {
+      credentials: 'include' // Include cookies for auth
+    });
+    
+    if (response.ok) {
+      const user = await response.json();
+      document.getElementById('userEmail').textContent = user.email;
+    } else {
+      // If not logged in, hide the user info section
+      document.querySelector('.user-info').style.display = 'none';
+    }
+  } catch (error) {
+    console.error('Failed to fetch user info:', error);
+    document.querySelector('.user-info').style.display = 'none';
+  }
+});
+</script>
+        <div class="sidebar__footer">
+          <a class="nav__link" href="/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
+          <button class="nav__link" id="logoutBtn" style="width:100%; background:none; border:0; text-align:left;">
+  <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+  <span>Log Out</span>
+</button>
         </div>
+        
+        <div class="theme-toggle-row" aria-live="polite">
+          <span>Theme</span>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" aria-pressed="false"></button>
+        </div>
+      </nav>
     </aside>
 
-    <!-- Main Content -->
-    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <!-- Header -->
-        <header class="border-b border-white/10 backdrop-blur-md bg-white/5">
-            <div class="container mx-auto px-4 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <button class="btn btn-ghost" onclick="navigateToHome()">
-                            ← Back to Home
-                        </button>
-                        <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center text-lg">
-                            ⚙️
-                        </div>
-                        <h1 class="text-2xl font-bold text-white">Course Title</h1>
-                    </div>
-                    <div class="bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-2 rounded-full">
-                        <span class="text-white font-medium">Advanced Level</span>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <div>
+      <!-- Header -->
+      <header class="site-hdr">
+        <div class="site-hdr__inner">
+          
+          <div>
+              <button class="sidebar-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" id="sidebarToggle">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <!-- Sidebar -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 sticky top-8">
-                        <h3 class="text-white text-lg font-bold mb-4">Course Contents</h3>
-                        <div class="space-y-4">
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-xs text-white font-bold">1</div>
-                                    <h4 class="text-white font-medium text-sm">Section Title</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Lesson 1</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Lesson 2</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Lesson 3</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Lesson 4</li>
-                                </ul>
-                            </div>
-                            <!-- Additional sections here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Content -->
-                <div class="lg:col-span-3">
-                    <!-- Introduction -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 mb-8">
-                        <h2 class="text-white text-3xl font-bold mb-4">Learn Programming Language</h2>
-                        <p class="text-gray-300 text-lg mb-6">
-                            Comprehensive course description explaining what the course covers and who it's for.
-                        </p>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2"><i class="fa-solid fa-book"></i></div>
-                                <div class="text-white font-semibold">30 Lessons</div>
-                                <div class="text-gray-400 text-sm">Comprehensive curriculum</div>
-                            </div>
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2">⚙️</div>
-                                <div class="text-white font-semibold">System Level</div>
-                                <div class="text-gray-400 text-sm">Low-level programming</div>
-                            </div>
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2">🚀</div>
-                                <div class="text-white font-semibold">Performance</div>
-                                <div class="text-gray-400 text-sm">High-speed applications</div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-white text-xl mb-4">What You'll Learn:</h3>
-                            <ul class="text-gray-300 space-y-2">
-                                <li>• Syntax and fundamental concepts</li>
-                                <li>• Core programming principles</li>
-                                <li>• Memory management</li>
-                                <li>• Advanced features</li>
-                                <li>• Best practices for optimization</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Code Examples -->
-                    <div class="space-y-6">
-                        <!-- Example 1 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">Hello World Program</h3>
-                                <button class="btn btn-outline btn-sm copy-btn">
-                                    <i class="fa-regular fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Your first program</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-green-400 text-sm">#include &lt;iostream&gt;
-using namespace std;
-
-int main() {
-    cout &lt;&lt; "Hello, World!" &lt;&lt; endl;
-    return 0;
-}</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Additional code examples here -->
-                    </div>
-
-                    <!-- Next Steps -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 mt-8">
-                        <h3 class="text-white text-xl font-bold mb-2">Continue Learning</h3>
-                        <p class="text-gray-300 mb-4">
-                            Explore other languages to expand your programming skills!
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button class="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
-                                Next: Learn Python →
-                            </button>
-                            <button class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
-                                Learn MySQL →
-                            </button>
-                            <button class="btn btn-outline">
-                                Back to All Courses
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h1 style="margin:.4rem 0 0; font-size:1.6rem; font-weight:800; margin-left: 60px;">Course: C++ Fundamentals</h1>
+          </div>
+          <div class="badge">Advanced Level</div>
         </div>
-    </div>
+      </header>
 
-    <script>
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'dark';
-        
-        document.body.setAttribute('data-theme', currentTheme);
-        
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        });
-        
-        // Chat functionality
-        function activeChat() {
-            document.getElementById("chat-container").style.display = "block";
+      <!-- Main Content -->
+      <main>
+        <div class="grid grid-4">
+          <!-- Course Contents (Accordion) -->
+          <section class="card" aria-labelledby="contentsTitle" style="position:sticky; top:90px; height:fit-content;">
+            <h2 id="contentsTitle" style="margin-bottom:10px;">Course Contents</h2>
+            <div class="accordion" id="accordion">
+              <!-- Item 1 -->
+              <details class="acc__item" open>
+                <summary class="acc__btn"><span class="num">1</span> Getting Started</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li>Introduction</li>
+                      <li>Environment Setup</li>
+                      <li>Hello World</li>
+                      <li>Basic I/O</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <!-- Item 2 -->
+              <details class="acc__item">
+                <summary class="acc__btn"><span class="num">2</span> Core Concepts</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li><button class="link-lessons" data-target="variables">Variables & Types</button></li>
+                      <li><button class="link-lessons" data-target="control">Control Flow</button></li>
+                      <li><button class="link-lessons" data-target="functions">Functions</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <!-- Detail pane -->
+          <section>
+            <!-- Intro card -->
+            <article class="card" id="lesson-intro">
+              <h2 class="h">Learn C++ the Right Way</h2>
+              <p class="t">This comprehensive course takes you from your first program to writing efficient, modern C++ with confidence.</p>
+              <div class="stats" aria-label="Course stats">
+                <div class="stat"><div class="ico"><i class="fa-solid fa-book"></i></div><div><strong>30 Lessons</strong><div class="muted">Comprehensive curriculum</div></div></div>
+                <div class="stat"><div class="ico">⚙️</div><div><strong>System Level</strong><div class="muted">Low-level programming</div></div></div>
+                <div class="stat"><div class="ico">🚀</div><div><strong>Performance</strong><div class="muted">High-speed apps</div></div></div>
+              </div>
+              <h3 style="margin-top:14px;">What You'll Learn</h3>
+              <ul class="t">
+                <li>Syntax and fundamental concepts</li>
+                <li>Core programming principles</li>
+                <li>Memory management</li>
+                <li>Advanced features</li>
+                <li>Optimization best practices</li>
+              </ul>
+            </article>
+
+            <!-- Code example card -->
+            <article class="card" id="lesson-hello">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Hello World Program</h3>
+                <button class="copy-btn" data-copy="#code-hello"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Your first C++ program.</p>
+              <div class="code" id="code-hello" aria-label="Hello world code">
+<pre><code><span class="kw">#include</span> &lt;iostream&gt;
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    cout &lt;&lt; <span class="sym">"Hello, World!"</span> &lt;&lt; endl;
+    <span class="kw">return</span> 0;
+}
+</code></pre>
+              </div>
+            </article>
+            <!-- Replace the existing code example card with this enhanced version -->
+<article class="card" id="lesson-hello">
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <h3>Hello World Program</h3>
+    <button class="copy-btn" data-copy="#code-hello"><i class="fa-regular fa-copy"></i> Copy</button>
+  </div>
+  <p class="t">Your first C++ program.</p>
+  <div class="code" id="code-hello" aria-label="Hello world code">
+<pre><code><span class="kw">#include</span> &lt;iostream&gt;
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    cout &lt;&lt; <span class="sym">"Hello, World!"</span> &lt;&lt; endl;
+    <span class="kw">return</span> 0;
+}</code></pre>
+  </div>
+</article>
+
+<!-- Add these additional code example cards -->
+<article class="card">
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <h3>Variables and Data Types</h3>
+    <button class="copy-btn" data-copy="#code-variables"><i class="fa-regular fa-copy"></i> Copy</button>
+  </div>
+  <p class="t">Basic variable declarations in C++.</p>
+  <div class="code" id="code-variables">
+<pre><code><span class="kw">#include</span> &lt;iostream&gt;
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="kw">// Integer types</span>
+    <span class="kw">int</span> age = 25;
+    <span class="kw">long</span> bigNumber = 123456789L;
+    
+    <span class="kw">// Floating point</span>
+    <span class="kw">float</span> price = 19.99f;
+    <span class="kw">double</span> pi = 3.1415926535;
+    
+    <span class="kw">// Character</span>
+    <span class="kw">char</span> grade = 'A';
+    
+    <span class="kw">// Boolean</span>
+    <span class="kw">bool</span> isCppFun = true;
+    
+    <span class="kw">// String</span>
+    string name = "Alice";
+    
+    cout &lt;&lt; <span class="sym">"Name: "</span> &lt;&lt; name &lt;&lt; endl;
+    <span class="kw">return</span> 0;
+}</code></pre>
+  </div>
+</article>
+
+<article class="card">
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <h3>Control Structures</h3>
+    <button class="copy-btn" data-copy="#code-control"><i class="fa-regular fa-copy"></i> Copy</button>
+  </div>
+  <p class="t">Conditionals and loops in C++.</p>
+  <div class="code" id="code-control">
+<pre><code><span class="kw">#include</span> &lt;iostream&gt;
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="kw">// If-else statement</span>
+    <span class="kw">int</span> x = 10;
+    <span class="kw">if</span> (x > 5) {
+        cout &lt;&lt; <span class="sym">"x is greater than 5"</span> &lt;&lt; endl;
+    } <span class="kw">else</span> {
+        cout &lt;&lt; <span class="sym">"x is 5 or less"</span> &lt;&lt; endl;
+    }
+    
+    <span class="kw">// For loop</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; 5; i++) {
+        cout &lt;&lt; <span class="sym">"Iteration "</span> &lt;&lt; i &lt;&lt; endl;
+    }
+    
+    <span class="kw">// While loop</span>
+    <span class="kw">int</span> count = 3;
+    <span class="kw">while</span> (count > 0) {
+        cout &lt;&lt; count &lt;&lt; endl;
+        count--;
+    }
+    
+    <span class="kw">return</span> 0;
+}</code></pre>
+  </div>
+</article>
+
+<article class="card">
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <h3>Functions</h3>
+    <button class="copy-btn" data-copy="#code-functions"><i class="fa-regular fa-copy"></i> Copy</button>
+  </div>
+  <p class="t">Creating and using functions in C++.</p>
+  <div class="code" id="code-functions">
+<pre><code><span class="kw">#include</span> &lt;iostream&gt;
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="kw">// Function declaration</span>
+<span class="kw">int</span> <span class="fn">addNumbers</span>(<span class="kw">int</span> a, <span class="kw">int</span> b);
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="kw">int</span> num1 = 5, num2 = 7;
+    <span class="kw">int</span> sum = addNumbers(num1, num2);
+    
+    cout &lt;&lt; <span class="sym">"Sum: "</span> &lt;&lt; sum &lt;&lt; endl;
+    <span class="kw">return</span> 0;
+}
+
+<span class="kw">// Function definition</span>
+<span class="kw">int</span> <span class="fn">addNumbers</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+    <span class="kw">return</span> a + b;
+}</code></pre>
+  </div>
+</article>
+
+<article class="card">
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <h3>Classes and Objects</h3>
+    <button class="copy-btn" data-copy="#code-classes"><i class="fa-regular fa-copy"></i> Copy</button>
+  </div>
+  <p class="t">Basic OOP in C++.</p>
+  <div class="code" id="code-classes">
+<pre><code><span class="kw">#include</span> &lt;iostream&gt;
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="kw">class</span> <span class="fn">Rectangle</span> {
+  <span class="kw">private</span>:
+    <span class="kw">int</span> width, height;
+  
+  <span class="kw">public</span>:
+    <span class="fn">Rectangle</span>(<span class="kw">int</span> w, <span class="kw">int</span> h) {
+        width = w;
+        height = h;
+    }
+    
+    <span class="kw">int</span> <span class="fn">area</span>() {
+        <span class="kw">return</span> width * height;
+    }
+};
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    Rectangle rect(3, 4);
+    cout &lt;&lt; <span class="sym">"Area: "</span> &lt;&lt; rect.area() &lt;&lt; endl;
+    <span class="kw">return</span> 0;
+}</code></pre>
+  </div>
+</article>
+
+            <!-- Next Steps card -->
+            <article class="card">
+              <h3>Continue Learning</h3>
+              <p class="t">Explore other languages to expand your programming skills!</p>
+              <div class="cta-row">
+                <button class="btn btn--gradient" id="goPython">Next: Learn Python →</button>
+                <button class="btn btn--gradient alt" id="goMySQL">Learn MySQL →</button>
+                <a class="btn" href="#" id="backAll">Back to All Courses</a>
+              </div>
+            </article>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Chat Floating Button -->
+  <button class="chat-fab" id="chatFab" aria-controls="chatBox" aria-expanded="false">
+    <i class="fa-brands fa-rocketchat"></i>
+    <span class="hide-sm">Get in Touch</span>
+    <img src="https://i.ibb.co/zT8pQBLR/arsene.jpg" alt="agent" />
+    <img src="https://i.ibb.co/WN6342yF/donald.jpg" alt="agent" />
+  </button>
+
+  <!-- Chat Modal -->
+  <section class="chat" id="chatBox" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <div class="chat__top">
+      <h2 id="chatTitle" style="margin:0; font-size:1rem;">Get In Touch</h2>
+      <button id="chatClose" aria-label="Close chat" class="btn" style="padding:8px 10px;">
+        <i class="fa-regular fa-circle-xmark"></i>
+      </button>
+    </div>
+    <form class="chat__body" id="contactForm">
+      <div id="formNote" class="sr-only" aria-live="polite"></div>
+      <div class="field">
+        <label for="name">Names *</label>
+        <input class="input" id="name" name="name" type="text" placeholder="Full names" required />
+      </div>
+      <div class="field">
+        <label for="email">E-mail *</label>
+        <input class="input" id="email" name="email" type="email" placeholder="E-mail" required />
+      </div>
+      <div class="field">
+        <label for="subject">Subject *</label>
+        <input class="input" id="subject" name="subject" type="text" placeholder="Subject" required />
+      </div>
+      <div class="field">
+        <label for="message">Message *</label>
+        <textarea class="textarea" id="message" name="message" placeholder="Text a message..." required></textarea>
+      </div>
+      <button class="submit" type="submit">Send</button>
+      <p class="help">* Feedback will get to you in less than 24hrs!</p>
+    </form>
+    <div class="chat__actions">
+      <a href="tel:+250792575986" title="Call"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:katprogrammers@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.instagram.com/kat_programmers" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </section>
+
+<!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section contact-form">
+        <h2 class="footer-title">Contact Us</h2>
+        <form class="contact-form-inner" id="footerContactForm">
+          <div class="form-group">
+            <label for="footerName">Name</label>
+            <input type="text" id="footerName" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="footerEmail">Email</label>
+            <input type="email" id="footerEmail" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="footerMessage">Message</label>
+            <textarea id="footerMessage" name="message" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Send</button>
+        </form>
+      </div>
+      
+      <div class="footer-section social-media">
+        <h2 class="footer-title">Follow Us</h2>
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/kat_programmers/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="qr">
+          <a href="https://katprogrammers.vercel.app" target="_blank" title="Open kat-programmers on Mobile">
+            <img src="https://i.ibb.co/BKPTj83C/qrcode.png" alt="Kat Programmers QR Code">
+            <p style="margin-top: 10px; font-size: 0.85rem;">Scan to open on mobile</p>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-section map">
+        <h2 class="footer-title">Our Location</h2>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019019858232!2d-122.4194154846817!3d37.77492977975959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c2f8e6e2b%3A0x4a0b8e6e2b8e6e2b!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1628888888888!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Kat-Programmers. All rights reserved.</p>
+      <p style="margin-top: 10px; font-size: 0.8rem;">
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Privacy Policy</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Terms of Service</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Contact Support</a>
+      </p>
+    </div>
+  </footer>
+  <script>
+    // ===== THEME =====
+    (function initTheme() {
+      try {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('themeToggle');
+        if (btn) btn.setAttribute('aria-pressed', theme === 'light');
+      } catch (e) {}
+    })();
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const root = document.documentElement;
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('themeToggle').setAttribute('aria-pressed', next === 'light');
+    });
+
+    // ===== SIDEBAR (mobile off-canvas) =====
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('backdrop');
+
+    function openSidebar() {
+      sidebar.classList.add('sidebar--active');
+      backdrop.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('sidebar--active');
+      backdrop.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+    sidebarToggle.addEventListener('click', () => {
+      const isOpen = sidebar.classList.contains('sidebar--active');
+      isOpen ? closeSidebar() : openSidebar();
+    });
+    backdrop.addEventListener('click', closeSidebar);
+
+    // Close sidebar on wide screens
+    const mq = window.matchMedia('(min-width: 841px)');
+    mq.addEventListener('change', e => { if (e.matches) closeSidebar(); });
+
+// ===== ENHANCED LOGOUT FOR VERCEL =====
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  try {
+    // Show loading state
+    const btn = document.getElementById('logoutBtn');
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+    btn.disabled = true;
+
+    // Call Vercel serverless endpoint
+    const response = await fetch('/api/sessionLogout', {
+      method: 'POST',
+      credentials: 'include', // Essential for cookies in Vercel
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      // Clear all client-side storage
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Redirect to login page with cache-busting
+      window.location.href = `/login?t=${Date.now()}`;
+    } else {
+      const error = await response.json();
+      console.error('Logout failed:', error);
+      alert('Logout failed. Please try again.');
+    }
+  } catch (error) {
+    console.error('Logout error:', error);
+    alert('Network error during logout. Please check your connection.');
+  } finally {
+    // Reset button state in case of failure
+    const btn = document.getElementById('logoutBtn');
+    if (btn) {
+      btn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span><span>Log Out</span>';
+      btn.disabled = false;
+    }
+  }
+});
+    // ===== COPY BUTTONS =====
+    function copyFrom(selector, btn) {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      const text = el.innerText.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = original; }, 1600);
+      }).catch(() => {
+        alert('Copy failed.');
+      });
+    }
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => copyFrom(btn.getAttribute('data-copy'), btn));
+    });
+
+    // ===== CHAT =====
+    const chatFab = document.getElementById('chatFab');
+    const chatBox = document.getElementById('chatBox');
+    const chatClose = document.getElementById('chatClose');
+
+    function openChat() { chatBox.classList.add('active'); chatFab.setAttribute('aria-expanded', 'true'); }
+    function closeChat() { chatBox.classList.remove('active'); chatFab.setAttribute('aria-expanded', 'false'); }
+
+    chatFab.addEventListener('click', () => {
+      if (chatBox.classList.contains('active')) closeChat(); else openChat();
+    });
+    chatClose.addEventListener('click', closeChat);
+
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Here you could POST to your backend / form service
+      alert('Message sent successfully! Our team will contact you soon.');
+      e.target.reset();
+      closeChat();
+    });
+
+    // ===== LESSON NAV (example hooks) =====
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.target;
+        if (target === 'hello') {
+          document.getElementById('lesson-hello').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          document.getElementById('lesson-intro').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-        
-        function closeChat() {
-            document.getElementById("chat-container").style.display = "none";
+      });
+    });
+    // Close sidebar when clicking navigation links
+    document.querySelectorAll('.nav__link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
         }
-        
-        // Navigation functions
-        function navigateToHome() {
-            window.location.href = 'home.html';
+      });
+    });
+    
+    // Close sidebar when clicking inside the accordion
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
         }
-        
-        function navigateToTutorial(page) {
-            window.location.href = page;
-        }
-        
-        // Logout function
-        function logout() {
-            localStorage.clear();
-            sessionStorage.clear();
-            window.location.replace("logout.html");
-        }
-        
-        // Copy button functionality
-        document.querySelectorAll('.copy-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const codeBlock = this.closest('.rounded-xl').querySelector('code');
-                const codeText = codeBlock.innerText;
-                
-                navigator.clipboard.writeText(codeText).then(() => {
-                    const originalText = this.innerHTML;
-                    this.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                    
-                    setTimeout(() => {
-                        this.innerHTML = originalText;
-                    }, 2000);
-                });
-            });
-        });
-        
-        // Form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Message sent successfully! Our team will contact you soon.');
-            this.reset();
-            closeChat();
-        });
-    </script>
+      });
+    });
+
+    // ===== CTA buttons (example navigation) =====
+    document.getElementById('goPython').addEventListener('click', () => window.location.href = 'python-course.html');
+    document.getElementById('goMySQL').addEventListener('click', () => window.location.href = 'mysql-course.html');
+    document.getElementById('backAll').addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'courses.html'; });
+  </script>
 </body>
 </html>
