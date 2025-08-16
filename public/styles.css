@@ -613,19 +613,25 @@ input:focus {
 }
 
 .free-ribbon {
-  background: linear-gradient(90deg, #ff7ab6, #ffb86b);
-  color: #111;
+  background: linear-gradient(60deg, #00ff2a, #00d9ff);
+  color: transparent;
   padding: 0.5rem 0.75rem;
   border-radius: 999px;
   font-weight: 800;
-  box-shadow: 0 6px 20px rgba(255,138,128,0.08);
+  width: 30%;
+  text-align: center;
   animation: pulse 2.5s infinite ease-in-out;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  -webkit-background-clip: text;
+
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); box-shadow: 0 6px 20px rgba(255,138,128,0.08); }
-  50% { transform: scale(1.03); box-shadow: 0 12px 30px rgba(255,138,128,0.12); }
-  100% { transform: scale(1); box-shadow: 0 6px 20px rgba(255,138,128,0.08); }
+  0% { transform: scale(1.05);}
+  50% { transform: scale(1.2);}
+  100% { transform: scale(1.05);}
 }
 
 .counters {
