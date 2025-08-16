@@ -1,429 +1,656 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Tutorial - KAT-PROGRAMMERS</title>
-    <link rel="stylesheet" href="courses.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="icon" href="logo.png">
-    <script>
-        function logout() {
-      // Clear session or authentication data (e.g., localStorage, cookies)
-      localStorage.clear();
-      sessionStorage.clear();
-      
-      // Redirect to login page
-      window.location.replace("logout.html");
-    }
-        function activeChat() {
-        document.getElementById("chat-container").style.display = "block";
-    }
-    function closeChat() {
-        document.getElementById("chat-container").style.display = "none";
-    }
-    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KAT-PROGRAMMERS Course Platform | HTML</title>
+  <link rel="icon" href="./assets/images/image (1).png" />
+  <link rel="stylesheet" href="courses.css">
+  <!-- Font Awesome (deferred for performance) -->
+  <link
+    rel="preload"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </noscript>
 
-    </script>
 </head>
 <body>
-    <div class="cont-btn" id="activechat" onclick="activeChat()"><i class="fa-brands fa-rocketchat fa-bounce"></i> <p>Get in Touch</p><img src="images/founder/arsene.jpg" alt=""><img class="img1" src="images/founder/donald.JPEG" alt=""></div>
-    <div class="chat-container" id="chat-container">
-        <span onclick="closeChat()"><i class="fa-regular fa-circle-xmark"></i></span>
-        <form action="" id="contact-form">
-            <h1>Get In Touch</h1>
-            <div id="popup" class="popup"></div>
-            <p class="p">Names *</p>
-            <input type="text" name="name" placeholder="Full names" required><br>
-            <p class="p">E-mail *</p>
-            <input type="email" name="email" placeholder="E-mail" required> 
-            <p class="p">Subject *</p>
-            <input type="text" name="subject" placeholder="Subject" required><br>
-            <p class="p">Message *</p>
-            <textarea name="message" id="message" placeholder="Text a message..." required></textarea> 
-            <button type="submit">Send</button>
-            <p class="p1">* Feedback will get to you in less than 24hrs!</p>
-        </form>
-        <div class="con">
-            <p><a href="tel:+250792575986"><i class="fa-solid fa-phone"></i></a></p>
-            <p><a href="mailto:katprogrammers@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a></p>
-            <p><a href="https://www.instagram.com/kat_programmers" target="_blank""><i class="fa-brands fa-instagram"></i></a></p>
-        </div>
-    </div>
+  <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" id="sidebarToggle">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="logo.png" alt="KAT-PROGRAMMERS Logo">
-            <h2>KAT-PROGRAMMERS</h2>
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
+  <div class="shell">
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar--offcanvas" id="sidebar" aria-label="Primary">
+      <div class="sidebar__hdr">
+        <img src="./assets/images/image (1).png" alt="KAT-PROGRAMMERS logo" />
+        <div class="sidebar__title">KAT-PROGRAMMERS</div>
+      </div>
+      
+      <nav class="sidebar__nav" role="navigation">
+        <div class="nav__group" aria-label="Main links">
+          <a class="nav__link" href="/dashboard"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+          <a class="nav__link" href="/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
+          <a class="nav__link" href="/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
+          <a class="nav__link" href="/certificate" aria-current="page"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
+          <a class="nav__link" href="/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
         </div>
-        <ul class="sidebar-links">
-            <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
-            <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
-            <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
-            <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
-            <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
-            <div class="sidebar-bottom">
-                <li><a href="about.html"><span><i class="fa-solid fa-circle-user"></i></span><p>About</p></a></li>
-                <li><a onclick="logout()"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></a></li>
+
+        <div class="user-info" style="padding: 16px; border-top: 1px solid var(--bg-surface);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center;">
+              <i class="fa-solid fa-user" style="color: white;"></i>
             </div>
-            <div class="theme-toggle-container">
-            
-            <button class="theme-toggle" id="themeToggle"></button>
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">Logged in as:</div>
+              <div id="userEmail" style="font-weight: 600; font-size: 0.9rem;"></div>
+            </div>
+          </div>
         </div>
-        </ul>
+
+        <div class="sidebar__footer">
+          <a class="nav__link" href="/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
+          <button class="nav__link" id="logoutBtn" style="width:100%; background:none; border:0; text-align:left;">
+            <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span>Log Out</span>
+          </button>
+        </div>
+        
+        <div class="theme-toggle-row" aria-live="polite">
+          <span>Theme</span>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" aria-pressed="false"></button>
+        </div>
+      </nav>
     </aside>
 
-    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <!-- Header -->
-        <header class="border-b border-white/10 backdrop-blur-md bg-white/5">
-            <div class="container mx-auto px-4 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <button class="btn btn-ghost" onclick="navigateToHome()">
-                            ← Back to Home
-                        </button>
-                        <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center text-lg">
-                            <i class="fa-brands fa-html5"></i>
-                        </div>
-                        <h1 class="text-2xl font-bold text-white">HTML Tutorial</h1>
-                    </div>
-                    <div class="bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 rounded-full">
-                        <span class="text-white font-medium">Beginner Friendly</span>
-                    </div>
+    <div>
+      <!-- Header -->
+      <header class="site-hdr">
+        <div class="site-hdr__inner">
+          <div>
+            <h1 style="margin:.4rem 0 0; font-size:1.6rem; font-weight:800; margin-left: 60px;">Course: HTML Fundamentals</h1>
+          </div>
+          <div class="badge">Beginner Level</div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main>
+        <div class="grid grid-4">
+          <!-- Course Contents (Accordion) -->
+          <section class="card" aria-labelledby="contentsTitle" style="position:sticky; top:90px; height:fit-content;">
+            <h2 id="contentsTitle" style="margin-bottom:10px;">Course Contents</h2>
+            <div class="accordion" id="accordion">
+              <!-- Item 1 -->
+              <details class="acc__item" open>
+                <summary class="acc__btn"><span class="num">1</span> Getting Started</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li>Introduction</li>
+                      <li>Environment Setup</li>
+                      <li>Basic Structure</li>
+                      <li>HTML Elements</li>
+                    </ul>
+                  </div>
                 </div>
+              </details>
+              <!-- Item 2 -->
+              <details class="acc__item">
+                <summary class="acc__btn"><span class="num">2</span> Core Concepts</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li><button class="link-lessons" data-target="forms">Forms & Inputs</button></li>
+                      <li><button class="link-lessons" data-target="semantic">Semantic HTML</button></li>
+                      <li><button class="link-lessons" data-target="multimedia">Multimedia</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <!-- Item 3 -->
+              <details class="acc__item">
+                <summary class="acc__btn"><span class="num">3</span> Advanced Topics</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li><button class="link-lessons" data-target="accessibility">Accessibility</button></li>
+                      <li><button class="link-lessons" data-target="seo">SEO Basics</button></li>
+                      <li><button class="link-lessons" data-target="tables">Tables</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
             </div>
-        </header>
+          </section>
 
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <!-- Sidebar -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 sticky top-8">
-                        <h3 class="text-white text-lg font-bold mb-4">Course Contents</h3>
-                        <div class="space-y-4">
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">1</div>
-                                    <h4 class="text-white font-medium text-sm">Introduction to HTML</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">What is HTML?</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">HTML Structure</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">HTML Tags</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Attributes</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">2</div>
-                                    <h4 class="text-white font-medium text-sm">Basic HTML Elements</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Headings</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Paragraphs</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Links</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Images</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Lists</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">3</div>
-                                    <h4 class="text-white font-medium text-sm">HTML Forms</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Form Elements</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Input Types</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Form Validation</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Buttons</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">4</div>
-                                    <h4 class="text-white font-medium text-sm">HTML5 Features</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Semantic Elements</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Audio/Video</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Canvas</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Local Storage</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <!-- Detail pane -->
+          <section>
+            <!-- Intro card -->
+            <article class="card" id="lesson-intro">
+              <h2 class="h">Learn HTML the Right Way</h2>
+              <p class="t">This comprehensive course takes you from your first webpage to building complete, semantic websites with confidence.</p>
+              <div class="stats" aria-label="Course stats">
+                <div class="stat"><div class="ico"><i class="fa-solid fa-book"></i></div><div><strong>25 Lessons</strong><div class="muted">Comprehensive curriculum</div></div></div>
+                <div class="stat"><div class="ico">🌐</div><div><strong>Web Foundation</strong><div class="muted">Core web technology</div></div></div>
+                <div class="stat"><div class="ico">🚀</div><div><strong>Essential Skills</strong><div class="muted">Every developer needs</div></div></div>
+              </div>
+              <h3 style="margin-top:14px;">What You'll Learn</h3>
+              <ul class="t">
+                <li>HTML syntax and document structure</li>
+                <li>All essential HTML elements</li>
+                <li>Forms and user input handling</li>
+                <li>Semantic HTML5 elements</li>
+                <li>Accessibility best practices</li>
+              </ul>
+            </article>
 
-                <!-- Main Content -->
-                <div class="lg:col-span-3">
-                    <!-- Introduction -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 mb-8">
-                        <h2 class="text-white text-3xl font-bold mb-4">Learn HTML - HyperText Markup Language</h2>
-                        <p class="text-gray-300 text-lg mb-6">
-                            HTML is the standard markup language for creating web pages. It describes the structure of a web page using markup tags.
-                        </p>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2"><i class="fa-solid fa-book"></i></div>
-                                <div class="text-white font-semibold">15 Lessons</div>
-                                <div class="text-gray-400 text-sm">Comprehensive curriculum</div>
-                            </div>
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2"><i class="fa-solid fa-laptop-code"></i></div>
-                                <div class="text-white font-semibold">Hands-on</div>
-                                <div class="text-gray-400 text-sm">Practice with examples</div>
-                            </div>
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2"><i class="fa-solid fa-check fa-bounce" style="color: #63E6BE;"></i></div>
-                                <div class="text-white font-semibold">Certificate</div>
-                                <div class="text-gray-400 text-sm">Upon completion</div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-white text-xl mb-4">What You'll Learn:</h3>
-                            <ul class="text-gray-300 space-y-2">
-                                <li>• HTML document structure and syntax</li>
-                                <li>• Essential HTML elements and attributes</li>
-                                <li>• Creating forms and interactive elements</li>
-                                <li>• HTML5 semantic elements and features</li>
-                                <li>• Best practices for web accessibility</li>
-                                <li>• Integration with CSS and JavaScript</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Code Examples -->
-                    <div class="space-y-6">
-                        <!-- Example 1 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">Basic Html Structure</h3>
-                                
-                                <button type="button"  class="btn btn-outline btn-sm copy-btn" hidden
-                                    data-code="<!DOCTYPE html>
-<html lang=&quot;en&quot;>
-<head>
-    <meta charset=&quot;UTF-8&quot;>
-    <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
-    <title>My First HTML Page</title>
-</head>
-<body>
-    <h1>Welcome to HTML!</h1>
-    <p>This is my first HTML page.</p>
-</body>
-</html> "
-                                    data-title="Basic Html Structure">
-                                    <i class="fa-regular fa-clipboard"></i> copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">The fundamental structure of an HTML document</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-green-400 text-sm">&lt;!DOCTYPE html&gt;
+            <!-- Code example cards -->
+            <article class="card" id="lesson-structure">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Basic HTML Structure</h3>
+                <button class="copy-btn" data-copy="#code-structure"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">The foundation of every HTML document.</p>
+              <div class="code" id="code-structure">
+<pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;My First HTML Page&lt;/title&gt;
+    &lt;title&gt;Document Title&lt;/title&gt;
+    &lt;meta name="description" content="Page description"&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;Welcome to HTML!&lt;/h1&gt;
-    &lt;p&gt;This is my first HTML page.&lt;/p&gt;
+    &lt;h1&gt;Main Heading&lt;/h1&gt;
+    &lt;p&gt;This is a paragraph of text.&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li&gt;List item 1&lt;/li&gt;
+        &lt;li&gt;List item 2&lt;/li&gt;
+    &lt;/ul&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-                            </div>
-                        </div>
+              </div>
+            </article>
 
-                        <!-- Example 2 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">HTML Elements and Tags</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="<h1>Main Heading</h1>
-<h2>Subheading</h2>
-<p>This is a paragraph with <strong>bold text</strong> and <em>italic text</em>.</p>
-<a href=&quot;https://example.com&quot;>This is a link</a>
-<img src=&quot;image.jpg&quot; alt=&quot;Description of image&quot;>"
-                                    data-title="HTML Elements and Tags">
-                                    <i class="fa-regular fa-clipboard"></i> copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Common HTML elements for content structure</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-green-400 text-sm">&lt;h1&gt;Main Heading&lt;/h1&gt;
+            <article class="card" id="lesson-elements">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Common HTML Elements</h3>
+                <button class="copy-btn" data-copy="#code-elements"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Essential elements every developer should know.</p>
+              <div class="code" id="code-elements">
+<pre><code>&lt;!-- Headings --&gt;
+&lt;h1&gt;Main Title&lt;/h1&gt;
 &lt;h2&gt;Subheading&lt;/h2&gt;
-&lt;p&gt;This is a paragraph with &lt;strong&gt;bold text&lt;/strong&gt; and &lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;
-&lt;a href="https://example.com"&gt;This is a link&lt;/a&gt;
-&lt;img src="image.jpg" alt="Description of image"&gt;</code></pre>
-                            </div>
-                        </div>
+&lt;h3&gt;Section Heading&lt;/h3&gt;
 
-                        <!-- Example 3 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">HTML Lists</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="<!-- Unordered List -->
-<ul>
-    <li>First item</li>
-    <li>Second item</li>
-    <li>Third item</li>
-</ul>
+&lt;!-- Text elements --&gt;
+&lt;p&gt;This is a paragraph. &lt;strong&gt;Important text&lt;/strong&gt; and &lt;em&gt;emphasized text&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Here's a &lt;a href="https://example.com"&gt;link&lt;/a&gt; to another page.&lt;/p&gt;
 
-<!-- Ordered List -->
-<ol>
-    <li>Step one</li>
-    <li>Step two</li>
-    <li>Step three</li>
-</ol>"
-                                    data-title="HTML Lists">
-                                    <i class="fa-regular fa-clipboard"></i> copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Creating bulleted and numbered lists</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-green-400 text-sm">&lt;!-- Unordered List --&gt;
+&lt;!-- Lists --&gt;
 &lt;ul&gt;
-    &lt;li&gt;First item&lt;/li&gt;
-    &lt;li&gt;Second item&lt;/li&gt;
-    &lt;li&gt;Third item&lt;/li&gt;
+    &lt;li&gt;Unordered list item&lt;/li&gt;
+    &lt;li&gt;Another item&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;!-- Ordered List --&gt;
 &lt;ol&gt;
-    &lt;li&gt;Step one&lt;/li&gt;
-    &lt;li&gt;Step two&lt;/li&gt;
-    &lt;li&gt;Step three&lt;/li&gt;
-&lt;/ol&gt;</code></pre>
-                            </div>
-                        </div>
+    &lt;li&gt;First ordered item&lt;/li&gt;
+    &lt;li&gt;Second item&lt;/li&gt;
+&lt;/ol&gt;
 
-                        <!-- Example 4 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">HTML Forms</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="<form action=&quot;/submit&quot; method=&quot;post&quot;>
-    <label for=&quot;name&quot;>Name:</label>
-    <input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; required>
+&lt;!-- Images --&gt;
+&lt;img src="image.jpg" alt="Description of image" width="400" height="300"&gt;
+
+&lt;!-- Divisions --&gt;
+&lt;div class="container"&gt;
+    &lt;p&gt;Content grouped together&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+              </div>
+            </article>
+
+            <article class="card" id="lesson-forms">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>HTML Forms</h3>
+                <button class="copy-btn" data-copy="#code-forms"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Collecting user input with forms.</p>
+              <div class="code" id="code-forms">
+<pre><code>&lt;form action="/submit" method="post"&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;Personal Information&lt;/legend&gt;
+        
+        &lt;div&gt;
+            &lt;label for="name"&gt;Full Name:&lt;/label&gt;
+            &lt;input type="text" id="name" name="name" required&gt;
+        &lt;/div&gt;
+        
+        &lt;div&gt;
+            &lt;label for="email"&gt;Email:&lt;/label&gt;
+            &lt;input type="email" id="email" name="email" required&gt;
+        &lt;/div&gt;
+        
+        &lt;div&gt;
+            &lt;label for="password"&gt;Password:&lt;/label&gt;
+            &lt;input type="password" id="password" name="password" minlength="8" required&gt;
+        &lt;/div&gt;
+    &lt;/fieldset&gt;
     
-    <label for=&quot;email&quot;>Email:</label>
-    <input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; required>
+    &lt;fieldset&gt;
+        &lt;legend&gt;Preferences&lt;/legend&gt;
+        
+        &lt;div&gt;
+            &lt;label for="newsletter"&gt;
+                &lt;input type="checkbox" id="newsletter" name="newsletter" checked&gt;
+                Subscribe to newsletter
+            &lt;/label&gt;
+        &lt;/div&gt;
+        
+        &lt;div&gt;
+            &lt;label&gt;Age Group:&lt;/label&gt;
+            &lt;select name="age"&gt;
+                &lt;option value="under18"&gt;Under 18&lt;/option&gt;
+                &lt;option value="18-25" selected&gt;18-25&lt;/option&gt;
+                &lt;option value="26-35"&gt;26-35&lt;/option&gt;
+                &lt;option value="36+"&gt;36+&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        
+        &lt;div&gt;
+            &lt;label&gt;Feedback:&lt;/label&gt;
+            &lt;textarea name="feedback" rows="4"&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+    &lt;/fieldset&gt;
     
-    <label for=&quot;message&quot;>Message:</label>
-    <textarea id=&quot;message&quot; name=&quot;message&quot; rows=&quot;4&quot;></textarea>
-    
-    <button type=&quot;submit&quot;>Send Message</button>
-</form>"
-                                    data-title="HTML Forms">
-                                    <i class="fa-regular fa-clipboard"></i> copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Creating interactive forms with various input types</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-green-400 text-sm">&lt;form action="/submit" method="post"&gt;
-    &lt;label for="name"&gt;Name:&lt;/label&gt;
-    &lt;input type="text" id="name" name="name" required&gt;
-    
-    &lt;label for="email"&gt;Email:&lt;/label&gt;
-    &lt;input type="email" id="email" name="email" required&gt;
-    
-    &lt;label for="message"&gt;Message:&lt;/label&gt;
-    &lt;textarea id="message" name="message" rows="4"&gt;&lt;/textarea&gt;
-    
-    &lt;button type="submit"&gt;Send Message&lt;/button&gt;
+    &lt;button type="submit"&gt;Submit Form&lt;/button&gt;
+    &lt;button type="reset"&gt;Reset&lt;/button&gt;
 &lt;/form&gt;</code></pre>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </article>
 
-                    <!-- Next Steps -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 mt-8">
-                        <h3 class="text-white text-xl font-bold mb-2">Ready to Continue?</h3>
-                        <p class="text-gray-300 mb-4">
-                            Once you've mastered HTML basics, move on to CSS to style your web pages.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button 
-                                class="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
-                                onclick="navigateToTutorial('css.html')">
-                                Next: Learn CSS →
-                            </button>
-                            <button 
-                                class="btn btn-outline"
-                                onclick="navigateToHome()">
-                                Back to All Courses
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script>
-  emailjs.init("6CSR1CAXwOHcVmcbZ"); // Replace with your actual public key
-</script>
-<script src="email.js"></script>
-<script>
-        
-        
-        // Chat functionality
-        function activeChat() {
-            document.getElementById("chat-container").style.display = "block";
-        }
-        
-        function closeChat() {
-            document.getElementById("chat-container").style.display = "none";
-        }
-        
-        // Navigation functions
-        function navigateToHome() {
-            window.location.href = 'home.html';
-        }
-        
-        function navigateToTutorial(page) {
-            window.location.href = page;
-        }
-        
-        // Logout function
-        async function logout() {
-      await fetch('/sessionLogout', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      window.location.href = '/';
-    }
-        
-        
-        
-        // Form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Message sent successfully! Our team will contact you soon.');
-            this.reset();
-            closeChat();
-        });
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'dark';
-        
-        document.body.setAttribute('data-theme', currentTheme);
-        
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            <article class="card" id="lesson-semantic">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Semantic HTML5</h3>
+                <button class="copy-btn" data-copy="#code-semantic"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Modern semantic elements for better structure and accessibility.</p>
+              <div class="code" id="code-semantic">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Semantic HTML Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Website Title&lt;/h1&gt;
+        &lt;nav&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#home"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+    
+    &lt;main&gt;
+        &lt;article&gt;
+            &lt;header&gt;
+                &lt;h2&gt;Article Title&lt;/h2&gt;
+                &lt;p&gt;Posted on &lt;time datetime="2023-05-15"&gt;May 15, 2023&lt;/time&gt;&lt;/p&gt;
+            &lt;/header&gt;
             
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+            &lt;section&gt;
+                &lt;h3&gt;Introduction&lt;/h3&gt;
+                &lt;p&gt;Article introduction content...&lt;/p&gt;
+            &lt;/section&gt;
+            
+            &lt;section&gt;
+                &lt;h3&gt;Main Content&lt;/h3&gt;
+                &lt;p&gt;Detailed article content...&lt;/p&gt;
+                &lt;figure&gt;
+                    &lt;img src="image.jpg" alt="Description"&gt;
+                    &lt;figcaption&gt;Image caption&lt;/figcaption&gt;
+                &lt;/figure&gt;
+            &lt;/section&gt;
+            
+            &lt;footer&gt;
+                &lt;p&gt;Article footer with author info&lt;/p&gt;
+            &lt;/footer&gt;
+        &lt;/article&gt;
+        
+        &lt;aside&gt;
+            &lt;h2&gt;Related Content&lt;/h2&gt;
+            &lt;nav&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;Related Article 1&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;Related Article 2&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/nav&gt;
+        &lt;/aside&gt;
+    &lt;/main&gt;
+    
+    &lt;footer&gt;
+        &lt;p&gt;&copy; 2023 Company Name. All rights reserved.&lt;/p&gt;
+        &lt;address&gt;
+            Contact us at &lt;a href="mailto:info@example.com"&gt;info@example.com&lt;/a&gt;
+        &lt;/address&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+              </div>
+            </article>
+
+            <!-- Next Steps card -->
+            <article class="card">
+              <h3>Continue Learning</h3>
+              <p class="t">Explore other web technologies to build complete websites!</p>
+              <div class="cta-row">
+                <button class="btn btn--gradient" id="goCSS">Next: Learn CSS →</button>
+                <button class="btn btn--gradient alt" id="goJS">Learn JavaScript →</button>
+                <a class="btn" href="#" id="backAll">Back to All Courses</a>
+              </div>
+            </article>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Chat Floating Button -->
+  <button class="chat-fab" id="chatFab" aria-controls="chatBox" aria-expanded="false">
+    <i class="fa-brands fa-rocketchat"></i>
+    <span class="hide-sm">Get in Touch</span>
+    <img src="https://i.ibb.co/zT8pQBLR/arsene.jpg" alt="agent" />
+    <img src="https://i.ibb.co/WN6342yF/donald.jpg" alt="agent" />
+  </button>
+
+  <!-- Chat Modal -->
+  <section class="chat" id="chatBox" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <div class="chat__top">
+      <h2 id="chatTitle" style="margin:0; font-size:1rem;">Get In Touch</h2>
+      <button id="chatClose" aria-label="Close chat" class="btn" style="padding:8px 10px;">
+        <i class="fa-regular fa-circle-xmark"></i>
+      </button>
+    </div>
+    <form class="chat__body" id="contactForm">
+      <div id="formNote" class="sr-only" aria-live="polite"></div>
+      <div class="field">
+        <label for="name">Names *</label>
+        <input class="input" id="name" name="name" type="text" placeholder="Full names" required />
+      </div>
+      <div class="field">
+        <label for="email">E-mail *</label>
+        <input class="input" id="email" name="email" type="email" placeholder="E-mail" required />
+      </div>
+      <div class="field">
+        <label for="subject">Subject *</label>
+        <input class="input" id="subject" name="subject" type="text" placeholder="Subject" required />
+      </div>
+      <div class="field">
+        <label for="message">Message *</label>
+        <textarea class="textarea" id="message" name="message" placeholder="Text a message..." required></textarea>
+      </div>
+      <button class="submit" type="submit">Send</button>
+      <p class="help">* Feedback will get to you in less than 24hrs!</p>
+    </form>
+    <div class="chat__actions">
+      <a href="tel:+250792575986" title="Call"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:katprogrammers@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.instagram.com/kat_programmers" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section contact-form">
+        <h2 class="footer-title">Contact Us</h2>
+        <form class="contact-form-inner" id="footerContactForm">
+          <div class="form-group">
+            <label for="footerName">Name</label>
+            <input type="text" id="footerName" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="footerEmail">Email</label>
+            <input type="email" id="footerEmail" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="footerMessage">Message</label>
+            <textarea id="footerMessage" name="message" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Send</button>
+        </form>
+      </div>
+      
+      <div class="footer-section social-media">
+        <h2 class="footer-title">Follow Us</h2>
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/kat_programmers/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="qr">
+          <a href="https://katprogrammers.vercel.app" target="_blank" title="Open kat-programmers on Mobile">
+            <img src="https://i.ibb.co/BKPTj83C/qrcode.png" alt="Kat Programmers QR Code">
+            <p style="margin-top: 10px; font-size: 0.85rem;">Scan to open on mobile</p>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-section map">
+        <h2 class="footer-title">Our Location</h2>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019019858232!2d-122.4194154846817!3d37.77492977975959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c2f8e6e2b%3A0x4a0b8e6e2b8e6e2b!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1628888888888!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Kat-Programmers. All rights reserved.</p>
+      <p style="margin-top: 10px; font-size: 0.8rem;">
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Privacy Policy</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Terms of Service</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Contact Support</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== THEME =====
+    (function initTheme() {
+      try {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('themeToggle');
+        if (btn) btn.setAttribute('aria-pressed', theme === 'light');
+      } catch (e) {}
+    })();
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const root = document.documentElement;
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('themeToggle').setAttribute('aria-pressed', next === 'light');
+    });
+
+    // ===== SIDEBAR (mobile off-canvas) =====
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('backdrop');
+
+    function openSidebar() {
+      sidebar.classList.add('sidebar--active');
+      backdrop.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('sidebar--active');
+      backdrop.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+    sidebarToggle.addEventListener('click', () => {
+      const isOpen = sidebar.classList.contains('sidebar--active');
+      isOpen ? closeSidebar() : openSidebar();
+    });
+    backdrop.addEventListener('click', closeSidebar);
+
+    // Close sidebar on wide screens
+    const mq = window.matchMedia('(min-width: 841px)');
+    mq.addEventListener('change', e => { if (e.matches) closeSidebar(); });
+
+    // ===== ENHANCED LOGOUT FOR VERCEL =====
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        // Show loading state
+        const btn = document.getElementById('logoutBtn');
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+        btn.disabled = true;
+
+        // Call Vercel serverless endpoint
+        const response = await fetch('/api/sessionLogout', {
+          method: 'POST',
+          credentials: 'include', // Essential for cookies in Vercel
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // Clear all client-side storage
+          localStorage.clear();
+          sessionStorage.clear();
+          
+          // Redirect to login page with cache-busting
+          window.location.href = `/login?t=${Date.now()}`;
+        } else {
+          const error = await response.json();
+          console.error('Logout failed:', error);
+          alert('Logout failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+        alert('Network error during logout. Please check your connection.');
+      } finally {
+        // Reset button state in case of failure
+        const btn = document.getElementById('logoutBtn');
+        if (btn) {
+          btn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span><span>Log Out</span>';
+          btn.disabled = false;
+        }
+      }
+    });
+
+    // ===== COPY BUTTONS =====
+    function copyFrom(selector, btn) {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      const text = el.innerText.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = original; }, 1600);
+      }).catch(() => {
+        alert('Copy failed.');
+      });
+    }
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => copyFrom(btn.getAttribute('data-copy'), btn));
+    });
+
+    // ===== CHAT =====
+    const chatFab = document.getElementById('chatFab');
+    const chatBox = document.getElementById('chatBox');
+    const chatClose = document.getElementById('chatClose');
+
+    function openChat() { chatBox.classList.add('active'); chatFab.setAttribute('aria-expanded', 'true'); }
+    function closeChat() { chatBox.classList.remove('active'); chatFab.setAttribute('aria-expanded', 'false'); }
+
+    chatFab.addEventListener('click', () => {
+      if (chatBox.classList.contains('active')) closeChat(); else openChat();
+    });
+    chatClose.addEventListener('click', closeChat);
+
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Here you could POST to your backend / form service
+      alert('Message sent successfully! Our team will contact you soon.');
+      e.target.reset();
+      closeChat();
+    });
+
+    // ===== LESSON NAV (example hooks) =====
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.target;
+        const element = document.getElementById(`lesson-${target}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Close sidebar when clicking navigation links
+    document.querySelectorAll('.nav__link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
+    });
+    
+    // Close sidebar when clicking inside the accordion
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
+    });
+
+    // ===== CTA buttons (example navigation) =====
+    document.getElementById('goCSS').addEventListener('click', () => window.location.href = 'css.html');
+    document.getElementById('goJS').addEventListener('click', () => window.location.href = 'javascript.html');
+    document.getElementById('backAll').addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'courses.html'; });
+
+    // Fetch user info
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/api/me', {
+          credentials: 'include' // Include cookies for auth
         });
         
-    </script>
-    <script src="script.js"></script>
+        if (response.ok) {
+          const user = await response.json();
+          document.getElementById('userEmail').textContent = user.email;
+        } else {
+          // If not logged in, hide the user info section
+          document.querySelector('.user-info').style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+        document.querySelector('.user-info').style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
