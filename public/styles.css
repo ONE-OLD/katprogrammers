@@ -618,7 +618,7 @@ input:focus {
   padding: 0.5rem 0.75rem;
   border-radius: 999px;
   font-weight: 800;
-  width: 30%;
+  width: 50%;
   text-align: center;
   animation: pulse 2.5s infinite ease-in-out;
   position: relative;
