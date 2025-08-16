@@ -11,24 +11,8 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <a href="/" class="logo">
-      <i class="fas fa-shield-alt"></i>
-      <span>AuthPortal</span>
+      <img src="image (1).png" alt="">
     </a>
-    
-    <ul class="nav-menu">
-      <li class="nav-item">
-        <a href="/" class="nav-link active">
-          <i class="fas fa-home"></i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link">
-          <i class="fas fa-sign-in-alt"></i>
-          <span>Login</span>
-        </a>
-      </li>
-    </ul>
     
     <div class="theme-toggle-container">
       <button class="theme-toggle" id="themeToggle"></button>
@@ -37,14 +21,53 @@
 
   <!-- Main Content -->
   <main class="main-content">
-    <h1 class="page-title">Welcome to AuthPortal</h1>
+        <h1 class="page-title">Welcome to Kat-Programmers</h1>
+
+    <!-- Hero / Promo: highlights that the platform is free, with counters and features -->
+    <div class="hero reveal-up">
+      <div class="free-ribbon">FREE</div>
+      <div class="hero-content">
+        <div class="hero-title">Learn to Build Real Projects — It's Free</div>
+        <div class="hero-desc">Kat-Programmers provides hands-on tutorials, project templates, mentor feedback and real projects you can ship. Start today with no cost and level up your skills.</div>
+
+        <div class="counters" aria-hidden="false">
+          <div class="counter">
+            <div class="num" data-target="1200">1.2k</div>
+            <div class="label">Students</div>
+          </div>
+          <div class="counter">
+            <div class="num" data-target="350">350+</div>
+            <div class="label">Projects</div>
+          </div>
+          <div class="counter">
+            <div class="num" data-target="48">48</div>
+            <div class="label">Courses</div>
+          </div>
+        </div>
+
+        <div class="feature-list" aria-hidden="false">
+          <div class="feature-item"><i class="fas fa-check-circle" style="color:var(--accent-secondary)"></i> Project-based learning</div>
+          <div class="feature-item"><i class="fas fa-chalkboard-teacher" style="color:var(--accent-secondary)"></i> Mentor support</div>
+          <div class="feature-item"><i class="fas fa-certificate" style="color:var(--accent-secondary)"></i> Free certificate</div>
+        </div>
+
+        <div style="margin-top:0.75rem;">
+          <a href="/dashboard" class="btn btn-primary">Get Started</a>
+          <a href="/about" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+
+      <div class="hero-media" style="width:220px;">
+        <img src="hello.png" alt="Students building projects" style="width:100%; border-radius:8px;">
+      </div>
+    </div>
+
     
     <div class="card">
       <p>Welcome to Kat-Programmers!
 Dive into the world of coding and unlock your potential. Here, you can learn the foundations and advanced skills in HTML, CSS, C++, JavaScript, Python, and MySQL. Whether you’re building stunning websites, creating dynamic applications, or managing databases, our tutorials and hands-on projects will guide you step by step. Start your programming journey today and turn your ideas into reality!</p>
       <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
         <a href="/login" class="btn btn-primary">Login</a>
-        <a href="/private/dashboard" class="btn btn-secondary">Dashboard</a>
       </div>
     </div>
     
@@ -53,27 +76,73 @@ Dive into the world of coding and unlock your potential. Here, you can learn the
       <ul style="list-style: none; padding-left: 1rem;">
         <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
           <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
-          <span>Secure authentication with session management</span>
+          <span>Comprehensive Learning Platform</span>
         </li>
         <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
           <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
-          <span>Dark/light theme with persistent settings</span>
+          <span>Programming Languages Covered</span>
         </li>
         <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
           <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
-          <span>User profile management</span>
+          <span>Practical Projects</span>
         </li>
         <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
           <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
-          <span>Password reset functionality</span>
+          <span>Beginner to Advanced Roadmaps</span>
         </li>
         <li style="display: flex; align-items: flex-start;">
           <span style="color: var(--accent-secondary); margin-right: 10px;">✓</span>
-          <span>Activity tracking</span>
+          <span>Community & Collaboration</span>
         </li>
       </ul>
     </div>
-  </main>
+  </main><br>
+  <!-- Footer (contact form, social, map) -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section contact-form">
+        <h2 class="footer-title">Contact Us</h2>
+        <form class="contact-form-inner" id="contactForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+      </div>
+      <div class="footer-section social-media">
+        <h2 class="footer-title">Follow Us</h2>
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/kat_programmers/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="qr">
+          <a href="https://katprogrammers.vercel.app" target="_blank" title="Open kat-programmers on Mobile">
+            <img src="qrcode.png" alt="Kat Programmers QR Code">
+          </a>
+        </div>
+      </div>
+      <div class="footer-section map">
+        <h2 class="footer-title">Our Location</h2>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019019858232!2d-122.4194154846817!3d37.77492977975959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c2f8e6e2b%3A0x4a0b8e6e2b8e6e2b!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1628888888888!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Kat-Programmers. All rights reserved.</p>
+    </div>
+  </footer>
   <script type="module" src="/js/auth.js"></script>
   <script>
     // Theme toggle functionality
@@ -90,6 +159,10 @@ Dive into the world of coding and unlock your potential. Here, you can learn the
       localStorage.setItem('theme', newTheme);
     });
   </script>
+  <!-- EmailJS SDK (required) -->
+  <script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+  <!-- External email handler -->
+  <script src="email.js"></script>
 
 </body>
 </html>
