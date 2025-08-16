@@ -10,37 +10,9 @@
 <body data-theme="dark">
   <!-- Sidebar -->
   <aside class="sidebar">
-    <a href="index.html" class="logo">
-      <i class="fas fa-shield-alt"></i>
-      <span>AuthPortal</span>
+    <a href="/" class="logo">
+      <img src="image (1).png" alt="">
     </a>
-    
-    <ul class="nav-menu">
-      <li class="nav-item">
-        <a href="index.html" class="nav-link">
-          <i class="fas fa-home"></i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="dashboard.html" class="nav-link">
-          <i class="fas fa-tachometer-alt"></i>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="profile.html" class="nav-link">
-          <i class="fas fa-user"></i>
-          <span>Profile</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="login.html" class="nav-link active">
-          <i class="fas fa-sign-in-alt"></i>
-          <span>Login</span>
-        </a>
-      </li>
-    </ul>
     
     <div class="theme-toggle-container">
       <button class="theme-toggle" id="themeToggle"></button>
@@ -49,13 +21,14 @@
 
   <!-- Main Content -->
   <main class="main-content">
-    <h1 class="page-title">Login / Signup</h1>
     
     <div class="flip-container" id="flipContainer">
       <div class="flipper">
         <!-- Login Form -->
         <div class="front">
+          <h1 class="page-title" id="formTitle">Login</h1>
           <div class="auth-form">
+            <h2 class="page-title" id="formTitle">Welcome Back!</h2>
             <div class="auth-msg" id="loginMsg"></div>
             <div class="form-group">
               <label for="loginEmail">Email</label>
@@ -77,7 +50,9 @@
         
         <!-- Signup Form -->
         <div class="back">
+          <h1 class="page-title" id="formTitle">Register</h1>
           <div class="auth-form">
+            <h1 class="page-title" id="formTitle">Welcome, Let's Get Started</h1>
             <div class="auth-msg" id="signupMsg"></div>
             <div class="form-group">
               <label for="signupEmail">Email</label>
@@ -116,6 +91,7 @@
       </div>
     </div>
   </main>
+  
   <script type="module" src="/js/auth.js"></script>
   <script>
     const flipContainer = document.getElementById('flipContainer');
