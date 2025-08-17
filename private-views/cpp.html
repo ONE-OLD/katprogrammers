@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
   <title>KAT-PROGRAMMERS Course Platform</title>
   <link rel="icon" href="./assets/images/image (1).png" />
   <link rel="stylesheet" href="courses.css">
@@ -554,6 +557,13 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
     document.querySelectorAll('[data-copy]').forEach(btn => {
       btn.addEventListener('click', () => copyFrom(btn.getAttribute('data-copy'), btn));
     });
+
+    // Check if user is authenticated
+window.addEventListener('DOMContentLoaded', () => {
+  if (!userIsAuthenticated() && isProtectedPage()) {
+    window.location.href = '/login';
+  }
+});
 
     // ===== CHAT =====
     const chatFab = document.getElementById('chatFab');
