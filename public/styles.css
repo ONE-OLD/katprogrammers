@@ -339,8 +339,8 @@ input:focus {
 /* New Animated Button */
     .btn-get-started {
       position: relative;
-      padding: 1.2rem 2.5rem;
-      font-size: 1.2rem;
+      padding: 1rem 2.2rem;
+      font-size: 0.8rem;
       font-weight: 700;
       border: none;
       border-radius: 10px;
@@ -350,6 +350,8 @@ input:focus {
       cursor: pointer;
       outline: none;
       overflow: hidden;
+      width: 200px;
+      height: 50px;
       z-index: 1;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       animation: gradientAnimation 4s ease infinite, pulse 2s ease infinite;
