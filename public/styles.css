@@ -328,14 +328,39 @@ input:focus {
   font-size: 1rem;
 }
 
+/* Animated gradient button */
 .btn-primary {
-  background: var(--accent-primary);
-  color: var(--bg-primary);
+  position: relative;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0);
+  background-size: 300% 300%;
+  color: white;
+  animation: gradientAnimation 4s ease infinite, pulse 2s ease infinite;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary:hover {
-  background: var(--accent-secondary);
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  animation: gradientAnimation 2s ease infinite, pulse 1s ease infinite;
+  box-shadow: 0 10px 25px rgba(255, 0, 128, 0.4),
+              0 10px 40px rgba(255, 140, 0, 0.4),
+              0 10px 55px rgba(64, 224, 208, 0.4);
+}
+
+/* Keyframe animations */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.03); }
 }
 
 .btn-danger {
