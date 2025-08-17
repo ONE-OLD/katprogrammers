@@ -358,6 +358,19 @@ input:focus {
               0 10px 40px rgba(255, 140, 0, 0.4),
               0 10px 55px rgba(64, 224, 208, 0.4);
 }
+.btn-text {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-text i {
+      font-size: 1.3rem;
+      animation: bounce 1.5s ease infinite;
+    }
 
 /* Keyframe animations */
 @keyframes gradientAnimation {
