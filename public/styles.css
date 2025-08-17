@@ -327,9 +327,17 @@ input:focus {
   transition: var(--transition);
   font-size: 1rem;
 }
-
-/* Animated gradient button */
 .btn-primary {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+.btn-primary:hover {
+  background: var(--accent-secondary);
+  transform: translateY(-2px);
+}
+/* Animated gradient button */
+.btn-get-started {
   position: relative;
   padding: 1.2rem 2.5rem;
   font-size: 1.2rem;
@@ -343,7 +351,7 @@ input:focus {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.btn-primary:hover {
+.btn-get-started:hover {
   transform: translateY(-5px);
   animation: gradientAnimation 2s ease infinite, pulse 1s ease infinite;
   box-shadow: 0 10px 25px rgba(255, 0, 128, 0.4),
