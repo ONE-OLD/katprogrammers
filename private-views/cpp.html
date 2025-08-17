@@ -505,7 +505,7 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
     btn.disabled = true;
 
     // Call Vercel serverless endpoint
-    const response = await fetch('/api/sessionLogout', {
+    const response = await fetch('/sessionLogout', {
       method: 'POST',
       credentials: 'include', // Essential for cookies in Vercel
       headers: {
