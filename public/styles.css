@@ -339,7 +339,7 @@ input:focus {
 /* New Animated Button */
     .btn-get-started {
       position: relative;
-      padding: 1rem 2.2rem;
+      padding: 1rem 1rem;
       font-size: 0.8rem;
       font-weight: 700;
       border: none;
@@ -350,7 +350,7 @@ input:focus {
       cursor: pointer;
       outline: none;
       overflow: hidden;
-      width: 200px;
+      width: 180px;
       height: 50px;
       z-index: 1;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -427,9 +427,9 @@ input:focus {
     }
 
     @keyframes pulse {
-      0% { transform: translateY(0) scale(0.5); }
-      50% { transform: translateY(-3px) scale(0.6); }
-      100% { transform: translateY(0) scale(0.5); }
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-3px) scale(1.03); }
+      100% { transform: translateY(0) scale(1); }
     }
 
     @keyframes bounce {
