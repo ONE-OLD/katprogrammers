@@ -336,29 +336,74 @@ input:focus {
   background: var(--accent-secondary);
   transform: translateY(-2px);
 }
-/* Animated gradient button */
-.btn-get-started {
-  position: relative;
-  padding: 1.2rem 2.5rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 50px;
-  background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0);
-  background-size: 300% 300%;
-  color: white;
-  animation: gradientAnimation 4s ease infinite, pulse 2s ease infinite;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
+/* New Animated Button */
+    .btn-get-started {
+      position: relative;
+      padding: 1.2rem 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0);
+      background-size: 300% 300%;
+      color: white;
+      cursor: pointer;
+      outline: none;
+      overflow: hidden;
+      z-index: 1;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      animation: gradientAnimation 4s ease infinite, pulse 2s ease infinite;
+      transform: translateY(0);
+      transition: all 0.4s ease;
+    }
 
-.btn-get-started:hover {
-  transform: translateY(-5px);
-  animation: gradientAnimation 2s ease infinite, pulse 1s ease infinite;
-  box-shadow: 0 10px 25px rgba(255, 0, 128, 0.4),
-              0 10px 40px rgba(255, 140, 0, 0.4),
-              0 10px 55px rgba(64, 224, 208, 0.4);
-}
-.btn-text {
+    .btn-get-started::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0);
+      background-size: 300% 300%;
+      filter: blur(10px);
+      z-index: -1;
+      opacity: 0.7;
+      animation: gradientAnimation 4s ease infinite;
+    }
+
+    .btn-get-started::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.6s ease;
+      z-index: -1;
+    }
+
+    .btn-get-started:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(255, 0, 128, 0.4),
+                  0 10px 40px rgba(255, 140, 0, 0.4),
+                  0 10px 55px rgba(64, 224, 208, 0.4);
+      animation: gradientAnimation 2s ease infinite, pulse 1s ease infinite;
+    }
+
+    .btn-get-started:hover::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .btn-get-started:active {
+      transform: translateY(0) scale(0.98);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-text {
       position: relative;
       z-index: 2;
       display: flex;
@@ -372,17 +417,23 @@ input:focus {
       animation: bounce 1.5s ease infinite;
     }
 
-/* Keyframe animations */
-@keyframes gradientAnimation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+    /* Animations */
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-@keyframes pulse {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-3px) scale(1.03); }
-}
+    @keyframes pulse {
+      0% { transform: translateY(0) scale(0.7); }
+      50% { transform: translateY(-3px) scale(0.8); }
+      100% { transform: translateY(0) scale(0.7); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
 
 .btn-danger {
   background: var(--error);
