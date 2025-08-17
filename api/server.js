@@ -164,6 +164,11 @@ app.use('/private', express.static(privateDir));
 
 app.use(express.static(publicDir));
 
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, max-age=0');
+  next();
+});
+
 // Serve protected views without .html
 app.get("/private/dashboard", requireAuth, (_req, res) => {
   res.sendFile(path.join(privateDir, "dashboard.html"));
