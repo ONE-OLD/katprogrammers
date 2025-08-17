@@ -335,6 +335,7 @@ input:focus {
 .btn-primary:hover {
   background: var(--accent-secondary);
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(3, 218, 198, 0.4);
 }
 /* New Animated Button */
     .btn-get-started {
