@@ -83,7 +83,56 @@
     .badge { background: linear-gradient(90deg, #10b981, #059669); color: #fff; padding: 6px 12px; border-radius: 999px; font-weight: 600; }
 
     /* Main */
-    main { max-width: 1200px; margin-left: 250px; padding: 24px 18px 60px; background: linear-gradient(135deg, rgba(2,6,23,.65), rgba(76,29,149,.45), rgba(2,6,23,.65)); }
+    /* ===== MAIN CONTENT LAYOUT ===== */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 24px 60px;
+  background: linear-gradient(135deg, rgba(2,6,23,.65), rgba(76,29,149,.45), rgba(2,6,23,.65));
+  width: calc(100% - 40px); /* Add some breathing room on sides */
+}
+
+/* Desktop layout - when sidebar is visible */
+@media (min-width: 841px) {
+  main {
+    margin-left: var(--sidebar-w); /* Push content right to account for sidebar */
+    width: calc(100% - var(--sidebar-w) - 40px); /* Adjust width to account for sidebar */
+    padding-left: 40px; /* More padding on desktop */
+    padding-right: 40px;
+  }
+}
+
+/* Mobile layout adjustments */
+@media (max-width: 840px) {
+  main {
+    padding-top: 80px; /* Account for fixed header */
+    padding-left: 20px;
+    padding-right: 20px;
+    width: calc(100% - 40px); /* Full width minus some padding */
+  }
+  
+  /* Ensure cards don't stretch too wide on mobile */
+  .card {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  main {
+    padding-left: 12px;
+    padding-right: 12px;
+    width: calc(100% - 24px);
+  }
+}
+
+@media (max-width: 840px) {
+  .card[style*="position:sticky"] {
+    position: relative !important;
+    top: 0 !important;
+  }
+}
 
     /* Cards & sections */
     .card { background: var(--bg-white-5, color-mix(in hsl, #fff 6%, var(--bg-surface))); background: color-mix(in hsl, var(--bg-surface) 86%, transparent); border: 1px solid color-mix(in hsl, #fff 12%, var(--bg-surface)); border-radius: var(--radius); box-shadow: var(--elev); padding: 20px; }
@@ -393,6 +442,7 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
 
 
 
