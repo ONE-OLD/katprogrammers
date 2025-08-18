@@ -77,7 +77,7 @@
 
     /* Header */
     header.site-hdr { position: fixed; width: 90%; top: 0; z-index: 45; border-bottom: 1px solid var(--bg-surface); backdrop-filter: blur(8px); background: color-mix(in hsl, var(--bg-primary) 78%, transparent); }
-    .site-hdr__inner { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 12px 18px; }
+    .site-hdr__inner { display: flex; align-items: center; justify-content: space-between; max-width: 1000px; margin: 0 auto; padding: 10px 10px; }
     .breadcrumb { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: .95rem; }
     .breadcrumb a { color: var(--text-secondary); }
     .badge { background: linear-gradient(90deg, #10b981, #059669); color: #fff; padding: 6px 12px; border-radius: 999px; font-weight: 600; }
@@ -393,6 +393,7 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
 
 
 
