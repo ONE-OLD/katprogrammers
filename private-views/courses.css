@@ -83,7 +83,7 @@
     .badge { background: linear-gradient(90deg, #10b981, #059669); color: #fff; padding: 6px 12px; border-radius: 999px; font-weight: 600; }
 
     /* Main */
-    main { max-width: 1200px; margin-left: 250px; margin: auto; padding: 24px 18px 60px; background: linear-gradient(135deg, rgba(2,6,23,.65), rgba(76,29,149,.45), rgba(2,6,23,.65)); }
+    main { max-width: 1200px; margin-left: 250px; padding: 24px 18px 60px; background: linear-gradient(135deg, rgba(2,6,23,.65), rgba(76,29,149,.45), rgba(2,6,23,.65)); }
 
     /* Cards & sections */
     .card { background: var(--bg-white-5, color-mix(in hsl, #fff 6%, var(--bg-surface))); background: color-mix(in hsl, var(--bg-surface) 86%, transparent); border: 1px solid color-mix(in hsl, #fff 12%, var(--bg-surface)); border-radius: var(--radius); box-shadow: var(--elev); padding: 20px; }
@@ -393,6 +393,7 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
 
 
 
