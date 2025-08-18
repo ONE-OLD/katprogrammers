@@ -369,7 +369,7 @@ main {
       .shell { grid-template-columns: 1fr; }
       .sidebar-toggle { display: inline-block; }
       aside.sidebar { position: fixed; height: 100dvh; }
-      main { padding-top: 70px; margin-left: 0%; }
+      
       .backdrop { display: none; }
       .backdrop.active { display: block; }
       .chat { right: 12px; bottom: 80px; }
@@ -442,6 +442,7 @@ main {
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
 
 
 
