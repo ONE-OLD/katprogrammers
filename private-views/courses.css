@@ -69,7 +69,7 @@
     [data-theme="light"] .theme-toggle::before { transform: translateX(26px); }
 
     /* Mobile sidebar */
-    .sidebar-toggle { display: none; position: fixed; top: 14px; left: 14px; z-index: 60; background: transparent; color: var(--text-primary); border: 0; font-size: 26px; padding: 6px; border-radius: 10px; }
+    .sidebar-toggle { display: none; width: 10px; height: 10px; position: fixed; top: 14px; left: 14px; z-index: 60; background: transparent; color: var(--text-primary); border: 0; font-size: 26px; padding: 6px; border-radius: 10px; }
     .sidebar--offcanvas { transform: translateX(-100%); position: fixed; left: 0; width: var(--sidebar-w); }
     .sidebar--active { transform: translateX(0); }
     .backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); backdrop-filter: blur(1px); z-index: 40; }
@@ -393,6 +393,7 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
 
 
 
