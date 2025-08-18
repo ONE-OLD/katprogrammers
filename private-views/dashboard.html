@@ -52,82 +52,102 @@
             transition: var(--transition);
         }
 
-        /* ===== SIDEBAR STYLES ===== */
-        .sidebar {
-            width: 250px;
-            background-color: var(--bg-secondary);
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            overflow-y: auto;
-            transition: var(--transition);
-            z-index: 100;
-        }
+        /* Sidebar Styles */
+.sidebar {
+  width: auto;
+  background-color: var(--bg-secondary);
+  padding: 1.5rem 1rem;
+  height: 100vh;
+  position: fixed;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
 
-        .sidebar-header {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 1px solid var(--bg-surface);
-        }
+.logo {
+  text-decoration: none;
+  margin-bottom: 2rem;
+  padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+}
 
-        .sidebar-header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+.logo img {
+  width: 50px;
+  height: 50px;
+}
 
-        .sidebar-header h2 {
-            font-size: 1.2rem;
-            color: var(--text-primary);
-        }
+.nav-menu {
+  list-style: none;
+  flex-grow: 1;
+}
 
-        .sidebar-links {
-            padding: 15px 0;
-        }
+.nav-item {
+  margin-bottom: 0.5rem;
+}
 
-        .sidebar-links li {
-            list-style: none;
-            margin-bottom: 5px;
-        }
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: var(--transition);
+}
 
-        .sidebar-links a,button {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: var(--transition);
-            border: none;
-            width: 100%;
-        }
+.nav-link:hover, .nav-link.active {
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+}
 
-        .sidebar-links a:hover,
-        .sidebar-links a.active {
-            background-color: var(--accent-primary);
-            color: var(--bg-primary);
-        }
 
-        .sidebar-links span {
-            margin-right: 15px;
-            font-size: 1.1rem;
-            width: 24px;
-            text-align: center;
-        }
 
-        .sidebar-links p {
-            font-size: 0.9rem;
-        }
+.nav-link i {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
 
-        .sidebar-bottom {
-            margin-top: auto;
-            border-top: 1px solid var(--bg-surface);
-            padding-top: 15px;
-        }
+.theme-toggle-container {
+  padding: 1rem 0.5rem;
+  border-top: 1px solid var(--bg-surface);
+  margin-top: auto;
+}
 
+.theme-toggle {
+  background: var(--bg-surface);
+  border: none;
+  width: 50px;
+  height: 26px;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  margin-left: 0.5rem;
+}
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-secondary);
+  transform: translateX(var(--toggle-position, 0));
+  transition: var(--transition);
+}
+
+[data-theme="light"] .theme-toggle::before {
+  --toggle-position: 24px;
+}
+a{
+  text-decoration: none;
+}
         /* ===== CHAT BUTTON STYLES ===== */
         .cont-btn {
             position: fixed;
@@ -1117,14 +1137,25 @@
             window.location.href = page;
         }
         
-        // Logout function
-        async function logout() {
-      await fetch('/sessionLogout', {
-        method: 'POST',
-        credentials: 'include'
-      });
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+      // Clear Firebase session
+      await window.__auth.logout();
+      // Clear server cookie
+      await fetch('/sessionLogout', { method: 'POST' });
+      // Redirect to home
       window.location.href = '/';
+    } catch (e) {
+      console.error('Logout failed:', e);
     }
+  });
+
+  // Prevent cached back button showing private page
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+      window.location.reload();
+    }
+  });
         
         
         
