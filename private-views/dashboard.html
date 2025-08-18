@@ -1139,7 +1139,25 @@
             document.body.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         });
-        document.getElementById('profileLogoutBtn').addEventListener('click', logout);
+       // Fetch user info
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/api/me', {
+          credentials: 'include' // Include cookies for auth
+        });
+        
+        if (response.ok) {
+          const user = await response.json();
+          document.getElementById('userEmail').textContent = user.email;
+        } else {
+          // If not logged in, hide the user info section
+          document.querySelector('.user-info').style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+        document.querySelector('.user-info').style.display = 'none';
+      }
+    });
     </script>
     
 
