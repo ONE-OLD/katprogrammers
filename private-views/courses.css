@@ -76,14 +76,14 @@
     .backdrop.active { display: block; }
 
     /* Header */
-    header.site-hdr { position: sticky; top: 0; z-index: 45; border-bottom: 1px solid var(--bg-surface); backdrop-filter: blur(8px); background: color-mix(in hsl, var(--bg-primary) 78%, transparent); }
+    header.site-hdr { position: fixed; width: 90%; top: 0; z-index: 45; border-bottom: 1px solid var(--bg-surface); backdrop-filter: blur(8px); background: color-mix(in hsl, var(--bg-primary) 78%, transparent); }
     .site-hdr__inner { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 12px 18px; }
     .breadcrumb { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: .95rem; }
     .breadcrumb a { color: var(--text-secondary); }
     .badge { background: linear-gradient(90deg, #10b981, #059669); color: #fff; padding: 6px 12px; border-radius: 999px; font-weight: 600; }
 
     /* Main */
-    main { max-width: 1200px; margin-left: 250px; padding: 24px 18px 60px; background: linear-gradient(135deg, rgba(2,6,23,.65), rgba(76,29,149,.45), rgba(2,6,23,.65)); }
+    main { max-width: 1200px; margin-left: 250px; margin: auto; padding: 24px 18px 60px; background: linear-gradient(135deg, rgba(2,6,23,.65), rgba(76,29,149,.45), rgba(2,6,23,.65)); }
 
     /* Cards & sections */
     .card { background: var(--bg-white-5, color-mix(in hsl, #fff 6%, var(--bg-surface))); background: color-mix(in hsl, var(--bg-surface) 86%, transparent); border: 1px solid color-mix(in hsl, #fff 12%, var(--bg-surface)); border-radius: var(--radius); box-shadow: var(--elev); padding: 20px; }
@@ -393,6 +393,7 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
 
 
 
