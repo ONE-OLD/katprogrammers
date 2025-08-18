@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>KAT-PROGRAMMERS Course Platform | HTML</title>
-  <link rel="icon" href="./assets/images/image (1).png" />
+  <link rel="icon" href="https://i.ibb.co/NgsStwt4/image-1.png" />
   <link rel="stylesheet" href="courses.css">
   <!-- Font Awesome (deferred for performance) -->
   <link
@@ -33,17 +33,17 @@
     <!-- Sidebar -->
     <aside class="sidebar sidebar--offcanvas" id="sidebar" aria-label="Primary">
       <div class="sidebar__hdr">
-        <img src="./assets/images/image (1).png" alt="KAT-PROGRAMMERS logo" />
+        <img src="https://i.ibb.co/NgsStwt4/image-1.png" alt="KAT-PROGRAMMERS logo" />
         <div class="sidebar__title">KAT-PROGRAMMERS</div>
       </div>
       
       <nav class="sidebar__nav" role="navigation">
         <div class="nav__group" aria-label="Main links">
-          <a class="nav__link" href="/dashboard"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
-          <a class="nav__link" href="/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
-          <a class="nav__link" href="/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
-          <a class="nav__link" href="/certificate" aria-current="page"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
-          <a class="nav__link" href="/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
+          <a class="nav__link" href="/private/dashboard"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+          <a class="nav__link" href="/private/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
+          <a class="nav__link" href="/private/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
+          <a class="nav__link" href="/private/certificate" aria-current="page"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
+          <a class="nav__link" href="/private/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
         </div>
 
         <div class="user-info" style="padding: 16px; border-top: 1px solid var(--bg-surface);">
@@ -59,7 +59,7 @@
         </div>
 
         <div class="sidebar__footer">
-          <a class="nav__link" href="/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
+          <a class="nav__link" href="/private/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
           <button class="nav__link" id="logoutBtn" style="width:100%; background:none; border:0; text-align:left;">
             <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
             <span>Log Out</span>
@@ -88,7 +88,7 @@
       <main>
         <div class="grid grid-4">
           <!-- Course Contents (Accordion) -->
-          <section class="card" aria-labelledby="contentsTitle" style="position:sticky; top:90px; height:fit-content;">
+          <section class="card cont" aria-labelledby="contentsTitle" style="position:sticky; top:90px; width:400px; height:fit-content;">
             <h2 id="contentsTitle" style="margin-bottom:10px;">Course Contents</h2>
             <div class="accordion" id="accordion">
               <!-- Item 1 -->
@@ -373,8 +373,8 @@
   <button class="chat-fab" id="chatFab" aria-controls="chatBox" aria-expanded="false">
     <i class="fa-brands fa-rocketchat"></i>
     <span class="hide-sm">Get in Touch</span>
-    <img src="https://i.ibb.co/zT8pQBLR/arsene.jpg" alt="agent" />
-    <img src="https://i.ibb.co/WN6342yF/donald.jpg" alt="agent" />
+    <img class="hide-img" src="https://i.ibb.co/zT8pQBLR/arsene.jpg" alt="agent" />
+    <img class="hide-img" src="https://i.ibb.co/WN6342yF/donald.jpg" alt="agent" />
   </button>
 
   <!-- Chat Modal -->
@@ -421,15 +421,15 @@
         <form class="contact-form-inner" id="footerContactForm">
           <div class="form-group">
             <label for="footerName">Name</label>
-            <input type="text" id="footerName" name="name" required>
+            <input type="text" id="footerName" name="name" placeholder="e.g. Arsene Breezy" required>
           </div>
           <div class="form-group">
             <label for="footerEmail">Email</label>
-            <input type="email" id="footerEmail" name="email" required>
+            <input type="email" id="footerEmail" name="email" placeholder="e.g. example@gmail.com" required>
           </div>
           <div class="form-group">
             <label for="footerMessage">Message</label>
-            <textarea id="footerMessage" name="message" rows="3" required></textarea>
+            <textarea id="footerMessage" name="message" rows="3" placeholder="text message..." required></textarea>
           </div>
           <button type="submit" class="btn-primary">Send</button>
         </form>
