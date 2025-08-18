@@ -1063,7 +1063,48 @@
     }
   });
         
-        
+        // ===== SIDEBAR (mobile off-canvas) =====
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('backdrop');
+
+    function openSidebar() {
+      sidebar.classList.add('sidebar--active');
+      backdrop.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('sidebar--active');
+      backdrop.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+    sidebarToggle.addEventListener('click', () => {
+      const isOpen = sidebar.classList.contains('sidebar--active');
+      isOpen ? closeSidebar() : openSidebar();
+    });
+    backdrop.addEventListener('click', closeSidebar);
+
+    // Close sidebar on wide screens
+    const mq = window.matchMedia('(min-width: 841px)');
+    mq.addEventListener('change', e => { if (e.matches) closeSidebar(); });
+
+        // Close sidebar when clicking navigation links
+    document.querySelectorAll('.nav__link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
+    });
+    
+    // Close sidebar when clicking inside the accordion
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
+    });
         
         // Form submission
         document.getElementById('contact-form').addEventListener('submit', function(e) {
