@@ -1114,23 +1114,7 @@
         function navigateToTutorial(page) {
             window.location.href = page;
         }
-        
-        const logoutBtn = document.getElementById("logoutBtn");
 
-logoutBtn.addEventListener("click", async () => {
-  logoutBtn.disabled = true;
-  logoutBtn.textContent = "Logging out..."; // change text while disabled
-
-  try {
-    await window.__auth.logout();
-    await fetch("/sessionLogout", { method: "POST" });
-    window.location.href = "/";
-  } catch (e) {
-    console.error("Logout failed:", e);
-    logoutBtn.disabled = false;
-    logoutBtn.textContent = "Logout"; // reset
-  }
-});
 
 
   // Prevent cached back button showing private page
@@ -1235,6 +1219,28 @@ logoutBtn.addEventListener("click", async () => {
     }
   });
     </script>
+    <script>
+  async function logout() {
+    try {
+      const response = await fetch('/sessionLogout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      if (data.ok) {
+        window.location.href = '/login';
+      } else {
+        console.error('Logout failed:', data.error);
+        alert('Failed to log out. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+      alert('An error occurred while logging out.');
+    }
+  }
+</script>
     
 
 </body>
