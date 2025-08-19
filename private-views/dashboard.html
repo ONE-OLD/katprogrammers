@@ -1115,18 +1115,23 @@
             window.location.href = page;
         }
         
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-    try {
-      // Clear Firebase session
-      await window.__auth.logout();
-      // Clear server cookie
-      await fetch('/sessionLogout', { method: 'POST' });
-      // Redirect to home
-      window.location.href = '/';
-    } catch (e) {
-      console.error('Logout failed:', e);
-    }
-  });
+        const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", async () => {
+  logoutBtn.disabled = true;
+  logoutBtn.textContent = "Logging out..."; // change text while disabled
+
+  try {
+    await window.__auth.logout();
+    await fetch("/sessionLogout", { method: "POST" });
+    window.location.href = "/";
+  } catch (e) {
+    console.error("Logout failed:", e);
+    logoutBtn.disabled = false;
+    logoutBtn.textContent = "Logout"; // reset
+  }
+});
+
 
   // Prevent cached back button showing private page
   window.addEventListener("pageshow", function (event) {
