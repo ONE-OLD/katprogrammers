@@ -1204,10 +1204,32 @@
     });
     </script>
    <script>
-  async function handleLogout() {
+  // Authentication check function
+async function checkAuth() {
+  try {
+    const response = await fetch('/api/me', {
+      credentials: 'include'
+    });
+    
+    if (!response.ok) {
+      window.location.replace('/login');
+    }
+  } catch (error) {
+    window.location.replace('/login');
+  }
+}
+
+// Check auth on page load and when page is shown from cache
+document.addEventListener('DOMContentLoaded', checkAuth);
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    checkAuth();
+  }
+});
+
+// Updated logout function
+async function handleLogout() {
   const logoutBtn = document.getElementById("logoutBtn");
-  
-  // Disable button and show loading state
   logoutBtn.disabled = true;
   const originalContent = logoutBtn.innerHTML;
   logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
@@ -1219,7 +1241,6 @@
     });
     
     if (response.ok) {
-      // Replace current history entry with login page
       window.location.replace('/login');
     } else {
       throw new Error('Logout failed');
@@ -1231,33 +1252,12 @@
     alert('Logout failed. Please try again.');
   }
 }
-</script>
-    <script>
-// Check authentication status on page load
-async function checkAuth() {
-  try {
-    const response = await fetch('/api/me', {
-      credentials: 'include'
-    });
-    
-    if (!response.ok) {
-      // Not authenticated, redirect to login
-      window.location.href = '/login';
-    }
-  } catch (error) {
-    console.error('Auth check failed:', error);
-    window.location.href = '/login';
-  }
-}
 
-// Run check when page loads
-document.addEventListener('DOMContentLoaded', checkAuth);
-
-// Also check when page is shown (for back/forward navigation)
-window.addEventListener('pageshow', function(event) {
-  if (event.persisted) {
-    // Page was loaded from cache, check auth
-    checkAuth();
+// Add event listener
+document.addEventListener('DOMContentLoaded', function() {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", handleLogout);
   }
 });
 </script>
