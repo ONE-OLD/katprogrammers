@@ -155,6 +155,11 @@ app.use((req, res, next) => {
   res.set("Surrogate-Control", "no-store");
   next();
 });
+// Specifically for dashboard and other private pages
+app.get("/private/*", (req, res, next) => {
+  res.set("Cache-Control", "no-store, max-age=0");
+  next();
+});
 
 // ---------------- STATIC FILES ----------------
 const publicDir = path.join(__dirname, "../public");
