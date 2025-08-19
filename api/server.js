@@ -169,6 +169,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cors({
+  origin: true, // or your specific domain
+  credentials: true // important for cookies
+}));
+
 // Serve protected views without .html
 app.get("/private/dashboard", requireAuth, (_req, res) => {
   res.sendFile(path.join(privateDir, "dashboard.html"));
