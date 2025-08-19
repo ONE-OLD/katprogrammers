@@ -1244,6 +1244,35 @@
     }
   });
 </script>
+    <script>
+// Check authentication status on page load
+async function checkAuth() {
+  try {
+    const response = await fetch('/api/me', {
+      credentials: 'include'
+    });
+    
+    if (!response.ok) {
+      // Not authenticated, redirect to login
+      window.location.href = '/login';
+    }
+  } catch (error) {
+    console.error('Auth check failed:', error);
+    window.location.href = '/login';
+  }
+}
+
+// Run check when page loads
+document.addEventListener('DOMContentLoaded', checkAuth);
+
+// Also check when page is shown (for back/forward navigation)
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    // Page was loaded from cache, check auth
+    checkAuth();
+  }
+});
+</script>
     
 
 </body>
