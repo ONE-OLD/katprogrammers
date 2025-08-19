@@ -71,8 +71,28 @@ app.post("/sessionLogin", async (req, res) => {
   }
 });
 
-app.post("/sessionLogout", (_req, res) => {
-  res.clearCookie("session", { path: "/" });
+app.post("/sessionLogout", async (req, res) => {
+  const sessionCookie = req.cookies.session || null;
+  
+  // Clear the session cookie first
+  res.clearCookie("session", { 
+    path: "/",
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict"
+  });
+  
+  // Then try to revoke the session (non-blocking)
+  if (sessionCookie) {
+    try {
+      const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true);
+      await adminAuth.revokeRefreshTokens(decodedClaims.sub);
+    } catch (error) {
+      // Session was already invalid or expired
+      console.log("Session revocation error (non-critical):", error.message);
+    }
+  }
+  
   return res.json({ ok: true });
 });
 
