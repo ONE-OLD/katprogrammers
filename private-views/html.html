@@ -643,6 +643,12 @@ function setupCrossTabLogout() {
         window.location.replace('/login');
       }
     });
+    
+    // Also check for logout event on page load as a fallback
+    if (localStorage.getItem('logout-event')) {
+      console.log('Logout detected on page load via localStorage');
+      window.location.replace('/login');
+    }
   }
 
   // Enhanced authentication check
@@ -673,7 +679,7 @@ function setupCrossTabLogout() {
   });
   window.addEventListener('focus', checkAuthStatus);
   
-  // Optional: Periodic check
+  // Optional: Periodic check (every 30 seconds)
   setInterval(checkAuthStatus, 30000);
   
   // Update the logout button handler
