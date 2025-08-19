@@ -616,18 +616,34 @@
 
   </script>
   <script>
-// Cross-tab logout communication using BroadcastChannel
+// Cross-tab logout communication with fallback
 function setupCrossTabLogout() {
-  // Create a broadcast channel for logout events
-  const logoutChannel = new BroadcastChannel('logout-channel');
+  let logoutChannel;
   
-  // Listen for logout messages from other tabs
-  logoutChannel.addEventListener('message', (event) => {
-    if (event.data.type === 'logout') {
-      console.log('Logout detected from another tab');
-      window.location.replace('/login');
-    }
-  });
+  // Check if BroadcastChannel is supported
+  if (typeof BroadcastChannel !== 'undefined') {
+    // Use BroadcastChannel (modern browsers)
+    logoutChannel = new BroadcastChannel('logout-channel');
+    
+    // Listen for logout messages from other tabs
+    logoutChannel.addEventListener('message', (event) => {
+      if (event.data.type === 'logout') {
+        console.log('Logout detected from another tab via BroadcastChannel');
+        window.location.replace('/login');
+      }
+    });
+  } else {
+    // Fallback for browsers that don't support BroadcastChannel
+    console.log('BroadcastChannel not supported, using localStorage fallback');
+    
+    // Listen for storage events (logout events from other tabs)
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'logout-event' && event.newValue) {
+        console.log('Logout detected from another tab via localStorage');
+        window.location.replace('/login');
+      }
+    });
+  }
 
   // Enhanced authentication check
   async function checkAuthStatus() {
@@ -675,8 +691,17 @@ function setupCrossTabLogout() {
         });
         
         if (response.ok) {
-          // Broadcast logout to other tabs
-          logoutChannel.postMessage({ type: 'logout', timestamp: Date.now() });
+          // Broadcast logout to other tabs using the available method
+          if (logoutChannel) {
+            // Use BroadcastChannel if available
+            logoutChannel.postMessage({ type: 'logout', timestamp: Date.now() });
+          } else {
+            // Use localStorage fallback
+            localStorage.setItem('logout-event', Date.now().toString());
+            // Immediately remove it to allow detecting future logouts
+            setTimeout(() => localStorage.removeItem('logout-event'), 100);
+          }
+          
           window.location.replace('/login');
         } else {
           throw new Error('Logout failed');
