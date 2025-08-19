@@ -1217,7 +1217,7 @@ function setupCrossTabLogout() {
     logoutChannel.addEventListener('message', (event) => {
       if (event.data.type === 'logout') {
         console.log('Logout detected from another tab via BroadcastChannel');
-        window.location.replace('/login');
+        window.location.replace('/');
       }
     });
   } else {
@@ -1228,14 +1228,14 @@ function setupCrossTabLogout() {
     window.addEventListener('storage', function(event) {
       if (event.key === 'logout-event' && event.newValue) {
         console.log('Logout detected from another tab via localStorage');
-        window.location.replace('/login');
+        window.location.replace('/');
       }
     });
     
     // Also check for logout event on page load as a fallback
     if (localStorage.getItem('logout-event')) {
       console.log('Logout detected on page load via localStorage');
-      window.location.replace('/login');
+      window.location.replace('/');
     }
   }
 
@@ -1296,7 +1296,7 @@ function setupCrossTabLogout() {
             setTimeout(() => localStorage.removeItem('logout-event'), 100);
           }
           
-          window.location.replace('/login');
+          window.location.replace('/');
         } else {
           throw new Error('Logout failed');
         }
