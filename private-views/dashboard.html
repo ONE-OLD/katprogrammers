@@ -1201,24 +1201,48 @@
       }
     });
     </script>
-    <script>
-document.getElementById('logoutBtn').addEventListener('click', async function() {
-  try {
-    const response = await fetch('/sessionLogout', {
-      method: 'POST',
-      credentials: 'include' // Important for cookies
-    });
+   <script>
+  // Logout function
+  async function handleLogout() {
+    const logoutBtn = document.getElementById("logoutBtn");
     
-    if (response.ok) {
-      window.location.href = '/'; // Redirect to login page
-    } else {
-      throw new Error('Logout failed');
+    // Disable button and show loading state
+    logoutBtn.disabled = true;
+    const originalContent = logoutBtn.innerHTML;
+    logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+
+    try {
+      // Send POST request to logout endpoint
+      const response = await fetch('/sessionLogout', {
+        method: 'POST',
+        credentials: 'include' // Important for cookies
+      });
+      
+      if (response.ok) {
+        // Redirect to login page after successful logout
+        window.location.href = '/login';
+      } else {
+        throw new Error('Logout failed with status: ' + response.status);
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+      
+      // Restore button state
+      logoutBtn.disabled = false;
+      logoutBtn.innerHTML = originalContent;
+      
+      // Show error message to user
+      alert('Logout failed. Please try again.');
     }
-  } catch (error) {
-    console.error('Logout error:', error);
-    alert('Logout failed. Please try again.');
   }
-});
+
+  // Add event listener when DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", handleLogout);
+    }
+  });
 </script>
     
 
