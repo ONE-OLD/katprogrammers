@@ -899,7 +899,7 @@
 
         <div class="sidebar__footer">
           <a class="nav__link" href="/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
-          <button class="nav__link" id="logoutBtn" style="width:100%; background:none; border:0; text-align:left; cursor: pointer;">
+          <button class="nav__link" onclick="logout()" style="width:100%; background:none; border:0; text-align:left; cursor: pointer;">
             <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
             <span>Log Out</span>
           </button>
@@ -1167,13 +1167,7 @@
       });
     });
         
-        // Form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Message sent successfully! Our team will contact you soon.');
-            this.reset();
-            closeChat();
-        });
+  
         // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
         const currentTheme = localStorage.getItem('theme') || 'dark';
@@ -1206,18 +1200,6 @@
         document.querySelector('.user-info').style.display = 'none';
       }
     });
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-    try {
-      // Clear Firebase session
-      await window.__auth.logout();
-      // Clear server cookie
-      await fetch('/sessionLogout', { method: 'POST' });
-      // Redirect to home
-      window.location.href = '/';
-    } catch (e) {
-      console.error('Logout failed:', e);
-    }
-  });
     </script>
     <script>
   async function logout() {
