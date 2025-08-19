@@ -1204,62 +1204,83 @@
     });
     </script>
    <script>
-  // Authentication check function
-async function checkAuth() {
-  try {
-    const response = await fetch('/api/me', {
-      credentials: 'include'
-    });
-    
-    if (!response.ok) {
+// Cross-tab logout communication using BroadcastChannel
+function setupCrossTabLogout() {
+  // Create a broadcast channel for logout events
+  const logoutChannel = new BroadcastChannel('logout-channel');
+  
+  // Listen for logout messages from other tabs
+  logoutChannel.addEventListener('message', (event) => {
+    if (event.data.type === 'logout') {
+      console.log('Logout detected from another tab');
       window.location.replace('/login');
     }
-  } catch (error) {
-    window.location.replace('/login');
-  }
-}
+  });
 
-// Check auth on page load and when page is shown from cache
-document.addEventListener('DOMContentLoaded', checkAuth);
-window.addEventListener('pageshow', function(event) {
-  if (event.persisted) {
-    checkAuth();
-  }
-});
-
-// Updated logout function
-async function handleLogout() {
-  const logoutBtn = document.getElementById("logoutBtn");
-  logoutBtn.disabled = true;
-  const originalContent = logoutBtn.innerHTML;
-  logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
-
-  try {
-    const response = await fetch('/sessionLogout', {
-      method: 'POST',
-      credentials: 'include'
-    });
-    
-    if (response.ok) {
+  // Enhanced authentication check
+  async function checkAuthStatus() {
+    try {
+      const response = await fetch('/api/me', {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      if (!response.ok) {
+        window.location.replace('/login');
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
       window.location.replace('/login');
-    } else {
-      throw new Error('Logout failed');
     }
-  } catch (error) {
-    console.error('Logout error:', error);
-    logoutBtn.disabled = false;
-    logoutBtn.innerHTML = originalContent;
-    alert('Logout failed. Please try again.');
   }
-}
 
-// Add event listener
-document.addEventListener('DOMContentLoaded', function() {
+  // Check auth on various events
+  document.addEventListener('DOMContentLoaded', checkAuthStatus);
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+      checkAuthStatus();
+    }
+  });
+  window.addEventListener('focus', checkAuthStatus);
+  
+  // Optional: Periodic check
+  setInterval(checkAuthStatus, 30000);
+  
+  // Update the logout button handler
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
-    logoutBtn.addEventListener("click", handleLogout);
+    logoutBtn.addEventListener("click", async function() {
+      const originalContent = logoutBtn.innerHTML;
+      logoutBtn.disabled = true;
+      logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+
+      try {
+        const response = await fetch('/sessionLogout', {
+          method: 'POST',
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          // Broadcast logout to other tabs
+          logoutChannel.postMessage({ type: 'logout', timestamp: Date.now() });
+          window.location.replace('/login');
+        } else {
+          throw new Error('Logout failed');
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+        logoutBtn.disabled = false;
+        logoutBtn.innerHTML = originalContent;
+        alert('Logout failed. Please try again.');
+      }
+    });
   }
-});
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', setupCrossTabLogout);
 </script>
     
 
