@@ -2,7 +2,9 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>KAT-PROGRAMMERS Course Platform | HTML</title>
   <link rel="icon" href="https://i.ibb.co/NgsStwt4/image-1.png" />
   <link rel="stylesheet" href="courses.css">
@@ -517,47 +519,7 @@
     mq.addEventListener('change', e => { if (e.matches) closeSidebar(); });
 
     // ===== ENHANCED LOGOUT FOR VERCEL =====
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-      try {
-        // Show loading state
-        const btn = document.getElementById('logoutBtn');
-        const originalContent = btn.innerHTML;
-        btn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
-        btn.disabled = true;
-
-        // Call Vercel serverless endpoint
-        const response = await fetch('/api/sessionLogout', {
-          method: 'POST',
-          credentials: 'include', // Essential for cookies in Vercel
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (response.ok) {
-          // Clear all client-side storage
-          localStorage.clear();
-          sessionStorage.clear();
-          
-          // Redirect to login page with cache-busting
-          window.location.href = `/login?t=${Date.now()}`;
-        } else {
-          const error = await response.json();
-          console.error('Logout failed:', error);
-          alert('Logout failed. Please try again.');
-        }
-      } catch (error) {
-        console.error('Logout error:', error);
-        alert('Network error during logout. Please check your connection.');
-      } finally {
-        // Reset button state in case of failure
-        const btn = document.getElementById('logoutBtn');
-        if (btn) {
-          btn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span><span>Log Out</span>';
-          btn.disabled = false;
-        }
-      }
-    });
+    
 
     // ===== COPY BUTTONS =====
     function copyFrom(selector, btn) {
@@ -632,25 +594,64 @@
     document.getElementById('goJS').addEventListener('click', () => window.location.href = 'javascript.html');
     document.getElementById('backAll').addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'courses.html'; });
 
-    // Fetch user info
-    document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const response = await fetch('/api/me', {
-          credentials: 'include' // Include cookies for auth
-        });
-        
-        if (response.ok) {
-          const user = await response.json();
-          document.getElementById('userEmail').textContent = user.email;
-        } else {
-          // If not logged in, hide the user info section
-          document.querySelector('.user-info').style.display = 'none';
-        }
-      } catch (error) {
-        console.error('Failed to fetch user info:', error);
-        document.querySelector('.user-info').style.display = 'none';
-      }
-    });
   </script>
+  <script>
+  // Authentication check function
+async function checkAuth() {
+  try {
+    const response = await fetch('/api/me', {
+      credentials: 'include'
+    });
+    
+    if (!response.ok) {
+      window.location.replace('/login');
+    }
+  } catch (error) {
+    window.location.replace('/login');
+  }
+}
+
+// Check auth on page load and when page is shown from cache
+document.addEventListener('DOMContentLoaded', checkAuth);
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    checkAuth();
+  }
+});
+
+// Updated logout function
+async function handleLogout() {
+  const logoutBtn = document.getElementById("logoutBtn");
+  logoutBtn.disabled = true;
+  const originalContent = logoutBtn.innerHTML;
+  logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+
+  try {
+    const response = await fetch('/sessionLogout', {
+      method: 'POST',
+      credentials: 'include'
+    });
+    
+    if (response.ok) {
+      window.location.replace('/login');
+    } else {
+      throw new Error('Logout failed');
+    }
+  } catch (error) {
+    console.error('Logout error:', error);
+    logoutBtn.disabled = false;
+    logoutBtn.innerHTML = originalContent;
+    alert('Logout failed. Please try again.');
+  }
+}
+
+// Add event listener
+document.addEventListener('DOMContentLoaded', function() {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", handleLogout);
+  }
+});
+</script>
 </body>
 </html>
