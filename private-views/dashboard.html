@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>KAT-PROGRAMMERS Course Platform</title>
     <link rel="stylesheet" href="courses.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1202,47 +1204,33 @@
     });
     </script>
    <script>
-  // Logout function
   async function handleLogout() {
-    const logoutBtn = document.getElementById("logoutBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  
+  // Disable button and show loading state
+  logoutBtn.disabled = true;
+  const originalContent = logoutBtn.innerHTML;
+  logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+
+  try {
+    const response = await fetch('/sessionLogout', {
+      method: 'POST',
+      credentials: 'include'
+    });
     
-    // Disable button and show loading state
-    logoutBtn.disabled = true;
-    const originalContent = logoutBtn.innerHTML;
-    logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
-
-    try {
-      // Send POST request to logout endpoint
-      const response = await fetch('/sessionLogout', {
-        method: 'POST',
-        credentials: 'include' // Important for cookies
-      });
-      
-      if (response.ok) {
-        // Redirect to login page after successful logout
-        window.location.href = '/login';
-      } else {
-        throw new Error('Logout failed with status: ' + response.status);
-      }
-    } catch (error) {
-      console.error('Logout error:', error);
-      
-      // Restore button state
-      logoutBtn.disabled = false;
-      logoutBtn.innerHTML = originalContent;
-      
-      // Show error message to user
-      alert('Logout failed. Please try again.');
+    if (response.ok) {
+      // Replace current history entry with login page
+      window.location.replace('/login');
+    } else {
+      throw new Error('Logout failed');
     }
+  } catch (error) {
+    console.error('Logout error:', error);
+    logoutBtn.disabled = false;
+    logoutBtn.innerHTML = originalContent;
+    alert('Logout failed. Please try again.');
   }
-
-  // Add event listener when DOM is loaded
-  document.addEventListener('DOMContentLoaded', function() {
-    const logoutBtn = document.getElementById("logoutBtn");
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", handleLogout);
-    }
-  });
+}
 </script>
     <script>
 // Check authentication status on page load
