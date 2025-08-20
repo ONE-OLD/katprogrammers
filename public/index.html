@@ -9,6 +9,27 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body data-theme="dark">
+  <!-- Loading Screen -->
+  <div class="loader-container" id="loader">
+    <div class="floating-elements">
+      <div class="floating-element" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+      <div class="floating-element" style="top: 60%; left: 80%; animation-delay: 1s;"></div>
+      <div class="floating-element" style="top: 40%; left: 50%; animation-delay: 2s;"></div>
+      <div class="floating-element" style="top: 80%; left: 30%; animation-delay: 3s;"></div>
+    </div>
+    
+    <div class="code-symbol">
+      <div class="water-fill" id="waterFill"></div>
+      <div class="waves"></div>
+      &lt;/&gt;
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div class="loading-text">Loading Kat-Programmers</div>
+  </div>
   <!-- Sidebar -->
   <aside class="sidebar">
     <a href="/" class="logo">
@@ -163,6 +184,50 @@ Dive into the world of coding and unlock your potential. Here, you can learn the
       
       document.body.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
+    });
+  </script>
+  <script>
+    // Simulate loading process
+    document.addEventListener('DOMContentLoaded', function() {
+      const loader = document.getElementById('loader');
+      const content = document.getElementById('content');
+      const waterFill = document.getElementById('waterFill');
+      const progressBar = document.getElementById('progressBar');
+      
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 5;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          
+          // Hide loader and show content when done
+          setTimeout(() => {
+            loader.classList.add('hidden');
+            content.classList.add('visible');
+          }, 500);
+        }
+        
+        // Update water fill and progress bar
+        waterFill.style.height = `${progress}%`;
+        progressBar.style.width = `${progress}%`;
+      }, 100);
+      
+      // Additional check for window load (images, etc.)
+      window.addEventListener('load', function() {
+        // If the interval is still running, complete it
+        if (progress < 100) {
+          clearInterval(interval);
+          progress = 100;
+          waterFill.style.height = '100%';
+          progressBar.style.width = '100%';
+          
+          setTimeout(() => {
+            loader.classList.add('hidden');
+            content.classList.add('visible');
+          }, 500);
+        }
+      });
     });
   </script>
   <!-- EmailJS SDK (required) -->
