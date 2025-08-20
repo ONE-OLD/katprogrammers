@@ -1,487 +1,923 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Tutorial - KAT-PROGRAMMERS</title>
-    <link rel="stylesheet" href="courses.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script>
-        function logout() {
-      // Clear session or authentication data (e.g., localStorage, cookies)
-      localStorage.clear();
-      sessionStorage.clear();
-      
-      // Redirect to login page
-      window.location.replace("logout.html");
-    }
-        function activeChat() {
-        document.getElementById("chat-container").style.display = "block";
-    }
-    function closeChat() {
-        document.getElementById("chat-container").style.display = "none";
-    }
-    
-
-    </script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>KAT-PROGRAMMERS Course Platform | Python</title>
+  <link rel="icon" href="https://i.ibb.co/NgsStwt4/image-1.png" />
+  <link rel="stylesheet" href="courses.css">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 </head>
 <body>
-    <div class="cont-btn" id="activechat" onclick="activeChat()"><i class="fa-brands fa-rocketchat fa-bounce"></i> <p>Get in Touch</p><img src="images/founder/arsene.jpg" alt=""><img class="img1" src="images/founder/donald.JPEG" alt=""></div>
-    <div class="chat-container" id="chat-container">
-        <span onclick="closeChat()"><i class="fa-regular fa-circle-xmark"></i></span>
-        <form action="" id="contact-form">
-            <h1>Get In Touch</h1>
-            <div id="popup" class="popup"></div>
-            <p class="p">Names *</p>
-            <input type="text" name="name" placeholder="Full names" required><br>
-            <p class="p">E-mail *</p>
-            <input type="email" name="email" placeholder="E-mail" required> 
-            <p class="p">Subject *</p>
-            <input type="text" name="subject" placeholder="Subject" required><br>
-            <p class="p">Message *</p>
-            <textarea name="message" id="message" placeholder="Text a message..." required></textarea> 
-            <button type="submit">Send</button>
-            <p class="p1">* Feedback will get to you in less than 24hrs!</p>
-        </form>
-        <div class="con">
-            <p><a href="tel:+250792575986"><i class="fa-solid fa-phone"></i></a></p>
-            <p><a href="mailto:katprogrammers@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a></p>
-            <p><a href="https://www.instagram.com/kat_programmers" target="_blank"><i class="fa-brands fa-instagram"></i></a></p>
-        </div>
-    </div>
+  <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" id="sidebarToggle">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="logo.png" alt="KAT-PROGRAMMERS Logo">
-            <h2>KAT-PROGRAMMERS</h2>
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
+  <div class="shell">
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar--offcanvas" id="sidebar" aria-label="Primary">
+      <div class="sidebar__hdr">
+        <img src="https://i.ibb.co/NgsStwt4/image-1.png" alt="KAT-PROGRAMMERS logo" />
+        <div class="sidebar__title">KAT-PROGRAMMERS</div>
+      </div>
+      
+      <nav class="sidebar__nav" role="navigation">
+        <div class="nav__group" aria-label="Main links">
+          <a class="nav__link" href="/private/dashboard"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+          <a class="nav__link" href="/private/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
+          <a class="nav__link" href="/private/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
+          <a class="nav__link" href="/private/certificate"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
+          <a class="nav__link" href="/private/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
         </div>
-        <ul class="sidebar-links">
-            <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
-            <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
-            <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
-            <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
-            <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
-            <div class="sidebar-bottom">
-                <li><a href="about.html"><span><i class="fa-solid fa-circle-user"></i></span><p>About</p></a></li>
-                <li><a onclick="logout()"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></a></li>
+
+        <div class="user-info" style="padding: 16px; border-top: 1px solid var(--bg-surface);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center;">
+              <i class="fa-solid fa-user" style="color: white;"></i>
             </div>
-        </ul>
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">Logged in as:</div>
+              <div id="userEmail" style="font-weight: 600; font-size: 0.9rem;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar__footer">
+          <a class="nav__link" href="/private/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
+          <button class="nav__link" id="logoutBtn" style="width:100%; background:none; border:0; text-align:left;">
+            <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span>Log Out</span>
+          </button>
+        </div>
+        
+        <div class="theme-toggle-row" aria-live="polite">
+          <span>Theme</span>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" aria-pressed="false"></button>
+        </div>
+      </nav>
     </aside>
 
-    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <!-- Header -->
-        <header class="border-b border-white/10 backdrop-blur-md bg-white/5">
-            <div class="container mx-auto px-4 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <button class="btn btn-ghost" onclick="navigateToHome()">
-                            ← Back to Home
-                        </button>
-                        <div class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center text-lg">
-                            🐍
-                        </div>
-                        <h1 class="text-2xl font-bold text-white">Python Tutorial</h1>
-                    </div>
-                    <div class="bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2 rounded-full">
-                        <span class="text-white font-medium">Beginner Friendly</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <!-- Sidebar -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 sticky top-8">
-                        <h3 class="text-white text-lg font-bold mb-4">Course Contents</h3>
-                        <div class="space-y-4">
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-xs text-white font-bold">1</div>
-                                    <h4 class="text-white font-medium text-sm">Python Basics</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Python Syntax</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Variables</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Data Types</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Operators</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-xs text-white font-bold">2</div>
-                                    <h4 class="text-white font-medium text-sm">Data Structures</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Lists</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Dictionaries</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Tuples</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Sets</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-xs text-white font-bold">3</div>
-                                    <h4 class="text-white font-medium text-sm">Functions & OOP</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Functions</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Classes</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Inheritance</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Modules</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-xs text-white font-bold">4</div>
-                                    <h4 class="text-white font-medium text-sm">Advanced Python</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">File Handling</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Error Handling</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Libraries</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Web Scraping</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Content -->
-                <div class="lg:col-span-3">
-                    <!-- Introduction -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 mb-8">
-                        <h2 class="text-white text-3xl font-bold mb-4">Learn Python - The Most Popular Programming Language</h2>
-                        <p class="text-gray-300 text-lg mb-6">
-                            Python is perfect for beginners and professionals alike. Learn data science, web development, automation, and AI/ML.
-                        </p>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2"><i class="fa-solid fa-book"></i></div>
-                                <div class="text-white font-semibold">35 Lessons</div>
-                                <div class="text-gray-400 text-sm">Comprehensive curriculum</div>
-                            </div>
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2">🤖</div>
-                                <div class="text-white font-semibold">AI/ML Ready</div>
-                                <div class="text-gray-400 text-sm">Machine learning prep</div>
-                            </div>
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2">📊</div>
-                                <div class="text-white font-semibold">Data Science</div>
-                                <div class="text-gray-400 text-sm">Analytics & visualization</div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-white text-xl mb-4">What You'll Learn:</h3>
-                            <ul class="text-gray-300 space-y-2">
-                                <li>• Python syntax and programming fundamentals</li>
-                                <li>• Data structures and algorithm implementation</li>
-                                <li>• Object-oriented programming concepts</li>
-                                <li>• File handling and data processing</li>
-                                <li>• Popular libraries for data science and web development</li>
-                                <li>• Best practices for clean, readable code</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Code Examples -->
-                    <div class="space-y-6">
-                        <!-- Example 1 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">Python Basics</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="# Variables and data types
-name = \"Alice\"
-age = 25
-height = 5.6
-is_student = True
-
-# Basic operations
-numbers = [1, 2, 3, 4, 5]
-total = sum(numbers)
-average = total / len(numbers)
-
-# Print statements
-print(f\"Name: {name}\")
-print(f\"Age: {age}\")
-print(f\"Average of numbers: {average}\")"
-                                    data-title="Python Basics">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Python syntax and basic operations</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-purple-400 text-sm"># Variables and data types
-name = "Alice"
-age = 25
-height = 5.6
-is_student = True
-
-# Basic operations
-numbers = [1, 2, 3, 4, 5]
-total = sum(numbers)
-average = total / len(numbers)
-
-# Print statements
-print(f"Name: {name}")
-print(f"Age: {age}")
-print(f"Average of numbers: {average}")</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Example 2 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">Lists and Dictionaries</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="# Working with lists
-fruits = [\"apple\", \"banana\", \"orange\", \"grape\"]
-fruits.append(\"kiwi\")
-fruits.remove(\"banana\")
-
-# List comprehension
-squared_numbers = [x**2 for x in range(1, 6)]
-
-# Working with dictionaries
-student = {
-    \"name\": \"John\",
-    \"age\": 20,
-    \"grades\": [85, 92, 78, 96],
-    \"is_enrolled\": True
-}
-
-# Accessing dictionary values
-print(f\"Student: {student['name']}\")
-print(f\"Average grade: {sum(student['grades']) / len(student['grades'])}\")"
-                                    data-title="Lists and Dictionaries">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Working with Python data structures</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-purple-400 text-sm"># Working with lists
-fruits = ["apple", "banana", "orange", "grape"]
-fruits.append("kiwi")
-fruits.remove("banana")
-
-# List comprehension
-squared_numbers = [x**2 for x in range(1, 6)]
-
-# Working with dictionaries
-student = {
-    "name": "John",
-    "age": 20,
-    "grades": [85, 92, 78, 96],
-    "is_enrolled": True
-}
-
-# Accessing dictionary values
-print(f"Student: {student['name']}")
-print(f"Average grade: {sum(student['grades']) / len(student['grades'])}")</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Example 3 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">Functions and Classes</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="# Functions
-def calculate_area(length, width):
-    \"\"\"Calculate the area of a rectangle\"\"\"
-    return length * width
-
-def greet(name, age=None):
-    if age:
-        return f\"Hello, {name}! You are {age} years old.\"
-    return f\"Hello, {name}!\"
-
-# Classes
-class Car:
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.mileage = 0
-    
-    def drive(self, miles):
-        self.mileage += miles
-        print(f\"Drove {miles} miles. Total mileage: {self.mileage}\")
-    
-    def __str__(self):
-        return f\"{self.year} {self.make} {self.model}\"
-
-# Usage
-my_car = Car(\"Toyota\", \"Camry\", 2020)
-print(my_car)
-my_car.drive(100)"
-                                    data-title="Functions and Classes">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Object-oriented programming in Python</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-purple-400 text-sm"># Functions
-def calculate_area(length, width):
-    """Calculate the area of a rectangle"""
-    return length * width
-
-def greet(name, age=None):
-    if age:
-        return f"Hello, {name}! You are {age} years old."
-    return f"Hello, {name}!"
-
-# Classes
-class Car:
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.mileage = 0
-    
-    def drive(self, miles):
-        self.mileage += miles
-        print(f"Drove {miles} miles. Total mileage: {self.mileage}")
-    
-    def __str__(self):
-        return f"{self.year} {self.make} {self.model}"
-
-# Usage
-my_car = Car("Toyota", "Camry", 2020)
-print(my_car)
-my_car.drive(100)</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Example 4 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">File Handling and Libraries</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="import json
-import requests
-from datetime import datetime
-
-# File handling
-def save_data(data, filename):
-    with open(filename, 'w') as file:
-        json.dump(data, file, indent=2)
-
-def load_data(filename):
-    try:
-        with open(filename, 'r') as file:
-            return json.load(file)
-    except FileNotFoundError:
-        return {}
-
-# Working with APIs
-def get_weather(city):
-    # Example API call (requires API key)
-    url = f\"https://api.example.com/weather?q={city}\"
-    try:
-        response = requests.get(url)
-        return response.json()
-    except requests.RequestException:
-        return {\"error\": \"Failed to fetch weather data\"}
-
-# Data processing
-def process_sales_data(sales):
-    total_sales = sum(sale['amount'] for sale in sales)
-    average_sale = total_sales / len(sales) if sales else 0
-    
-    return {
-        'total': total_sales,
-        'average': average_sale,
-        'count': len(sales),
-        'timestamp': datetime.now().isoformat()
-    }"
-                                    data-title="File Handling and Libraries">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Working with files, APIs, and external libraries</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-purple-400 text-sm">import json
-import requests
-from datetime import datetime
-
-# File handling
-def save_data(data, filename):
-    with open(filename, 'w') as file:
-        json.dump(data, file, indent=2)
-
-def load_data(filename):
-    try:
-        with open(filename, 'r') as file:
-            return json.load(file)
-    except FileNotFoundError:
-        return {}
-
-# Working with APIs
-def get_weather(city):
-    # Example API call (requires API key)
-    url = f"https://api.example.com/weather?q={city}"
-    try:
-        response = requests.get(url)
-        return response.json()
-    except requests.RequestException:
-        return {"error": "Failed to fetch weather data"}
-
-# Data processing
-def process_sales_data(sales):
-    total_sales = sum(sale['amount'] for sale in sales)
-    average_sale = total_sales / len(sales) if sales else 0
-    
-    return {
-        'total': total_sales,
-        'average': average_sale,
-        'count': len(sales),
-        'timestamp': datetime.now().isoformat()
-    }</code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Next Steps -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 mt-8">
-                        <h3 class="text-white text-xl font-bold mb-2">Complete Your Journey</h3>
-                        <p class="text-gray-300 mb-4">
-                            Finish your programming education with database management using MySQL!
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button 
-                                class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
-                                onclick="navigateToTutorial('mysql.html')">
-                                Final: Learn MySQL →
-                            </button>
-                            <button 
-                                class="btn btn-outline"
-                                onclick="navigateToHome()">
-                                Back to All Courses
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div>
+      <!-- Header -->
+      <header class="site-hdr">
+        <div class="site-hdr__inner">
+          <div>
+            <h1 style="margin:.4rem 0 0; font-size:1.6rem; font-weight:800; margin-left: 60px;">Course: Python Programming</h1>
+          </div>
+          <div class="badge">Beginner to Advanced</div>
         </div>
-    </div>
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script>
-  emailjs.init("6CSR1CAXwOHcVmcbZ"); // Replace with your actual public key
-</script>
-<script src="email.js"></script>
+      </header>
 
-    <script src="script.js"></script>
+      <!-- Main Content -->
+      <main>
+        <div class="grid grid-4">
+          <!-- Course Contents (Accordion) -->
+          <section class="card cont" aria-labelledby="contentsTitle" style="position:sticky; top:90px; width:400px; height:fit-content;">
+            <h2 id="contentsTitle" style="margin-bottom:10px;">Course Contents</h2>
+            <div class="accordion" id="accordion">
+              <!-- Item 1 -->
+              <details class="acc__item" open>
+                <summary class="acc__btn"><span class="num">1</span> Python Basics</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li>Introduction to Python</li>
+                      <li>Variables & Data Types</li>
+                      <li>Control Structures</li>
+                      <li>Functions</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <!-- Item 2 -->
+              <details class="acc__item">
+                <summary class="acc__btn"><span class="num">2</span> Data Structures</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li><button class="link-lessons" data-target="lists">Lists & Tuples</button></li>
+                      <li><button class="link-lessons" data-target="dictionaries">Dictionaries</button></li>
+                      <li><button class="link-lessons" data-target="comprehensions">Comprehensions</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <!-- Item 3 -->
+              <details class="acc__item">
+                <summary class="acc__btn"><span class="num">3</span> Advanced Python</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li><button class="link-lessons" data-target="oop">OOP in Python</button></li>
+                      <li><button class="link-lessons" data-target="modules">Modules & Packages</button></li>
+                      <li><button class="link-lessons" data-target="fileio">File I/O</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <!-- Detail pane -->
+          <section>
+            <!-- Intro card -->
+            <article class="card" id="lesson-intro">
+              <h2 class="h">Master Python Programming</h2>
+              <p class="t">Learn one of the most versatile and popular programming languages used in web development, data science, AI, and automation.</p>
+              <div class="stats" aria-label="Course stats">
+                <div class="stat"><div class="ico"><i class="fa-solid fa-book"></i></div><div><strong>40 Lessons</strong><div class="muted">Comprehensive curriculum</div></div></div>
+                <div class="stat"><div class="ico">🐍</div><div><strong>Versatile</strong><div class="muted">Multiple applications</div></div></div>
+                <div class="stat"><div class="ico">📊</div><div><strong>Data Science</strong><div class="muted">Analytics & ML</div></div></div>
+              </div>
+              <h3 style="margin-top:14px;">What You'll Learn</h3>
+              <ul class="t">
+                <li>Python syntax and fundamentals</li>
+                <li>Data structures and algorithms</li>
+                <li>Object-oriented programming</li>
+                <li>Working with files and APIs</li>
+                <li>Popular Python libraries</li>
+              </ul>
+            </article>
+
+            <!-- Code example cards -->
+            <article class="card" id="lesson-basics">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Python Basics</h3>
+                <button class="copy-btn" data-copy="#code-basics"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Fundamental Python syntax and concepts.</p>
+              <div class="code" id="code-basics">
+<pre><code># Variables and data types
+name = "Alice"
+age = 30
+height = 5.7
+is_student = True
+
+# Output
+print("Hello, World!")
+print(f"Name: {name}, Age: {age}")
+
+# Input
+user_input = input("Enter your name: ")
+print(f"Hello, {user_input}!")
+
+# Arithmetic operations
+a = 10
+b = 3
+print(f"a + b = {a + b}")
+print(f"a - b = {a - b}")
+print(f"a * b = {a * b}")
+print(f"a / b = {a / b}")
+print(f"a // b = {a // b}")  # Floor division
+print(f"a % b = {a % b}")    # Modulus
+print(f"a ** b = {a ** b}")  # Exponentiation
+
+# String operations
+greeting = "Hello"
+name = "World"
+message = greeting + " " + name
+print(message)
+print(message.upper())
+print(message.lower())
+print(message.replace("World", "Python"))
+
+# Conditional statements
+score = 85
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+else:
+    grade = "F"
+print(f"Score: {score}, Grade: {grade}")
+
+# Loops
+# For loop
+print("For loop:")
+for i in range(5):
+    print(i)
+
+# While loop
+print("While loop:")
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+
+# Functions
+def greet_person(name, greeting="Hello"):
+    return f"{greeting}, {name}!"
+
+message = greet_person("Alice")
+print(message)
+message = greet_person("Bob", "Hi")
+print(message)
+
+# Lambda functions
+square = lambda x: x * x
+print(f"Square of 5: {square(5)}")
+
+# List comprehensions
+squares = [x**2 for x in range(10)]
+print(f"Squares: {squares}")</code></pre>
+              </div>
+            </article>
+
+            <article class="card" id="lesson-lists">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Lists and Tuples</h3>
+                <button class="copy-btn" data-copy="#code-lists"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Working with Python's primary sequence types.</p>
+              <div class="code" id="code-lists">
+<pre><code># Lists (mutable)
+fruits = ["apple", "banana", "cherry", "date"]
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "hello", 3.14, True]
+
+# Accessing elements
+print(fruits[0])       # First element
+print(fruits[-1])      # Last element
+print(fruits[1:3])     # Slice from index 1 to 2
+print(fruits[:2])      # Slice from start to index 1
+print(fruits[2:])      # Slice from index 2 to end
+
+# Modifying lists
+fruits.append("elderberry")        # Add to end
+fruits.insert(1, "blueberry")      # Insert at index
+fruits[0] = "avocado"              # Modify element
+fruits.remove("banana")            # Remove by value
+popped = fruits.pop()              # Remove and return last element
+popped_idx = fruits.pop(1)         # Remove and return element at index
+
+# List operations
+more_fruits = ["fig", "grape"]
+all_fruits = fruits + more_fruits  # Concatenation
+repeated = numbers * 2             # Repetition
+
+# List methods
+print(len(fruits))                 # Length
+print("apple" in fruits)           # Membership check
+fruits.sort()                      # Sort in place
+fruits.reverse()                   # Reverse in place
+sorted_fruits = sorted(fruits)     # Return new sorted list
+
+# List comprehensions
+squares = [x**2 for x in range(10)]
+even_squares = [x**2 for x in range(10) if x % 2 == 0]
+
+# Tuples (immutable)
+coordinates = (10, 20)
+rgb = (255, 128, 0)
+person = ("Alice", 30, "Engineer")
+
+# Accessing tuple elements
+print(coordinates[0])
+print(coordinates[1])
+
+# Tuples can't be modified
+# coordinates[0] = 15  # This would raise an error
+
+# Tuple unpacking
+x, y = coordinates
+red, green, blue = rgb
+name, age, profession = person
+
+# Functions returning multiple values
+def get_stats(numbers):
+    return min(numbers), max(numbers), sum(numbers)/len(numbers)
+
+min_val, max_val, avg_val = get_stats([1, 2, 3, 4, 5])
+
+# Using tuples as keys in dictionaries
+location_map = {
+    (40.7128, -74.0060): "New York",
+    (34.0522, -118.2437): "Los Angeles"
+}
+
+# Zip function
+names = ["Alice", "Bob", "Charlie"]
+ages = [25, 30, 35]
+people = list(zip(names, ages))
+print(people)</code></pre>
+              </div>
+            </article>
+
+            <article class="card" id="lesson-dictionaries">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Dictionaries</h3>
+                <button class="copy-btn" data-copy="#code-dictionaries"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Working with key-value pairs in Python.</p>
+              <div class="code" id="code-dictionaries">
+<pre><code># Creating dictionaries
+person = {
+    "name": "Alice",
+    "age": 30,
+    "city": "New York",
+    "is_student": False
+}
+
+# Alternative ways to create dictionaries
+person2 = dict(name="Bob", age=25, city="Boston")
+person3 = dict([("name", "Charlie"), ("age", 35), ("city", "Chicago")])
+
+# Accessing values
+print(person["name"])          # Key access
+print(person.get("age"))       # Using get method
+print(person.get("country", "USA"))  # Default value if key doesn't exist
+
+# Modifying dictionaries
+person["age"] = 31             # Update value
+person["country"] = "USA"      # Add new key-value pair
+person.update({"city": "Brooklyn", "is_employed": True})  # Multiple updates
+
+# Removing items
+email = person.pop("email", None)  # Remove key and return value, default if not found
+del person["is_student"]       # Remove key
+person.clear()                 # Remove all items
+
+# Dictionary methods
+print(person.keys())           # View of all keys
+print(person.values())         # View of all values
+print(person.items())          # View of all key-value pairs
+
+# Iterating through dictionaries
+for key in person:
+    print(f"{key}: {person[key]}")
+
+for key, value in person.items():
+    print(f"{key}: {value}")
+
+# Dictionary comprehensions
+squares = {x: x**2 for x in range(1, 6)}
+even_squares = {x: x**2 for x in range(1, 11) if x % 2 == 0}
+
+# Nested dictionaries
+users = {
+    "alice": {
+        "age": 30,
+        "email": "alice@example.com",
+        "roles": ["admin", "user"]
+    },
+    "bob": {
+        "age": 25,
+        "email": "bob@example.com",
+        "roles": ["user"]
+    }
+}
+
+# Accessing nested data
+print(users["alice"]["email"])
+print(users["bob"]["roles"][0])
+
+# Default dictionaries
+from collections import defaultdict
+
+word_count = defaultdict(int)
+for word in ["apple", "banana", "apple", "cherry", "banana", "apple"]:
+    word_count[word] += 1
+
+# Counter
+from collections import Counter
+
+words = ["apple", "banana", "apple", "cherry", "banana", "apple"]
+word_count = Counter(words)
+print(word_count.most_common(2))
+
+# Merging dictionaries (Python 3.9+)
+dict1 = {"a": 1, "b": 2}
+dict2 = {"b": 3, "c": 4}
+merged = dict1 | dict2          # {'a': 1, 'b': 3, 'c': 4}
+
+# Dictionary views
+keys_view = person.keys()
+values_view = person.values()
+items_view = person.items()</code></pre>
+              </div>
+            </article>
+
+            <article class="card" id="lesson-oop">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Object-Oriented Programming</h3>
+                <button class="copy-btn" data-copy="#code-oop"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Creating classes and objects in Python.</p>
+              <div class="code" id="code-oop">
+<pre><code># Basic class
+class Dog:
+    # Class attribute
+    species = "Canis familiaris"
+    
+    # Initializer / Instance attributes
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    # Instance method
+    def description(self):
+        return f"{self.name} is {self.age} years old"
+    
+    # Another instance method
+    def speak(self, sound):
+        return f"{self.name} says {sound}"
+
+# Creating objects
+buddy = Dog("Buddy", 9)
+miles = Dog("Miles", 4)
+
+# Accessing attributes and methods
+print(buddy.name)
+print(buddy.age)
+print(buddy.description())
+print(buddy.speak("Woof Woof"))
+
+# Inheritance
+class Bulldog(Dog):
+    def run(self, speed):
+        return f"{self.name} runs at {speed} mph"
+
+class Dachshund(Dog):
+    pass
+
+class RussellTerrier(Dog):
+    pass
+
+# Child classes inherit attributes and methods
+jim = Bulldog("Jim", 5)
+print(jim.description())
+print(jim.run(12))
+
+# Method overriding
+class Bulldog(Dog):
+    def speak(self, sound="Arf"):
+        return f"{self.name} says {sound}"
+
+jim = Bulldog("Jim", 5)
+print(jim.speak())
+
+# isinstance() and issubclass()
+print(isinstance(jim, Dog))        # True
+print(isinstance(jim, Bulldog))    # True
+print(issubclass(Bulldog, Dog))    # True
+
+# Properties
+class Person:
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+    
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+    
+    @full_name.setter
+    def full_name(self, name):
+        first, last = name.split(" ")
+        self.first_name = first
+        self.last_name = last
+
+person = Person("John", "Doe")
+print(person.full_name)            # John Doe
+person.full_name = "Jane Smith"
+print(person.first_name)           # Jane
+print(person.last_name)            # Smith
+
+# Class methods and static methods
+class MyClass:
+    class_attribute = "I'm a class attribute"
+    
+    def __init__(self, value):
+        self.instance_attribute = value
+    
+    @classmethod
+    def class_method(cls):
+        return f"Called class method of {cls}"
+    
+    @staticmethod
+    def static_method():
+        return "Called static method"
+    
+    def instance_method(self):
+        return f"Called instance method of {self}"
+
+obj = MyClass("test")
+print(MyClass.class_method())
+print(MyClass.static_method())
+print(obj.instance_method())
+
+# Special methods
+class Book:
+    def __init__(self, title, author, pages):
+        self.title = title
+        self.author = author
+        self.pages = pages
+    
+    def __str__(self):
+        return f"{self.title} by {self.author}"
+    
+    def __len__(self):
+        return self.pages
+    
+    def __eq__(self, other):
+        return self.title == other.title and self.author == other.author
+
+book1 = Book("Python Basics", "John Doe", 200)
+book2 = Book("Python Basics", "John Doe", 250)
+
+print(str(book1))      # Python Basics by John Doe
+print(len(book1))      # 200
+print(book1 == book2)  # True
+
+# Abstract base classes
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+    
+    @abstractmethod
+    def perimeter(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+    
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+# This would raise an error:
+# shape = Shape()
+
+rect = Rectangle(5, 3)
+print(rect.area())         # 15
+print(rect.perimeter())    # 16</code></pre>
+              </div>
+            </article>
+
+            <!-- Next Steps card -->
+            <article class="card">
+              <h3>Continue Learning</h3>
+              <p class="t">Explore other programming languages and technologies!</p>
+              <div class="cta-row">
+                <button class="btn btn--gradient" id="goDjango">Next: Learn Django →</button>
+                <button class="btn btn--gradient alt" id="goDataScience">Data Science with Python →</button>
+                <a class="btn" href="/private/dashboard" id="backAll">Back to All Courses</a>
+              </div>
+            </article>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Chat Floating Button -->
+  <button class="chat-fab" id="chatFab" aria-controls="chatBox" aria-expanded="false">
+    <i class="fa-brands fa-rocketchat"></i>
+    <span class="hide-sm">Get in Touch</span>
+    <img class="hide-img" src="https://i.ibb.co/zT8pQBLR/arsene.jpg" alt="agent" />
+    <img class="hide-img" src="https://i.ibb.co/WN6342yF/donald.jpg" alt="agent" />
+  </button>
+
+  <!-- Chat Modal -->
+  <section class="chat" id="chatBox" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <div class="chat__top">
+      <h2 id="chatTitle" style="margin:0; font-size:1rem;">Get In Touch</h2>
+      <button id="chatClose" aria-label="Close chat" class="btn" style="padding:8px 10px;">
+        <i class="fa-regular fa-circle-xmark"></i>
+      </button>
+    </div>
+    <form class="chat__body" id="contactForm">
+      <div id="formNote" class="sr-only" aria-live="polite"></div>
+      <div class="field">
+        <label for="name">Names *</label>
+        <input class="input" id="name" name="name" type="text" placeholder="Full names" required />
+      </div>
+      <div class="field">
+        <label for="email">E-mail *</label>
+        <input class="input" id="email" name="email" type="email" placeholder="E-mail" required />
+      </div>
+      <div class="field">
+        <label for="subject">Subject *</label>
+        <input class="input" id="subject" name="subject" type="text" placeholder="Subject" required />
+      </div>
+      <div class="field">
+        <label for="message">Message *</label>
+        <textarea class="textarea" id="message" name="message" placeholder="Text a message..." required></textarea>
+      </div>
+      <button class="submit" type="submit">Send</button>
+      <p class="help">* Feedback will get to you in less than 24hrs!</p>
+    </form>
+    <div class="chat__actions">
+      <a href="tel:+250792575986" title="Call"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:katprogrammers@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.instagram.com/kat_programmers" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section contact-form">
+        <h2 class="footer-title">Contact Us</h2>
+        <form class="contact-form-inner" id="footerContactForm">
+          <div class="form-group">
+            <label for="footerName">Name</label>
+            <input type="text" id="footerName" name="name" placeholder="e.g. Arsene Breezy" required>
+          </div>
+          <div class="form-group">
+            <label for="footerEmail">Email</label>
+            <input type="email" id="footerEmail" name="email" placeholder="e.g. example@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label for="footerMessage">Message</label>
+            <textarea id="footerMessage" name="message" rows="3" placeholder="text message..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Send</button>
+        </form>
+      </div>
+      
+      <div class="footer-section social-media">
+        <h2 class="footer-title">Follow Us</h2>
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/kat_programmers/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="qr">
+          <a href="https://katprogrammers.vercel.app" target="_blank" title="Open kat-programmers on Mobile">
+            <img src="https://i.ibb.co/BKPTj83C/qrcode.png" alt="Kat Programmers QR Code">
+            <p style="margin-top: 10px; font-size: 0.85rem;">Scan to open on mobile</p>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-section map">
+        <h2 class="footer-title">Our Location</h2>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019019858232!2d-122.4194154846817!3d37.77492977975959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c2f8e6e2b%3A0x4a0b8e6e2b8e6e2b!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1628888888888!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Kat-Programmers. All rights reserved.</p>
+      <p style="margin-top: 10px; font-size: 0.8rem;">
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Privacy Policy</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Terms of Service</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Contact Support</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== THEME =====
+    (function initTheme() {
+      try {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('themeToggle');
+        if (btn) btn.setAttribute('aria-pressed', theme === 'light');
+      } catch (e) {}
+    })();
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const root = document.documentElement;
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('themeToggle').setAttribute('aria-pressed', next === 'light');
+    });
+
+    // ===== SIDEBAR (mobile off-canvas) =====
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('backdrop');
+
+    function openSidebar() {
+      sidebar.classList.add('sidebar--active');
+      backdrop.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('sidebar--active');
+      backdrop.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+    sidebarToggle.addEventListener('click', () => {
+      const isOpen = sidebar.classList.contains('sidebar--active');
+      isOpen ? closeSidebar() : openSidebar();
+    });
+    backdrop.addEventListener('click', closeSidebar);
+
+    // Close sidebar on wide screens
+    const mq = window.matchMedia('(min-width: 841px)');
+    mq.addEventListener('change', e => { if (e.matches) closeSidebar(); });
+
+    // ===== COPY BUTTONS =====
+    function copyFrom(selector, btn) {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      const text = el.innerText.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = original; }, 1600);
+      }).catch(() => {
+        alert('Copy failed.');
+      });
+    }
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => copyFrom(btn.getAttribute('data-copy'), btn));
+    });
+
+    // ===== CHAT =====
+    const chatFab = document.getElementById('chatFab');
+    const chatBox = document.getElementById('chatBox');
+    const chatClose = document.getElementById('chatClose');
+
+    function openChat() { chatBox.classList.add('active'); chatFab.setAttribute('aria-expanded', 'true'); }
+    function closeChat() { chatBox.classList.remove('active'); chatFab.setAttribute('aria-expanded', 'false'); }
+
+    chatFab.addEventListener('click', () => {
+      if (chatBox.classList.contains('active')) closeChat(); else openChat();
+    });
+    chatClose.addEventListener('click', closeChat);
+
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Message sent successfully! Our team will contact you soon.');
+      e.target.reset();
+      closeChat();
+    });
+
+    // ===== LESSON NAV (example hooks) =====
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.target;
+        const element = document.getElementById(`lesson-${target}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Close sidebar when clicking navigation links
+    document.querySelectorAll('.nav__link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
+    });
+    
+    // Close sidebar when clicking inside the accordion
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
+    });
+
+    // Fetch user info
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/api/me', {
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const user = await response.json();
+          document.getElementById('userEmail').textContent = user.email;
+        } else {
+          document.querySelector('.user-info').style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+        document.querySelector('.user-info').style.display = 'none';
+      }
+    });
+
+    // ===== CTA buttons (example navigation) =====
+    document.getElementById('goDjango').addEventListener('click', () => alert('Django course coming soon!'));
+    document.getElementById('goDataScience').addEventListener('click', () => alert('Data Science course coming soon!'));
+    document.getElementById('backAll').addEventListener('click', (e) => { e.preventDefault(); window.location.href = '/private/dashboard'; });
+
+  </script>
+  <script>
+// Cross-tab logout communication with fallback
+function setupCrossTabLogout() {
+  let logoutChannel;
+  
+  if (typeof BroadcastChannel !== 'undefined') {
+    logoutChannel = new BroadcastChannel('logout-channel');
+    
+    logoutChannel.addEventListener('message', (event) => {
+      if (event.data.type === 'logout') {
+        console.log('Logout detected from another tab via BroadcastChannel');
+        window.location.replace('/login');
+      }
+    });
+  } else {
+    console.log('BroadcastChannel not supported, using localStorage fallback');
+    
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'logout-event' && event.newValue) {
+        console.log('Logout detected from another tab via localStorage');
+        window.location.replace('/login');
+      }
+    });
+    
+    if (localStorage.getItem('logout-event')) {
+      console.log('Logout detected on page load via localStorage');
+      window.location.replace('/login');
+    }
+  }
+
+  async function checkAuthStatus() {
+    try {
+      const response = await fetch('/api/me', {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      if (!response.ok) {
+        window.location.replace('/login');
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      window.location.replace('/login');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', checkAuthStatus);
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+      checkAuthStatus();
+    }
+  });
+  window.addEventListener('focus', checkAuthStatus);
+  
+  setInterval(checkAuthStatus, 30000);
+  
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function() {
+      const originalContent = logoutBtn.innerHTML;
+      logoutBtn.disabled = true;
+      logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+
+      try {
+        const response = await fetch('/sessionLogout', {
+          method: 'POST',
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          if (logoutChannel) {
+            logoutChannel.postMessage({ type: 'logout', timestamp: Date.now() });
+          } else {
+            localStorage.setItem('logout-event', Date.now().toString());
+            setTimeout(() => localStorage.removeItem('logout-event'), 100);
+          }
+          
+          window.location.replace('/login');
+        } else {
+          throw new Error('Logout failed');
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+        logoutBtn.disabled = false;
+        logoutBtn.innerHTML = originalContent;
+        alert('Logout failed. Please try again.');
+      }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', setupCrossTabLogout);
+</script>
 </body>
 </html>
