@@ -78,6 +78,7 @@
             opacity: 0.9;
             max-width: 800px;
             margin: 0 auto 2rem;
+            color: var(--text-primary);
         }
         
         .language-carousel {
