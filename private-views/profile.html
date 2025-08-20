@@ -101,9 +101,9 @@
       
       <hr>
       
-      <!-- FIXED: unique ID -->
-      <button id="logoutBtn" class="btn btn-secondary">
-        <i class="fas fa-sign-out-alt"></i> Logout
+      <button class="nav__link" id="logoutBtn" style="width:100%; background:transparent; border:0; text-align:left; cursor: pointer; width: 40%;">
+            <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span>Log Out</span>
       </button>
       
       <hr>
@@ -194,6 +194,49 @@
         const err = await res.json().catch(() => ({}));
         alert('Failed to delete account: ' + (err.error || 'Unknown error'));
       }
+    });
+
+     // ===== SIDEBAR (mobile off-canvas) =====
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('backdrop');
+
+    function openSidebar() {
+      sidebar.classList.add('sidebar--active');
+      backdrop.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('sidebar--active');
+      backdrop.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+    sidebarToggle.addEventListener('click', () => {
+      const isOpen = sidebar.classList.contains('sidebar--active');
+      isOpen ? closeSidebar() : openSidebar();
+    });
+    backdrop.addEventListener('click', closeSidebar);
+
+    // Close sidebar on wide screens
+    const mq = window.matchMedia('(min-width: 841px)');
+    mq.addEventListener('change', e => { if (e.matches) closeSidebar(); });
+
+        // Close sidebar when clicking navigation links
+    document.querySelectorAll('.nav__link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
+    });
+    
+    // Close sidebar when clicking inside the accordion
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
     });
 
   </script>
