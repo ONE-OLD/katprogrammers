@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile</title>
+  <title>Account | Kat-Programmers</title>
   <!-- Fixed CSS path -->
   <link rel="stylesheet" href="/private/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,26 +11,26 @@
 <body data-theme="dark">
   <!-- Sidebar -->
   <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="https://via.placeholder.com/40" alt="KAT-PROGRAMMERS Logo">
-            <h2>KAT-PROGRAMMERS</h2>
-        </div>
-        <ul class="sidebar-links">
-            <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
-            <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
-            <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
-            <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
-            <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
-            <div class="sidebar-bottom">
-                <li><a href="/private/profile"><span><i class="fa-solid fa-circle-user"></i></span><p>Profile</p></a></li>
-                <li><button id="profileLogoutBtn"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></button></li>
-            </div>
-        </ul>
-        <div class="theme-toggle-container">
-            
-            <button class="theme-toggle" id="themeToggle"></button>
-        </div>
-    </aside>
+    <div class="sidebar-header">
+      <img src="https://via.placeholder.com/40" alt="KAT-PROGRAMMERS Logo">
+      <h2>KAT-PROGRAMMERS</h2>
+    </div>
+    <ul class="sidebar-links">
+      <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
+      <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
+      <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
+      <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
+      <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
+      <div class="sidebar-bottom">
+        <li><a href="/private/profile"><span><i class="fa-solid fa-circle-user"></i></span><p>Profile</p></a></li>
+        <!-- FIXED: unique ID -->
+        <li><button id="sidebarLogoutBtn"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></button></li>
+      </div>
+    </ul>
+    <div class="theme-toggle-container">
+      <button class="theme-toggle" id="themeToggle"></button>
+    </div>
+  </aside>
 
   <!-- Main Content -->
   <main class="main-content">
@@ -69,29 +69,27 @@
       
       <hr>
       
-      <button id="profileLogoutBtn" class="btn btn-secondary">
+      <!-- FIXED: unique ID -->
+      <button id="mainLogoutBtn" class="btn btn-secondary">
         <i class="fas fa-sign-out-alt"></i> Logout
       </button>
       
       <hr>
       
       <h2 class="card-title">Recent Activity</h2>
-      <!-- Removed placeholder items; will populate dynamically -->
       <ul class="activity-list" id="activityList"></ul>
     </div>
   </main>
 
   <script>
-    // Theme toggle functionality (unchanged)
+    // Theme toggle functionality
     const themeToggle = document.getElementById('themeToggle');
     const currentTheme = localStorage.getItem('theme') || 'dark';
-    
     document.body.setAttribute('data-theme', currentTheme);
-    
+
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.body.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
       document.body.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
     });
@@ -116,6 +114,7 @@
       }
     }
 
+    // Change password
     document.getElementById('passwordForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const newPassword = document.getElementById('newPassword').value;
@@ -137,6 +136,7 @@
       }
     });
 
+    // Delete account
     document.getElementById('deleteBtn').addEventListener('click', async () => {
       if (!confirm('Are you sure you want to delete your account? This cannot be undone!')) return;
 
@@ -154,23 +154,27 @@
       }
     });
 
-    
+    // Shared logout function
+    async function logout() {
+      await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+      localStorage.removeItem('theme'); // clear theme if needed
+      window.location.href = '/login';
+    }
 
-    // FIXED: Correct logout button
-    document.getElementById('profileLogoutBtn').addEventListener('click', logout);
+    // Attach logout to both buttons
+    document.getElementById('sidebarLogoutBtn').addEventListener('click', logout);
+    document.getElementById('mainLogoutBtn').addEventListener('click', logout);
 
     // Load on page start
     loadProfile();
     loadActivity();
-  </script>
-  <script>
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-      // Reload page if it was loaded from bfcache (back-forward cache)
-      window.location.reload();
-    }
-  });
-</script>
 
+    // Prevent going back after logout
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        window.location.reload();
+      }
+    });
+  </script>
 </body>
 </html>
