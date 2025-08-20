@@ -73,11 +73,11 @@
       <h2 class="card-title">Account Information</h2>
       <div class="info-item">
         <span class="info-label">Email:</span>
-        <span class="info-value" id="email">Loading...</span>
+        <span class="info-value" id="userEmail">Loading...</span>
       </div>
       <div class="info-item">
         <span class="info-label">User ID:</span>
-        <span class="info-value" id="uid">Loading...</span>
+        <span class="info-value" id="userUid">Loading...</span>
       </div>
       
       <hr>
@@ -127,16 +127,26 @@
       localStorage.setItem('theme', newTheme);
     });
 
-    async function loadProfile() {
-      const res = await fetch('/api/me', { credentials: 'include' });
-      if (res.ok) {
-        const data = await res.json();
-        document.getElementById('email').textContent = data.email;
-        document.getElementById('uid').textContent = data.uid;
-      } else {
-        window.location.href = '/login';
+    // Fetch user info
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/api/me', {
+          credentials: 'include' // Include cookies for auth
+        });
+        
+        if (response.ok) {
+          const user = await response.json();
+          document.getElementById('userEmail').textContent = user.email;
+          document.getElementById('userUid').textContent = user.uid;
+        } else {
+          // If not logged in, hide the user info section
+          document.querySelector('.user-info').style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+        document.querySelector('.user-info').style.display = 'none';
       }
-    }
+    });
 
     async function loadActivity() {
       const res = await fetch('/api/activity', { credentials: 'include' });
