@@ -2,30 +2,20 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-  <title>KAT-PROGRAMMERS Course Platform</title>
-  <link rel="icon" href="./assets/images/image (1).png" />
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>KAT-PROGRAMMERS Course Platform | C++</title>
+  <link rel="icon" href="https://i.ibb.co/NgsStwt4/image-1.png" />
   <link rel="stylesheet" href="courses.css">
-  <!-- Font Awesome (deferred for performance) -->
-  <link
-    rel="preload"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    as="style"
-    onload="this.onload=null;this.rel='stylesheet'"
-  />
-  <noscript>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-  </noscript>
-
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 </head>
 <body>
   <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" id="sidebarToggle">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 
   <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
@@ -33,58 +23,37 @@
     <!-- Sidebar -->
     <aside class="sidebar sidebar--offcanvas" id="sidebar" aria-label="Primary">
       <div class="sidebar__hdr">
-        <img src="./assets/images/image (1).png" alt="KAT-PROGRAMMERS logo" />
+        <img src="https://i.ibb.co/NgsStwt4/image-1.png" alt="KAT-PROGRAMMERS logo" />
         <div class="sidebar__title">KAT-PROGRAMMERS</div>
       </div>
       
       <nav class="sidebar__nav" role="navigation">
         <div class="nav__group" aria-label="Main links">
-          <a class="nav__link" href="/dashboard"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
-          <a class="nav__link" href="/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
-          <a class="nav__link" href="/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
-          <a class="nav__link" href="/certificate" aria-current="page"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
-          <a class="nav__link" href="/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
+          <a class="nav__link" href="/private/dashboard"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+          <a class="nav__link" href="/private/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
+          <a class="nav__link" href="/private/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
+          <a class="nav__link" href="/private/certificate"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
+          <a class="nav__link" href="/private/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
         </div>
-        <!-- Add this inside your sidebar, just before the footer section -->
-<div class="user-info" style="padding: 16px; border-top: 1px solid var(--bg-surface);">
-  <div style="display: flex; align-items: center; gap: 12px;">
-    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center;">
-      <i class="fa-solid fa-user" style="color: white;"></i>
-    </div>
-    <div>
-      <div style="font-size: 0.85rem; color: var(--text-secondary);">Logged in as:</div>
-      <div id="userEmail" style="font-weight: 600; font-size: 0.9rem;"></div>
-    </div>
-  </div>
-</div>
 
-<script>
-// Add this script to fetch and display the user email
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const response = await fetch('/api/me', {
-      credentials: 'include' // Include cookies for auth
-    });
-    
-    if (response.ok) {
-      const user = await response.json();
-      document.getElementById('userEmail').textContent = user.email;
-    } else {
-      // If not logged in, hide the user info section
-      document.querySelector('.user-info').style.display = 'none';
-    }
-  } catch (error) {
-    console.error('Failed to fetch user info:', error);
-    document.querySelector('.user-info').style.display = 'none';
-  }
-});
-</script>
+        <div class="user-info" style="padding: 16px; border-top: 1px solid var(--bg-surface);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center;">
+              <i class="fa-solid fa-user" style="color: white;"></i>
+            </div>
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">Logged in as:</div>
+              <div id="userEmail" style="font-weight: 600; font-size: 0.9rem;"></div>
+            </div>
+          </div>
+        </div>
+
         <div class="sidebar__footer">
-          <a class="nav__link" href="/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
+          <a class="nav__link" href="/private/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
           <button class="nav__link" id="logoutBtn" style="width:100%; background:none; border:0; text-align:left;">
-  <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
-  <span>Log Out</span>
-</button>
+            <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span>Log Out</span>
+          </button>
         </div>
         
         <div class="theme-toggle-row" aria-live="polite">
@@ -98,13 +67,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       <!-- Header -->
       <header class="site-hdr">
         <div class="site-hdr__inner">
-          
           <div>
-              <button class="sidebar-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" id="sidebarToggle">
-    <i class="fa-solid fa-bars"></i>
-  </button>
-
-            <h1 style="margin:.4rem 0 0; font-size:1.6rem; font-weight:800; margin-left: 60px;">Course: C++ Fundamentals</h1>
+            <h1 style="margin:.4rem 0 0; font-size:1.6rem; font-weight:800; margin-left: 60px;">Course: C++ Programming</h1>
           </div>
           <div class="badge">Advanced Level</div>
         </div>
@@ -114,32 +78,45 @@ document.addEventListener('DOMContentLoaded', async () => {
       <main>
         <div class="grid grid-4">
           <!-- Course Contents (Accordion) -->
-          <section class="card" aria-labelledby="contentsTitle" style="position:sticky; top:90px; height:fit-content;">
+          <section class="card cont" aria-labelledby="contentsTitle" style="position:sticky; top:90px; width:400px; height:fit-content;">
             <h2 id="contentsTitle" style="margin-bottom:10px;">Course Contents</h2>
             <div class="accordion" id="accordion">
               <!-- Item 1 -->
               <details class="acc__item" open>
-                <summary class="acc__btn"><span class="num">1</span> Getting Started</summary>
+                <summary class="acc__btn"><span class="num">1</span> C++ Basics</summary>
                 <div class="acc__panel">
                   <div class="acc__panel-inner">
                     <ul>
-                      <li>Introduction</li>
-                      <li>Environment Setup</li>
-                      <li>Hello World</li>
-                      <li>Basic I/O</button></li>
+                      <li>Introduction to C++</li>
+                      <li>Variables & Data Types</li>
+                      <li>Operators</li>
+                      <li>Control Structures</li>
                     </ul>
                   </div>
                 </div>
               </details>
               <!-- Item 2 -->
               <details class="acc__item">
-                <summary class="acc__btn"><span class="num">2</span> Core Concepts</summary>
+                <summary class="acc__btn"><span class="num">2</span> Functions & OOP</summary>
                 <div class="acc__panel">
                   <div class="acc__panel-inner">
                     <ul>
-                      <li><button class="link-lessons" data-target="variables">Variables & Types</button></li>
-                      <li><button class="link-lessons" data-target="control">Control Flow</button></li>
                       <li><button class="link-lessons" data-target="functions">Functions</button></li>
+                      <li><button class="link-lessons" data-target="classes">Classes & Objects</button></li>
+                      <li><button class="link-lessons" data-target="templates">Templates</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <!-- Item 3 -->
+              <details class="acc__item">
+                <summary class="acc__btn"><span class="num">3</span> Advanced C++</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li><button class="link-lessons" data-target="stl">STL Library</button></li>
+                      <li><button class="link-lessons" data-target="memory">Memory Management</button></li>
+                      <li><button class="link-lessons" data-target="concurrency">Concurrency</button></li>
                     </ul>
                   </div>
                 </div>
@@ -151,199 +128,567 @@ document.addEventListener('DOMContentLoaded', async () => {
           <section>
             <!-- Intro card -->
             <article class="card" id="lesson-intro">
-              <h2 class="h">Learn C++ the Right Way</h2>
-              <p class="t">This comprehensive course takes you from your first program to writing efficient, modern C++ with confidence.</p>
+              <h2 class="h">Master C++ Programming</h2>
+              <p class="t">Learn one of the most powerful and widely used programming languages for system development, game programming, and high-performance applications.</p>
               <div class="stats" aria-label="Course stats">
-                <div class="stat"><div class="ico"><i class="fa-solid fa-book"></i></div><div><strong>30 Lessons</strong><div class="muted">Comprehensive curriculum</div></div></div>
-                <div class="stat"><div class="ico">⚙️</div><div><strong>System Level</strong><div class="muted">Low-level programming</div></div></div>
-                <div class="stat"><div class="ico">🚀</div><div><strong>Performance</strong><div class="muted">High-speed apps</div></div></div>
+                <div class="stat"><div class="ico"><i class="fa-solid fa-book"></i></div><div><strong>35 Lessons</strong><div class="muted">Comprehensive curriculum</div></div></div>
+                <div class="stat"><div class="ico">⚡</div><div><strong>High Performance</strong><div class="muted">System-level programming</div></div></div>
+                <div class="stat"><div class="ico">🔄</div><div><strong>Object-Oriented</strong><div class="muted">Modern programming paradigm</div></div></div>
               </div>
               <h3 style="margin-top:14px;">What You'll Learn</h3>
               <ul class="t">
-                <li>Syntax and fundamental concepts</li>
-                <li>Core programming principles</li>
-                <li>Memory management</li>
-                <li>Advanced features</li>
-                <li>Optimization best practices</li>
+                <li>C++ syntax and fundamentals</li>
+                <li>Object-oriented programming principles</li>
+                <li>Memory management and pointers</li>
+                <li>Standard Template Library (STL)</li>
+                <li>Multithreading and concurrency</li>
               </ul>
             </article>
 
-            <!-- Code example card -->
-            <article class="card" id="lesson-hello">
+            <!-- Code example cards -->
+            <article class="card" id="lesson-basics">
               <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                <h3>Hello World Program</h3>
-                <button class="copy-btn" data-copy="#code-hello"><i class="fa-regular fa-copy"></i> Copy</button>
+                <h3>C++ Basics</h3>
+                <button class="copy-btn" data-copy="#code-basics"><i class="fa-regular fa-copy"></i> Copy</button>
               </div>
-              <p class="t">Your first C++ program.</p>
-              <div class="code" id="code-hello" aria-label="Hello world code">
-<pre><code><span class="kw">#include</span> &lt;iostream&gt;
-<span class="kw">using</span> <span class="kw">namespace</span> std;
+              <p class="t">Fundamental C++ syntax and concepts.</p>
+              <div class="code" id="code-basics">
+<pre><code>#include <iostream>
+using namespace std;
 
-<span class="kw">int</span> <span class="fn">main</span>() {
-    cout &lt;&lt; <span class="sym">"Hello, World!"</span> &lt;&lt; endl;
-    <span class="kw">return</span> 0;
-}
-</code></pre>
+// Main function - program entry point
+int main() {
+    // Variables and data types
+    int number = 42;
+    double pi = 3.14159;
+    char grade = 'A';
+    string message = "Hello, C++!";
+    bool isCppFun = true;
+
+    // Output
+    cout << "Number: " << number << endl;
+    cout << "Pi: " << pi << endl;
+    cout << "Grade: " << grade << endl;
+    cout << "Message: " << message << endl;
+    cout << "Is C++ fun? " << boolalpha << isCppFun << endl;
+
+    // Input
+    int userInput;
+    cout << "Enter a number: ";
+    cin >> userInput;
+    cout << "You entered: " << userInput << endl;
+
+    // Operators
+    int a = 10, b = 3;
+    cout << "a + b = " << (a + b) << endl;
+    cout << "a - b = " << (a - b) << endl;
+    cout << "a * b = " << (a * b) << endl;
+    cout << "a / b = " << (a / b) << endl;
+    cout << "a % b = " << (a % b) << endl;
+
+    // Conditional statements
+    if (a > b) {
+        cout << "a is greater than b" << endl;
+    } else if (a < b) {
+        cout << "a is less than b" << endl;
+    } else {
+        cout << "a is equal to b" << endl;
+    }
+
+    // Switch statement
+    int day = 3;
+    switch (day) {
+        case 1: cout << "Monday" << endl; break;
+        case 2: cout << "Tuesday" << endl; break;
+        case 3: cout << "Wednesday" << endl; break;
+        default: cout << "Other day" << endl;
+    }
+
+    // Loops
+    // For loop
+    cout << "For loop: ";
+    for (int i = 0; i < 5; i++) {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    // While loop
+    cout << "While loop: ";
+    int count = 0;
+    while (count < 5) {
+        cout << count << " ";
+        count++;
+    }
+    cout << endl;
+
+    // Do-while loop
+    cout << "Do-while loop: ";
+    count = 0;
+    do {
+        cout << count << " ";
+        count++;
+    } while (count < 5);
+    cout << endl;
+
+    return 0;
+}</code></pre>
               </div>
             </article>
-            <!-- Replace the existing code example card with this enhanced version -->
-<article class="card" id="lesson-hello">
-  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-    <h3>Hello World Program</h3>
-    <button class="copy-btn" data-copy="#code-hello"><i class="fa-regular fa-copy"></i> Copy</button>
-  </div>
-  <p class="t">Your first C++ program.</p>
-  <div class="code" id="code-hello" aria-label="Hello world code">
-<pre><code><span class="kw">#include</span> &lt;iostream&gt;
-<span class="kw">using</span> <span class="kw">namespace</span> std;
 
-<span class="kw">int</span> <span class="fn">main</span>() {
-    cout &lt;&lt; <span class="sym">"Hello, World!"</span> &lt;&lt; endl;
-    <span class="kw">return</span> 0;
-}</code></pre>
-  </div>
-</article>
+            <article class="card" id="lesson-functions">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Functions in C++</h3>
+                <button class="copy-btn" data-copy="#code-functions"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Creating and using functions in C++.</p>
+              <div class="code" id="code-functions">
+<pre><code>#include <iostream>
+#include <cmath>
+using namespace std;
 
-<!-- Add these additional code example cards -->
-<article class="card">
-  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-    <h3>Variables and Data Types</h3>
-    <button class="copy-btn" data-copy="#code-variables"><i class="fa-regular fa-copy"></i> Copy</button>
-  </div>
-  <p class="t">Basic variable declarations in C++.</p>
-  <div class="code" id="code-variables">
-<pre><code><span class="kw">#include</span> &lt;iostream&gt;
-<span class="kw">using</span> <span class="kw">namespace</span> std;
+// Function declaration (prototype)
+double calculateCircleArea(double radius);
 
-<span class="kw">int</span> <span class="fn">main</span>() {
-    <span class="kw">// Integer types</span>
-    <span class="kw">int</span> age = 25;
-    <span class="kw">long</span> bigNumber = 123456789L;
-    
-    <span class="kw">// Floating point</span>
-    <span class="kw">float</span> price = 19.99f;
-    <span class="kw">double</span> pi = 3.1415926535;
-    
-    <span class="kw">// Character</span>
-    <span class="kw">char</span> grade = 'A';
-    
-    <span class="kw">// Boolean</span>
-    <span class="kw">bool</span> isCppFun = true;
-    
-    <span class="kw">// String</span>
-    string name = "Alice";
-    
-    cout &lt;&lt; <span class="sym">"Name: "</span> &lt;&lt; name &lt;&lt; endl;
-    <span class="kw">return</span> 0;
-}</code></pre>
-  </div>
-</article>
-
-<article class="card">
-  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-    <h3>Control Structures</h3>
-    <button class="copy-btn" data-copy="#code-control"><i class="fa-regular fa-copy"></i> Copy</button>
-  </div>
-  <p class="t">Conditionals and loops in C++.</p>
-  <div class="code" id="code-control">
-<pre><code><span class="kw">#include</span> &lt;iostream&gt;
-<span class="kw">using</span> <span class="kw">namespace</span> std;
-
-<span class="kw">int</span> <span class="fn">main</span>() {
-    <span class="kw">// If-else statement</span>
-    <span class="kw">int</span> x = 10;
-    <span class="kw">if</span> (x > 5) {
-        cout &lt;&lt; <span class="sym">"x is greater than 5"</span> &lt;&lt; endl;
-    } <span class="kw">else</span> {
-        cout &lt;&lt; <span class="sym">"x is 5 or less"</span> &lt;&lt; endl;
-    }
-    
-    <span class="kw">// For loop</span>
-    <span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; 5; i++) {
-        cout &lt;&lt; <span class="sym">"Iteration "</span> &lt;&lt; i &lt;&lt; endl;
-    }
-    
-    <span class="kw">// While loop</span>
-    <span class="kw">int</span> count = 3;
-    <span class="kw">while</span> (count > 0) {
-        cout &lt;&lt; count &lt;&lt; endl;
-        count--;
-    }
-    
-    <span class="kw">return</span> 0;
-}</code></pre>
-  </div>
-</article>
-
-<article class="card">
-  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-    <h3>Functions</h3>
-    <button class="copy-btn" data-copy="#code-functions"><i class="fa-regular fa-copy"></i> Copy</button>
-  </div>
-  <p class="t">Creating and using functions in C++.</p>
-  <div class="code" id="code-functions">
-<pre><code><span class="kw">#include</span> &lt;iostream&gt;
-<span class="kw">using</span> <span class="kw">namespace</span> std;
-
-<span class="kw">// Function declaration</span>
-<span class="kw">int</span> <span class="fn">addNumbers</span>(<span class="kw">int</span> a, <span class="kw">int</span> b);
-
-<span class="kw">int</span> <span class="fn">main</span>() {
-    <span class="kw">int</span> num1 = 5, num2 = 7;
-    <span class="kw">int</span> sum = addNumbers(num1, num2);
-    
-    cout &lt;&lt; <span class="sym">"Sum: "</span> &lt;&lt; sum &lt;&lt; endl;
-    <span class="kw">return</span> 0;
+// Function with default parameter
+void greet(string name = "Guest") {
+    cout << "Hello, " << name << "!" << endl;
 }
 
-<span class="kw">// Function definition</span>
-<span class="kw">int</span> <span class="fn">addNumbers</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) {
-    <span class="kw">return</span> a + b;
+// Function overloading
+int add(int a, int b) {
+    return a + b;
+}
+
+double add(double a, double b) {
+    return a + b;
+}
+
+// Pass by value
+void incrementByValue(int x) {
+    x++;
+    cout << "Inside function (by value): " << x << endl;
+}
+
+// Pass by reference
+void incrementByReference(int &x) {
+    x++;
+    cout << "Inside function (by reference): " << x << endl;
+}
+
+// Pass by pointer
+void incrementByPointer(int *x) {
+    (*x)++;
+    cout << "Inside function (by pointer): " << *x << endl;
+}
+
+// Return by value
+int square(int x) {
+    return x * x;
+}
+
+// Return by reference (caution: don't return local variables)
+int& getElement(int arr[], int index) {
+    return arr[index];
+}
+
+// Inline function
+inline int cube(int x) {
+    return x * x * x;
+}
+
+// Recursive function
+int factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}
+
+// Function template
+template <typename T>
+T getMax(T a, T b) {
+    return (a > b) ? a : b;
+}
+
+// Main function
+int main() {
+    // Basic function call
+    double area = calculateCircleArea(5.0);
+    cout << "Area of circle: " << area << endl;
+
+    // Default parameter
+    greet(); // Uses default
+    greet("Alice"); // Uses provided value
+
+    // Function overloading
+    cout << "Int addition: " << add(5, 3) << endl;
+    cout << "Double addition: " << add(5.5, 3.2) << endl;
+
+    // Parameter passing
+    int num = 10;
+    cout << "Original value: " << num << endl;
+    
+    incrementByValue(num);
+    cout << "After pass by value: " << num << endl;
+    
+    incrementByReference(num);
+    cout << "After pass by reference: " << num << endl;
+    
+    incrementByPointer(&num);
+    cout << "After pass by pointer: " << num << endl;
+
+    // Return values
+    cout << "Square of 7: " << square(7) << endl;
+
+    int numbers[] = {10, 20, 30};
+    getElement(numbers, 1) = 25; // Modify array element
+    cout << "Modified array element: " << numbers[1] << endl;
+
+    // Inline function
+    cout << "Cube of 4: " << cube(4) << endl;
+
+    // Recursive function
+    cout << "Factorial of 5: " << factorial(5) << endl;
+
+    // Function template
+    cout << "Max of 5 and 8: " << getMax(5, 8) << endl;
+    cout << "Max of 3.14 and 2.71: " << getMax(3.14, 2.71) << endl;
+    cout << "Max of 'A' and 'Z': " << getMax('A', 'Z') << endl;
+
+    return 0;
+}
+
+// Function definition
+double calculateCircleArea(double radius) {
+    return M_PI * radius * radius;
 }</code></pre>
-  </div>
-</article>
+              </div>
+            </article>
 
-<article class="card">
-  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-    <h3>Classes and Objects</h3>
-    <button class="copy-btn" data-copy="#code-classes"><i class="fa-regular fa-copy"></i> Copy</button>
-  </div>
-  <p class="t">Basic OOP in C++.</p>
-  <div class="code" id="code-classes">
-<pre><code><span class="kw">#include</span> &lt;iostream&gt;
-<span class="kw">using</span> <span class="kw">namespace</span> std;
+            <article class="card" id="lesson-classes">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Classes and Objects</h3>
+                <button class="copy-btn" data-copy="#code-classes"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Object-oriented programming with classes in C++.</p>
+              <div class="code" id="code-classes">
+<pre><code>#include <iostream>
+#include <string>
+using namespace std;
 
-<span class="kw">class</span> <span class="fn">Rectangle</span> {
-  <span class="kw">private</span>:
-    <span class="kw">int</span> width, height;
-  
-  <span class="kw">public</span>:
-    <span class="fn">Rectangle</span>(<span class="kw">int</span> w, <span class="kw">int</span> h) {
-        width = w;
-        height = h;
+// Simple class
+class Rectangle {
+private:
+    double length;
+    double width;
+    
+public:
+    // Constructor
+    Rectangle(double l, double w) : length(l), width(w) {}
+    
+    // Default constructor
+    Rectangle() : length(0), width(0) {}
+    
+    // Destructor
+    ~Rectangle() {
+        cout << "Rectangle object destroyed" << endl;
     }
     
-    <span class="kw">int</span> <span class="fn">area</span>() {
-        <span class="kw">return</span> width * height;
+    // Getter methods
+    double getLength() const { return length; }
+    double getWidth() const { return width; }
+    
+    // Setter methods
+    void setLength(double l) { length = l; }
+    void setWidth(double w) { width = w; }
+    
+    // Member function
+    double area() const {
+        return length * width;
+    }
+    
+    double perimeter() const {
+        return 2 * (length + width);
     }
 };
 
-<span class="kw">int</span> <span class="fn">main</span>() {
-    Rectangle rect(3, 4);
-    cout &lt;&lt; <span class="sym">"Area: "</span> &lt;&lt; rect.area() &lt;&lt; endl;
-    <span class="kw">return</span> 0;
+// Class with inheritance
+class Shape {
+protected:
+    string name;
+    
+public:
+    Shape(string n) : name(n) {}
+    
+    virtual double area() const = 0; // Pure virtual function
+    virtual double perimeter() const = 0;
+    
+    void display() const {
+        cout << "Shape: " << name << endl;
+    }
+    
+    virtual ~Shape() {} // Virtual destructor
+};
+
+class Circle : public Shape {
+private:
+    double radius;
+    
+public:
+    Circle(double r) : Shape("Circle"), radius(r) {}
+    
+    double area() const override {
+        return 3.14159 * radius * radius;
+    }
+    
+    double perimeter() const override {
+        return 2 * 3.14159 * radius;
+    }
+    
+    double getRadius() const { return radius; }
+    void setRadius(double r) { radius = r; }
+};
+
+// Class with static members
+class Counter {
+private:
+    static int count; // Static member variable
+    
+public:
+    Counter() {
+        count++; // Increment count when object is created
+    }
+    
+    ~Counter() {
+        count--; // Decrement count when object is destroyed
+    }
+    
+    static int getCount() { // Static member function
+        return count;
+    }
+};
+
+// Initialize static member
+int Counter::count = 0;
+
+// Class template
+template <typename T>
+class Box {
+private:
+    T content;
+    
+public:
+    Box(T c) : content(c) {}
+    
+    T getContent() const { return content; }
+    void setContent(T c) { content = c; }
+};
+
+// Main function
+int main() {
+    // Create objects
+    Rectangle rect(5.0, 3.0);
+    cout << "Rectangle area: " << rect.area() << endl;
+    cout << "Rectangle perimeter: " << rect.perimeter() << endl;
+    
+    // Using getters and setters
+    rect.setLength(7.0);
+    rect.setWidth(4.0);
+    cout << "Updated area: " << rect.area() << endl;
+    
+    // Inheritance example
+    Circle circle(5.0);
+    circle.display();
+    cout << "Circle area: " << circle.area() << endl;
+    cout << "Circle circumference: " << circle.perimeter() << endl;
+    
+    // Polymorphism
+    Shape* shape = &circle;
+    cout << "Area via base pointer: " << shape->area() << endl;
+    
+    // Static members
+    cout << "Initial count: " << Counter::getCount() << endl;
+    
+    Counter c1;
+    cout << "After creating c1: " << Counter::getCount() << endl;
+    
+    {
+        Counter c2;
+        cout << "After creating c2: " << Counter::getCount() << endl;
+    }
+    
+    cout << "After c2 is destroyed: " << Counter::getCount() << endl;
+    
+    // Class template
+    Box<int> intBox(42);
+    Box<string> stringBox("Hello, Template!");
+    
+    cout << "Int box content: " << intBox.getContent() << endl;
+    cout << "String box content: " << stringBox.getContent() << endl;
+    
+    return 0;
 }</code></pre>
-  </div>
-</article>
+              </div>
+            </article>
+
+            <article class="card" id="lesson-stl">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Standard Template Library (STL)</h3>
+                <button class="copy-btn" data-copy="#code-stl"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Using the powerful STL containers and algorithms.</p>
+              <div class="code" id="code-stl">
+<pre><code>#include <iostream>
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+// Function to print vector elements
+template <typename T>
+void printVector(const vector<T>& vec) {
+    for (const auto& element : vec) {
+        cout << element << " ";
+    }
+    cout << endl;
+}
+
+// Function to print map elements
+template <typename K, typename V>
+void printMap(const map<K, V>& m) {
+    for (const auto& pair : m) {
+        cout << pair.first << ": " << pair.second << endl;
+    }
+}
+
+int main() {
+    // VECTOR
+    cout << "=== VECTOR ===" << endl;
+    vector<int> numbers = {5, 2, 8, 1, 9};
+    
+    // Add elements
+    numbers.push_back(7);
+    numbers.insert(numbers.begin(), 0);
+    
+    cout << "Vector elements: ";
+    printVector(numbers);
+    
+    // Access elements
+    cout << "First element: " << numbers.front() << endl;
+    cout << "Last element: " << numbers.back() << endl;
+    cout << "Element at index 2: " << numbers[2] << endl;
+    
+    // Size and capacity
+    cout << "Size: " << numbers.size() << endl;
+    cout << "Capacity: " << numbers.capacity() << endl;
+    
+    // Sort vector
+    sort(numbers.begin(), numbers.end());
+    cout << "Sorted vector: ";
+    printVector(numbers);
+    
+    // Reverse vector
+    reverse(numbers.begin(), numbers.end());
+    cout << "Reversed vector: ";
+    printVector(numbers);
+    
+    // LIST
+    cout << "\n=== LIST ===" << endl;
+    list<string> names = {"Alice", "Bob", "Charlie"};
+    
+    // Add elements
+    names.push_back("David");
+    names.push_front("Zoe");
+    
+    // Iterate through list
+    cout << "List elements: ";
+    for (const auto& name : names) {
+        cout << name << " ";
+    }
+    cout << endl;
+    
+    // MAP
+    cout << "\n=== MAP ===" << endl;
+    map<string, int> ageMap;
+    
+    // Add elements
+    ageMap["Alice"] = 25;
+    ageMap["Bob"] = 30;
+    ageMap["Charlie"] = 35;
+    
+    // Access elements
+    cout << "Alice's age: " << ageMap["Alice"] << endl;
+    
+    // Check if key exists
+    if (ageMap.find("David") == ageMap.end()) {
+        cout << "David not found in map" << endl;
+    }
+    
+    // Print map
+    cout << "Age map:" << endl;
+    printMap(ageMap);
+    
+    // SET
+    cout << "\n=== SET ===" << endl;
+    set<int> uniqueNumbers = {5, 2, 8, 2, 5, 9, 1};
+    
+    // Add elements
+    uniqueNumbers.insert(3);
+    uniqueNumbers.insert(7);
+    
+    // Iterate through set (automatically sorted)
+    cout << "Set elements: ";
+    for (const auto& num : uniqueNumbers) {
+        cout << num << " ";
+    }
+    cout << endl;
+    
+    // Check if element exists
+    if (uniqueNumbers.find(5) != uniqueNumbers.end()) {
+        cout << "5 is in the set" << endl;
+    }
+    
+    // ALGORITHMS
+    cout << "\n=== ALGORITHMS ===" << endl;
+    vector<int> values = {5, 2, 8, 1, 9, 3, 7, 4, 6};
+    
+    // Find element
+    auto it = find(values.begin(), values.end(), 7);
+    if (it != values.end()) {
+        cout << "Found 7 at position: " << distance(values.begin(), it) << endl;
+    }
+    
+    // Count elements
+    int countFives = count(values.begin(), values.end(), 5);
+    cout << "Number of 5s: " << countFives << endl;
+    
+    // Min and max elements
+    auto minIt = min_element(values.begin(), values.end());
+    auto maxIt = max_element(values.begin(), values.end());
+    cout << "Min element: " << *minIt << endl;
+    cout << "Max element: " << *maxIt << endl;
+    
+    // Lambda function with algorithm
+    cout << "Even numbers: ";
+    for_each(values.begin(), values.end(), [](int n) {
+        if (n % 2 == 0) cout << n << " ";
+    });
+    cout << endl;
+    
+    return 0;
+}</code></pre>
+              </div>
+            </article>
 
             <!-- Next Steps card -->
             <article class="card">
               <h3>Continue Learning</h3>
-              <p class="t">Explore other languages to expand your programming skills!</p>
+              <p class="t">Explore other programming languages and technologies!</p>
               <div class="cta-row">
                 <button class="btn btn--gradient" id="goPython">Next: Learn Python →</button>
-                <button class="btn btn--gradient alt" id="goMySQL">Learn MySQL →</button>
-                <a class="btn" href="#" id="backAll">Back to All Courses</a>
+                <button class="btn btn--gradient alt" id="goJava">Learn Java →</button>
+                <a class="btn" href="/private/dashboard" id="backAll">Back to All Courses</a>
               </div>
             </article>
           </section>
@@ -356,8 +701,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   <button class="chat-fab" id="chatFab" aria-controls="chatBox" aria-expanded="false">
     <i class="fa-brands fa-rocketchat"></i>
     <span class="hide-sm">Get in Touch</span>
-    <img src="https://i.ibb.co/zT8pQBLR/arsene.jpg" alt="agent" />
-    <img src="https://i.ibb.co/WN6342yF/donald.jpg" alt="agent" />
+    <img class="hide-img" src="https://i.ibb.co/zT8pQBLR/arsene.jpg" alt="agent" />
+    <img class="hide-img" src="https://i.ibb.co/WN6342yF/donald.jpg" alt="agent" />
   </button>
 
   <!-- Chat Modal -->
@@ -396,7 +741,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     </div>
   </section>
 
-<!-- Footer Section -->
+  <!-- Footer Section -->
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-section contact-form">
@@ -404,15 +749,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         <form class="contact-form-inner" id="footerContactForm">
           <div class="form-group">
             <label for="footerName">Name</label>
-            <input type="text" id="footerName" name="name" required>
+            <input type="text" id="footerName" name="name" placeholder="e.g. Arsene Breezy" required>
           </div>
           <div class="form-group">
             <label for="footerEmail">Email</label>
-            <input type="email" id="footerEmail" name="email" required>
+            <input type="email" id="footerEmail" name="email" placeholder="e.g. example@gmail.com" required>
           </div>
           <div class="form-group">
             <label for="footerMessage">Message</label>
-            <textarea id="footerMessage" name="message" rows="3" required></textarea>
+            <textarea id="footerMessage" name="message" rows="3" placeholder="text message..." required></textarea>
           </div>
           <button type="submit" class="btn-primary">Send</button>
         </form>
@@ -451,6 +796,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       </p>
     </div>
   </footer>
+
   <script>
     // ===== THEME =====
     (function initTheme() {
@@ -498,48 +844,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const mq = window.matchMedia('(min-width: 841px)');
     mq.addEventListener('change', e => { if (e.matches) closeSidebar(); });
 
-// ===== ENHANCED LOGOUT FOR VERCEL =====
-document.getElementById('logoutBtn').addEventListener('click', async () => {
-  try {
-    // Show loading state
-    const btn = document.getElementById('logoutBtn');
-    const originalContent = btn.innerHTML;
-    btn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
-    btn.disabled = true;
-
-    // Call Vercel serverless endpoint
-    const response = await fetch('/sessionLogout', {
-      method: 'POST',
-      credentials: 'include', // Essential for cookies in Vercel
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (response.ok) {
-      // Clear all client-side storage
-      localStorage.clear();
-      sessionStorage.clear();
-      
-      // Redirect to login page with cache-busting
-      window.location.href = `/login?t=${Date.now()}`;
-    } else {
-      const error = await response.json();
-      console.error('Logout failed:', error);
-      alert('Logout failed. Please try again.');
-    }
-  } catch (error) {
-    console.error('Logout error:', error);
-    alert('Network error during logout. Please check your connection.');
-  } finally {
-    // Reset button state in case of failure
-    const btn = document.getElementById('logoutBtn');
-    if (btn) {
-      btn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span><span>Log Out</span>';
-      btn.disabled = false;
-    }
-  }
-});
     // ===== COPY BUTTONS =====
     function copyFrom(selector, btn) {
       const el = document.querySelector(selector);
@@ -558,13 +862,6 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
       btn.addEventListener('click', () => copyFrom(btn.getAttribute('data-copy'), btn));
     });
 
-    // Check if user is authenticated
-window.addEventListener('DOMContentLoaded', () => {
-  if (!userIsAuthenticated() && isProtectedPage()) {
-    window.location.href = '/login';
-  }
-});
-
     // ===== CHAT =====
     const chatFab = document.getElementById('chatFab');
     const chatBox = document.getElementById('chatBox');
@@ -580,7 +877,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('contactForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      // Here you could POST to your backend / form service
       alert('Message sent successfully! Our team will contact you soon.');
       e.target.reset();
       closeChat();
@@ -590,13 +886,13 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.link-lessons').forEach(btn => {
       btn.addEventListener('click', () => {
         const target = btn.dataset.target;
-        if (target === 'hello') {
-          document.getElementById('lesson-hello').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          document.getElementById('lesson-intro').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const element = document.getElementById(`lesson-${target}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
+
     // Close sidebar when clicking navigation links
     document.querySelectorAll('.nav__link').forEach(link => {
       link.addEventListener('click', () => {
@@ -615,10 +911,125 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // Fetch user info
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/api/me', {
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const user = await response.json();
+          document.getElementById('userEmail').textContent = user.email;
+        } else {
+          document.querySelector('.user-info').style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+        document.querySelector('.user-info').style.display = 'none';
+      }
+    });
+
     // ===== CTA buttons (example navigation) =====
-    document.getElementById('goPython').addEventListener('click', () => window.location.href = 'python-course.html');
-    document.getElementById('goMySQL').addEventListener('click', () => window.location.href = 'mysql-course.html');
-    document.getElementById('backAll').addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'courses.html'; });
+    document.getElementById('goPython').addEventListener('click', () => window.location.href = 'python.html');
+    document.getElementById('goJava').addEventListener('click', () => alert('Java course coming soon!'));
+    document.getElementById('backAll').addEventListener('click', (e) => { e.preventDefault(); window.location.href = '/private/dashboard'; });
+
   </script>
+  <script>
+// Cross-tab logout communication with fallback
+function setupCrossTabLogout() {
+  let logoutChannel;
+  
+  if (typeof BroadcastChannel !== 'undefined') {
+    logoutChannel = new BroadcastChannel('logout-channel');
+    
+    logoutChannel.addEventListener('message', (event) => {
+      if (event.data.type === 'logout') {
+        console.log('Logout detected from another tab via BroadcastChannel');
+        window.location.replace('/login');
+      }
+    });
+  } else {
+    console.log('BroadcastChannel not supported, using localStorage fallback');
+    
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'logout-event' && event.newValue) {
+        console.log('Logout detected from another tab via localStorage');
+        window.location.replace('/login');
+      }
+    });
+    
+    if (localStorage.getItem('logout-event')) {
+      console.log('Logout detected on page load via localStorage');
+      window.location.replace('/login');
+    }
+  }
+
+  async function checkAuthStatus() {
+    try {
+      const response = await fetch('/api/me', {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      if (!response.ok) {
+        window.location.replace('/login');
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      window.location.replace('/login');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', checkAuthStatus);
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+      checkAuthStatus();
+    }
+  });
+  window.addEventListener('focus', checkAuthStatus);
+  
+  setInterval(checkAuthStatus, 30000);
+  
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function() {
+      const originalContent = logoutBtn.innerHTML;
+      logoutBtn.disabled = true;
+      logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+
+      try {
+        const response = await fetch('/sessionLogout', {
+          method: 'POST',
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          if (logoutChannel) {
+            logoutChannel.postMessage({ type: 'logout', timestamp: Date.now() });
+          } else {
+            localStorage.setItem('logout-event', Date.now().toString());
+            setTimeout(() => localStorage.removeItem('logout-event'), 100);
+          }
+          
+          window.location.replace('/login');
+        } else {
+          throw new Error('Logout failed');
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+        logoutBtn.disabled = false;
+        logoutBtn.innerHTML = originalContent;
+        alert('Logout failed. Please try again.');
+      }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', setupCrossTabLogout);
+</script>
 </body>
 </html>
