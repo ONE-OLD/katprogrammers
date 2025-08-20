@@ -30,7 +30,7 @@
           <h1 class="page-title" id="formTitle">Login</h1>
           <div class="auth-form">
             <h2 class="page-title" id="formTitle">Welcome Back!</h2>
-            <div class="auth-msg" id="loginMsg" style="color: red; border: 2px solid red; background-color: rgb(255, 0, 0, 0.5); border-radius: 5px;"></div>
+            <div class="auth-msg" id="loginMsg" style="display: none; color: red; border: 2px solid red; background-color: rgb(255, 0, 0, 0.3); border-radius: 5px; padding-top: 10px; padding-bottom: 10px;"></div>
             <div class="form-group">
               <label for="loginEmail">Email</label>
               <input type="email" id="loginEmail" placeholder="Enter your email">
@@ -167,6 +167,7 @@
         window.location.href = "/private/dashboard";
       }
     } catch (e) {
+      loginMsg.style.display = 'block';
       loginMsg.textContent = e.message || 'Login failed';
     } finally {
       hideLoading(btn);
