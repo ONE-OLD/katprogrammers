@@ -386,7 +386,7 @@ input:focus {
   
   .main-content {
     margin-left: 0;
-    width: calc(100% - 70px);
+    width: 100%;
     padding: 1.5rem 1rem;
   }
   
