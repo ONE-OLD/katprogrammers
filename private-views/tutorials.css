@@ -270,13 +270,6 @@
         .cpp-indicator { background: var(--cpp-color); }
         .mysql-indicator { background: var(--mysql-color); }
         
-        footer {
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 4rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
         
         @media (max-width: 1100px) {
             .tutorials-grid {
@@ -308,5 +301,8 @@
             
             .carousel-item.next {
                 transform: rotateY(-45deg) translateZ(-300px) translateX(30%) scale(0.8);
+            }
+            .footer{
+                margin-top: 1000px;
             }
         }
