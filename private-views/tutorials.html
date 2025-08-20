@@ -3,31 +3,417 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorials</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>3D Programming Tutorials Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Tutorials</h1>
-        <nav>
-            <ul>
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/apps">Apps</a></li>
-                <li><a href="/tutorials">Tutorials</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/sessionLogout">Logout</a></li>
-            </ul>
-        </nav>
+        <div class="header-content">
+            <h1>3D Programming Tutorials Hub</h1>
+            <p class="subtitle">Explore our immersive 3D carousel of programming tutorials. Click through languages and discover the best learning resources!</p>
+        </div>
     </header>
-    <main>
-        <section>
-            <h2>Welcome to the Tutorials Section</h2>
-            <p>Here you will find various tutorials to help you learn and grow.</p>
-            <!-- Add tutorial links or content here -->
-        </section>
-    </main>
+    
+    <div class="container">
+        <div class="language-carousel">
+            <div class="carousel-container" id="carousel">
+                <!-- HTML Tutorials -->
+                <div class="carousel-item active" data-index="0">
+                    <div class="language-header">
+                        <h2><i class="fab fa-html5"></i> HTML Tutorials</h2>
+                        <p>Master the foundation of web development</p>
+                    </div>
+                    <div class="tutorials-grid">
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/PlxWf493en4" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>HTML Full Course for Beginners</h3>
+                                <p>Complete HTML tutorial for beginners covering all key concepts</p>
+                                <span class="level beginner">Beginner</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/kUMe1FH4CHE" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>HTML Forms Tutorial</h3>
+                                <p>Learn how to create and style forms in HTML</p>
+                                <span class="level beginner">Beginner</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/KqJikDzb3l4" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>HTML5 Semantic Tags</h3>
+                                <p>Understanding and using semantic HTML5 elements</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/4nC4VXHlys8" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>HTML Accessibility Best Practices</h3>
+                                <p>Making your HTML accessible to all users</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CSS Tutorials -->
+                <div class="carousel-item next" data-index="1">
+                    <div class="language-header">
+                        <h2><i class="fab fa-css3-alt"></i> CSS Tutorials</h2>
+                        <p>Style and design beautiful websites</p>
+                    </div>
+                    <div class="tutorials-grid">
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/1PnVor36_40" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>CSS Basics for Beginners</h3>
+                                <p>Introduction to CSS syntax, selectors, and properties</p>
+                                <span class="level beginner">Beginner</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/1Rs2ND1ryYc" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>CSS Flexbox Complete Guide</h3>
+                                <p>Master CSS Flexbox for modern layouts</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/Qhaz36TZG5Y" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>CSS Grid Layout Tutorial</h3>
+                                <p>Creating complex layouts with CSS Grid</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/c9Wg6Cb_YlU" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>CSS Animations and Transitions</h3>
+                                <p>Adding motion and interactivity to your websites</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- JavaScript Tutorials -->
+                <div class="carousel-item hidden" data-index="2">
+                    <div class="language-header">
+                        <h2><i class="fab fa-js"></i> JavaScript Tutorials</h2>
+                        <p>Add interactivity to your web projects</p>
+                    </div>
+                    <div class="tutorials-grid">
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/W6NZfCO5SIk" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>JavaScript Basics for Beginners</h3>
+                                <p>Getting started with JavaScript syntax and fundamentals</p>
+                                <span class="level beginner">Beginner</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/8dWL3wF_OMw" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>DOM Manipulation with JavaScript</h3>
+                                <p>Interacting with web page elements using JavaScript</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/ufdTYgTPwr8" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>Modern JavaScript ES6+ Features</h3>
+                                <p>Arrow functions, destructuring, modules, and more</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/DHvZLI7Db8E" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>JavaScript Promises and Async/Await</h3>
+                                <p>Managing asynchronous operations in JavaScript</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Python Tutorials -->
+                <div class="carousel-item hidden" data-index="3">
+                    <div class="language-header">
+                        <h2><i class="fab fa-python"></i> Python Tutorials</h2>
+                        <p>Learn one of the most versatile programming languages</p>
+                    </div>
+                    <div class="tutorials-grid">
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/_uQrJ0TkZlc" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>Python for Beginners</h3>
+                                <p>Complete Python programming tutorial for absolute beginners</p>
+                                <span class="level beginner">Beginner</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/rfscVS0vtbw" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>Intermediate Python Programming</h3>
+                                <p>Taking your Python skills to the next level</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/8ext9G7xspg" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>Python OOP Concepts</h3>
+                                <p>Object-oriented programming in Python</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/Ej_02ICOIgs" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>Python for Data Analysis</h3>
+                                <p>Using Pandas, NumPy, and Matplotlib for data analysis</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- C++ Tutorials -->
+                <div class="carousel-item hidden" data-index="4">
+                    <div class="language-header">
+                        <h2><i class="fab fa-cuttlefish"></i> C++ Tutorials</h2>
+                        <p>Powerful language for system and game development</p>
+                    </div>
+                    <div class="tutorials-grid">
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/vLnPwxZdW4Y" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>C++ Tutorial for Beginners</h3>
+                                <p>Learn C++ programming from scratch</p>
+                                <span class="level beginner">Beginner</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/Rub-JsjMhWY" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>Object-Oriented Programming in C++</h3>
+                                <p>Classes, objects, inheritance, and polymorphism in C++</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/wBGh8hCnjZw" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>STL and Data Structures in C++</h3>
+                                <p>Working with Standard Template Library and data structures</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/B31LgI4Y4DQ" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>Memory Management in C++</h3>
+                                <p>Understanding pointers, references, and dynamic memory</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- MySQL Tutorials -->
+                <div class="carousel-item prev" data-index="5">
+                    <div class="language-header">
+                        <h2><i class="fas fa-database"></i> MySQL Tutorials</h2>
+                        <p>Manage and query databases effectively</p>
+                    </div>
+                    <div class="tutorials-grid">
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/7S_tz1z_5bA" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>MySQL Tutorial for Beginners</h3>
+                                <p>Introduction to databases and MySQL</p>
+                                <span class="level beginner">Beginner</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/HXV3zeQKqGY" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>SQL Queries for Beginners</h3>
+                                <p>Learning SELECT, INSERT, UPDATE, and DELETE statements</p>
+                                <span class="level beginner">Beginner</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/Ofktsne-utM" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>Database Design with MySQL</h3>
+                                <p>Designing efficient database schemas and relationships</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tutorial-card">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/WmGU3eznT-s" allowfullscreen></iframe>
+                            </div>
+                            <div class="card-content">
+                                <h3>Advanced MySQL Queries</h3>
+                                <p>Complex joins, subqueries, and advanced SQL techniques</p>
+                                <span class="level intermediate">Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="carousel-nav">
+            <button class="nav-btn" id="prev-btn"><i class="fas fa-arrow-left"></i></button>
+            
+            <div class="language-indicators">
+                <div class="indicator html-indicator active" data-index="0"></div>
+                <div class="indicator css-indicator" data-index="1"></div>
+                <div class="indicator js-indicator" data-index="2"></div>
+                <div class="indicator py-indicator" data-index="3"></div>
+                <div class="indicator cpp-indicator" data-index="4"></div>
+                <div class="indicator mysql-indicator" data-index="5"></div>
+            </div>
+            
+            <button class="nav-btn" id="next-btn"><i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+    
     <footer>
-        <p>&copy; 2023 Your Website Name. All rights reserved.</p>
+        <p>3D Programming Tutorials Hub &copy; 2023 | Learn, Code, Create</p>
+        <p>Explore the world of programming through immersive 3D experience</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('carousel');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const items = document.querySelectorAll('.carousel-item');
+            const indicators = document.querySelectorAll('.indicator');
+            let currentIndex = 0;
+            const totalItems = items.length;
+            
+            // Function to update carousel
+            function updateCarousel() {
+                items.forEach((item, index) => {
+                    item.classList.remove('active', 'prev', 'next', 'hidden');
+                    
+                    if (index === currentIndex) {
+                        item.classList.add('active');
+                    } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
+                        item.classList.add('prev');
+                    } else if (index === (currentIndex + 1) % totalItems) {
+                        item.classList.add('next');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            // Next button event
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            });
+            
+            // Previous button event
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                updateCarousel();
+            });
+            
+            // Indicator click event
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = parseInt(indicator.getAttribute('data-index'));
+                    updateCarousel();
+                });
+            });
+            
+            // Initialize carousel
+            updateCarousel();
+        });
+    </script>
 </body>
 </html>
