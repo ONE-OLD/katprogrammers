@@ -303,6 +303,6 @@
                 transform: rotateY(-45deg) translateZ(-300px) translateX(30%) scale(0.8);
             }
             .footer{
-                margin-top: 1000px;
+                margin-top: 2000px;
             }
         }
