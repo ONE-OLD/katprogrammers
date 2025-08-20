@@ -826,5 +826,49 @@ function setupCrossTabLogout() {
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', setupCrossTabLogout);
 </script>
+  <script>
+    // Simulate loading process
+    document.addEventListener('DOMContentLoaded', function() {
+      const loader = document.getElementById('loader');
+      const content = document.getElementById('content');
+      const waterFill = document.getElementById('waterFill');
+      const progressBar = document.getElementById('progressBar');
+      
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 5;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          
+          // Hide loader and show content when done
+          setTimeout(() => {
+            loader.classList.add('hidden');
+            content.classList.add('visible');
+          }, 500);
+        }
+        
+        // Update water fill and progress bar
+        waterFill.style.height = `${progress}%`;
+        progressBar.style.width = `${progress}%`;
+      }, 100);
+      
+      // Additional check for window load (images, etc.)
+      window.addEventListener('load', function() {
+        // If the interval is still running, complete it
+        if (progress < 100) {
+          clearInterval(interval);
+          progress = 100;
+          waterFill.style.height = '100%';
+          progressBar.style.width = '100%';
+          
+          setTimeout(() => {
+            loader.classList.add('hidden');
+            content.classList.add('visible');
+          }, 500);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
