@@ -430,6 +430,62 @@
         <p>3D Programming Tutorials Hub &copy; 2023 | Learn, Code, Create</p>
         <p>Explore the world of programming through immersive 3D experience</p>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('carousel');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const items = document.querySelectorAll('.carousel-item');
+            const indicators = document.querySelectorAll('.indicator');
+            let currentIndex = 0;
+            const totalItems = items.length;
+            
+            // Function to update carousel
+            function updateCarousel() {
+                items.forEach((item, index) => {
+                    item.classList.remove('active', 'prev', 'next', 'hidden');
+                    
+                    if (index === currentIndex) {
+                        item.classList.add('active');
+                    } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
+                        item.classList.add('prev');
+                    } else if (index === (currentIndex + 1) % totalItems) {
+                        item.classList.add('next');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            // Next button event
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            });
+            
+            // Previous button event
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                updateCarousel();
+            });
+            
+            // Indicator click event
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = parseInt(indicator.getAttribute('data-index'));
+                    updateCarousel();
+                });
+            });
+            
+            // Initialize carousel
+            updateCarousel();
+        });
+    </script>
 
     <script>
         
