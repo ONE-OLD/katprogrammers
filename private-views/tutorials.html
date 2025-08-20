@@ -427,10 +427,61 @@
         </div>
     </div>
     
-    <footer>
-        <p>3D Programming Tutorials Hub &copy; 2023 | Learn, Code, Create</p>
-        <p>Explore the world of programming through immersive 3D experience</p>
-    </footer>
+    <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section contact-form">
+        <h2 class="footer-title">Contact Us</h2>
+        <form class="contact-form-inner" id="footerContactForm">
+          <div class="form-group">
+            <label for="footerName">Name</label>
+            <input type="text" id="footerName" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="footerEmail">Email</label>
+            <input type="email" id="footerEmail" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="footerMessage">Message</label>
+            <textarea id="footerMessage" name="message" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Send</button>
+        </form>
+      </div>
+      
+      <div class="footer-section social-media">
+        <h2 class="footer-title">Follow Us</h2>
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/kat_programmers/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="qr">
+          <a href="https://katprogrammers.vercel.app" target="_blank" title="Open kat-programmers on Mobile">
+            <img src="https://i.ibb.co/BKPTj83C/qrcode.png" alt="Kat Programmers QR Code">
+            <p style="margin-top: 10px; font-size: 0.85rem;">Scan to open on mobile</p>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-section map">
+        <h2 class="footer-title">Our Location</h2>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019019858232!2d-122.4194154846817!3d37.77492977975959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c2f8e6e2b%3A0x4a0b8e6e2b8e6e2b!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1628888888888!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Kat-Programmers. All rights reserved.</p>
+      <p style="margin-top: 10px; font-size: 0.8rem;">
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Privacy Policy</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Terms of Service</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Contact Support</a>
+      </p>
+    </div>
+  </footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const carousel = document.getElementById('carousel');
