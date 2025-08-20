@@ -1,477 +1,993 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MySQL Tutorial - KAT-PROGRAMMERS</title>
-    <link rel="stylesheet" href="courses.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script>
-        function logout() {
-      // Clear session or authentication data (e.g., localStorage, cookies)
-      localStorage.clear();
-      sessionStorage.clear();
-      
-      // Redirect to login page
-      window.location.replace("logout.html");
-    }
-        function activeChat() {
-        document.getElementById("chat-container").style.display = "block";
-    }
-    function closeChat() {
-        document.getElementById("chat-container").style.display = "none";
-    }
-    
-
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>KAT-PROGRAMMERS Course Platform | MySQL</title>
+  <link rel="icon" href="https://i.ibb.co/NgsStwt4/image-1.png" />
+  <link rel="stylesheet" href="courses.css">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 </head>
 <body>
-    <div class="cont-btn" id="activechat" onclick="activeChat()"><i class="fa-brands fa-rocketchat fa-bounce"></i> <p>Get in Touch</p><img src="images/founder/arsene.jpg" alt=""><img class="img1" src="images/founder/donald.JPEG" alt=""></div>
-    <div class="chat-container" id="chat-container">
-        <span onclick="closeChat()"><i class="fa-regular fa-circle-xmark"></i></span>
-        <form action="" id="contact-form">
-            <h1>Get In Touch</h1>
-            <div id="popup" class="popup"></div>
-            <p class="p">Names *</p>
-            <input type="text" name="name" placeholder="Full names" required><br>
-            <p class="p">E-mail *</p>
-            <input type="email" name="email" placeholder="E-mail" required> 
-            <p class="p">Subject *</p>
-            <input type="text" name="subject" placeholder="Subject" required><br>
-            <p class="p">Message *</p>
-            <textarea name="message" id="message" placeholder="Text a message..." required></textarea> 
-            <button type="submit">Send</button>
-            <p class="p1">* Feedback will get to you in less than 24hrs!</p>
-        </form>
-        <div class="con">
-            <p><a href="tel:+250792575986"><i class="fa-solid fa-phone"></i></a></p>
-            <p><a href="mailto:katprogrammers@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a></p>
-            <p><a href="https://www.instagram.com/kat_programmers" target="_blank"><i class="fa-brands fa-instagram"></i></a></p>
-        </div>
+    <!-- Loading Screen -->
+  <div class="loader-container" id="loader">
+    <div class="floating-elements">
+      <div class="floating-element" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+      <div class="floating-element" style="top: 60%; left: 80%; animation-delay: 1s;"></div>
+      <div class="floating-element" style="top: 40%; left: 50%; animation-delay: 2s;"></div>
+      <div class="floating-element" style="top: 80%; left: 30%; animation-delay: 3s;"></div>
     </div>
+    
+    <div class="code-symbol">
+      <div class="water-fill" id="waterFill"></div>
+      <div class="waves"></div>
+      &lt;/&gt;
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div class="loading-text">Loading Kat-Programmers</div>
+  </div>
+  <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" id="sidebarToggle">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="logo.png" alt="KAT-PROGRAMMERS Logo">
-            <h2>KAT-PROGRAMMERS</h2>
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
+  <div class="shell">
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar--offcanvas" id="sidebar" aria-label="Primary">
+      <div class="sidebar__hdr">
+        <img src="https://i.ibb.co/NgsStwt4/image-1.png" alt="KAT-PROGRAMMERS logo" />
+        <div class="sidebar__title">KAT-PROGRAMMERS</div>
+      </div>
+      
+      <nav class="sidebar__nav" role="navigation">
+        <div class="nav__group" aria-label="Main links">
+          <a class="nav__link" href="/private/dashboard"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+          <a class="nav__link" href="/private/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
+          <a class="nav__link" href="/private/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
+          <a class="nav__link" href="/private/certificate"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
+          <a class="nav__link" href="/private/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
         </div>
-        <ul class="sidebar-links">
-            <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
-            <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
-            <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
-            <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
-            <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
-            <div class="sidebar-bottom">
-                <li><a href="about.html"><span><i class="fa-solid fa-circle-user"></i></span><p>About</p></a></li>
-                <li><a onclick="logout()"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></a></li>
+
+        <div class="user-info" style="padding: 16px; border-top: 1px solid var(--bg-surface);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center;">
+              <i class="fa-solid fa-user" style="color: white;"></i>
             </div>
-        </ul>
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">Logged in as:</div>
+              <div id="userEmail" style="font-weight: 600; font-size: 0.9rem;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar__footer">
+          <a class="nav__link" href="/private/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
+          <button class="nav__link" id="logoutBtn" style="width:100%; background:none; border:0; text-align:left;">
+            <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span>Log Out</span>
+          </button>
+        </div>
+        
+        <div class="theme-toggle-row" aria-live="polite">
+          <span>Theme</span>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" aria-pressed="false"></button>
+        </div>
+      </nav>
     </aside>
 
-    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <!-- Header -->
-        <header class="border-b border-white/10 backdrop-blur-md bg-white/5">
-            <div class="container mx-auto px-4 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <button class="btn btn-ghost" onclick="navigateToHome()">
-                            ← Back to Home
-                        </button>
-                        <div class="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center text-lg">
-                            🗄️
-                        </div>
-                        <h1 class="text-2xl font-bold text-white">MySQL Tutorial</h1>
-                    </div>
-                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-2 rounded-full">
-                        <span class="text-white font-medium">Intermediate Level</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <!-- Sidebar -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 sticky top-8">
-                        <h3 class="text-white text-lg font-bold mb-4">Course Contents</h3>
-                        <div class="space-y-4">
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-xs text-white font-bold">1</div>
-                                    <h4 class="text-white font-medium text-sm">Database Basics</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">What is a Database?</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">MySQL Installation</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Basic SQL Syntax</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Database Design</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-xs text-white font-bold">2</div>
-                                    <h4 class="text-white font-medium text-sm">CRUD Operations</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">SELECT Queries</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">INSERT Data</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">UPDATE Records</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">DELETE Data</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-xs text-white font-bold">3</div>
-                                    <h4 class="text-white font-medium text-sm">Advanced Queries</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">JOINs</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Subqueries</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Aggregate Functions</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Indexes</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-xs text-white font-bold">4</div>
-                                    <h4 class="text-white font-medium text-sm">Database Management</h4>
-                                </div>
-                                <ul class="ml-8 space-y-1 text-gray-400 text-xs">
-                                    <li class="hover:text-white cursor-pointer transition-colors">Stored Procedures</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Triggers</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">User Management</li>
-                                    <li class="hover:text-white cursor-pointer transition-colors">Backup & Recovery</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Content -->
-                <div class="lg:col-span-3">
-                    <!-- Introduction -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 mb-8">
-                        <h2 class="text-white text-3xl font-bold mb-4">Learn MySQL - Database Management System</h2>
-                        <p class="text-gray-300 text-lg mb-6">
-                            Master database management with MySQL. Learn SQL queries, database design, and data relationships for backend development.
-                        </p>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2"><i class="fa-solid fa-book"></i></div>
-                                <div class="text-white font-semibold">22 Lessons</div>
-                                <div class="text-gray-400 text-sm">Comprehensive curriculum</div>
-                            </div>
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2">🗄️</div>
-                                <div class="text-white font-semibold">Database Design</div>
-                                <div class="text-gray-400 text-sm">Proper data modeling</div>
-                            </div>
-                            <div class="text-center p-4 bg-white/5 rounded-lg">
-                                <div class="text-2xl mb-2">⚡</div>
-                                <div class="text-white font-semibold">Performance</div>
-                                <div class="text-gray-400 text-sm">Optimized queries</div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-white text-xl mb-4">What You'll Learn:</h3>
-                            <ul class="text-gray-300 space-y-2">
-                                <li>• SQL fundamentals and query syntax</li>
-                                <li>• Database design and normalization</li>
-                                <li>• Advanced queries with JOINs and subqueries</li>
-                                <li>• Data relationships and foreign keys</li>
-                                <li>• Database optimization and indexing</li>
-                                <li>• User management and security</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Code Examples -->
-                    <div class="space-y-6">
-                        <!-- Example 1 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">Creating Database and Tables</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="-- Create database
-CREATE DATABASE school_management;
-USE school_management;
-
--- Create students table
-CREATE TABLE students (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    age INT,
-    enrollment_date DATE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create courses table
-CREATE TABLE courses (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    course_name VARCHAR(100) NOT NULL,
-    course_code VARCHAR(10) UNIQUE,
-    credits INT DEFAULT 3,
-    instructor VARCHAR(100)
-);"
-                                    data-title="Creating Database and Tables">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Setting up database structure with tables</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-cyan-300 text-sm">-- Create database
-CREATE DATABASE school_management;
-USE school_management;
-
--- Create students table
-CREATE TABLE students (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    age INT,
-    enrollment_date DATE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create courses table
-CREATE TABLE courses (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    course_name VARCHAR(100) NOT NULL,
-    course_code VARCHAR(10) UNIQUE,
-    credits INT DEFAULT 3,
-    instructor VARCHAR(100)
-);</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Example 2 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">CRUD Operations</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="-- INSERT data
-INSERT INTO students (first_name, last_name, email, age, enrollment_date)
-VALUES 
-    ('John', 'Doe', 'john.doe@email.com', 20, '2024-01-15'),
-    ('Jane', 'Smith', 'jane.smith@email.com', 19, '2024-01-16'),
-    ('Bob', 'Johnson', 'bob.johnson@email.com', 21, '2024-01-17');
-
--- SELECT data
-SELECT * FROM students;
-SELECT first_name, last_name, email FROM students WHERE age > 19;
-
--- UPDATE data
-UPDATE students 
-SET age = 22 
-WHERE email = 'bob.johnson@email.com';
-
--- DELETE data
-DELETE FROM students WHERE age < 18;"
-                                    data-title="CRUD Operations">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Basic database operations - Create, Read, Update, Delete</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-cyan-300 text-sm">-- INSERT data
-INSERT INTO students (first_name, last_name, email, age, enrollment_date)
-VALUES 
-    ('John', 'Doe', 'john.doe@email.com', 20, '2024-01-15'),
-    ('Jane', 'Smith', 'jane.smith@email.com', 19, '2024-01-16'),
-    ('Bob', 'Johnson', 'bob.johnson@email.com', 21, '2024-01-17');
-
--- SELECT data
-SELECT * FROM students;
-SELECT first_name, last_name, email FROM students WHERE age > 19;
-
--- UPDATE data
-UPDATE students 
-SET age = 22 
-WHERE email = 'bob.johnson@email.com';
-
--- DELETE data
-DELETE FROM students WHERE age < 18;</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Example 3 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">JOINs and Relationships</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="-- Create enrollment table for many-to-many relationship
-CREATE TABLE enrollments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
-    course_id INT,
-    grade CHAR(2),
-    enrollment_date DATE,
-    FOREIGN KEY (student_id) REFERENCES students(id),
-    FOREIGN KEY (course_id) REFERENCES courses(id)
-);
-
--- INNER JOIN - Students with their enrollments
-SELECT 
-    s.first_name,
-    s.last_name,
-    c.course_name,
-    e.grade
-FROM students s
-INNER JOIN enrollments e ON s.id = e.student_id
-INNER JOIN courses c ON e.course_id = c.id;
-
--- LEFT JOIN - All students, including those not enrolled
-SELECT 
-    s.first_name,
-    s.last_name,
-    c.course_name
-FROM students s
-LEFT JOIN enrollments e ON s.id = e.student_id
-LEFT JOIN courses c ON e.course_id = c.id;"
-                                    data-title="JOINs and Relationships">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Connecting tables with JOINs and foreign keys</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-cyan-300 text-sm">-- Create enrollment table for many-to-many relationship
-CREATE TABLE enrollments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
-    course_id INT,
-    grade CHAR(2),
-    enrollment_date DATE,
-    FOREIGN KEY (student_id) REFERENCES students(id),
-    FOREIGN KEY (course_id) REFERENCES courses(id)
-);
-
--- INNER JOIN - Students with their enrollments
-SELECT 
-    s.first_name,
-    s.last_name,
-    c.course_name,
-    e.grade
-FROM students s
-INNER JOIN enrollments e ON s.id = e.student_id
-INNER JOIN courses c ON e.course_id = c.id;
-
--- LEFT JOIN - All students, including those not enrolled
-SELECT 
-    s.first_name,
-    s.last_name,
-    c.course_name
-FROM students s
-LEFT JOIN enrollments e ON s.id = e.student_id
-LEFT JOIN courses c ON e.course_id = c.id;</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Example 4 -->
-                        <div class="bg-white/5 border border-white/10 rounded-xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-white text-xl font-bold">Aggregate Functions and Grouping</h3>
-                                <button 
-                                    class="btn btn-outline btn-sm copy-btn" 
-                                    data-code="-- Aggregate functions
-SELECT COUNT(*) as total_students FROM students;
-SELECT AVG(age) as average_age FROM students;
-SELECT MIN(age) as youngest, MAX(age) as oldest FROM students;
-
--- GROUP BY with aggregate functions
-SELECT 
-    c.course_name,
-    COUNT(e.student_id) as enrolled_students,
-    AVG(CASE 
-        WHEN e.grade = 'A' THEN 4
-        WHEN e.grade = 'B' THEN 3
-        WHEN e.grade = 'C' THEN 2
-        WHEN e.grade = 'D' THEN 1
-        ELSE 0 
-    END) as average_gpa
-FROM courses c
-LEFT JOIN enrollments e ON c.id = e.course_id
-GROUP BY c.id, c.course_name
-HAVING enrolled_students > 0;
-
--- Subquery example
-SELECT first_name, last_name, age
-FROM students
-WHERE age > (SELECT AVG(age) FROM students);"
-                                    data-title="Aggregate Functions and Grouping">
-                                    📋 Copy
-                                </button>
-                            </div>
-                            <p class="text-gray-300 mb-4">Advanced queries with calculations and data analysis</p>
-                            <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                                <pre><code class="text-cyan-300 text-sm">-- Aggregate functions
-SELECT COUNT(*) as total_students FROM students;
-SELECT AVG(age) as average_age FROM students;
-SELECT MIN(age) as youngest, MAX(age) as oldest FROM students;
-
--- GROUP BY with aggregate functions
-SELECT 
-    c.course_name,
-    COUNT(e.student_id) as enrolled_students,
-    AVG(CASE 
-        WHEN e.grade = 'A' THEN 4
-        WHEN e.grade = 'B' THEN 3
-        WHEN e.grade = 'C' THEN 2
-        WHEN e.grade = 'D' THEN 1
-        ELSE 0 
-    END) as average_gpa
-FROM courses c
-LEFT JOIN enrollments e ON c.id = e.course_id
-GROUP BY c.id, c.course_name
-HAVING enrolled_students > 0;
-
--- Subquery example
-SELECT first_name, last_name, age
-FROM students
-WHERE age > (SELECT AVG(age) FROM students);</code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Completion -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 mt-8">
-                        <h3 class="text-white text-xl font-bold mb-2">🎉 Congratulations!</h3>
-                        <p class="text-gray-300 mb-4">
-                            You've completed all the programming language tutorials! You now have a solid foundation in web development, system programming, and database management.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button 
-                                class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
-                                onclick="navigateToHome()">
-                                🏠 Back to Home
-                            </button>
-                            <button 
-                                class="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
-                                onclick="alert('Certificate feature coming soon!')">
-                                📜 Get Certificate
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div>
+      <!-- Header -->
+      <header class="site-hdr">
+        <div class="site-hdr__inner">
+          <div>
+            <h1 style="margin:.4rem 0 0; font-size:1.6rem; font-weight:800; margin-left: 60px;">Course: MySQL Database</h1>
+          </div>
+          <div class="badge">Intermediate Level</div>
         </div>
-    </div>
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script>
-  emailjs.init("6CSR1CAXwOHcVmcbZ"); // Replace with your actual public key
-</script>
-<script src="email.js"></script>
+      </header>
 
-    <script src="script.js"></script>
+      <!-- Main Content -->
+      <main>
+        <div class="grid grid-4">
+          <!-- Course Contents (Accordion) -->
+          <section class="card cont" aria-labelledby="contentsTitle" style="position:sticky; top:90px; width:400px; height:fit-content;">
+            <h2 id="contentsTitle" style="margin-bottom:10px;">Course Contents</h2>
+            <div class="accordion" id="accordion">
+              <!-- Item 1 -->
+              <details class="acc__item" open>
+                <summary class="acc__btn"><span class="num">1</span> Database Fundamentals</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li>Introduction to MySQL</li>
+                      <li>Database Design</li>
+                      <li>SQL Basics</li>
+                      <li>Data Types</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <!-- Item 2 -->
+              <details class="acc__item">
+                <summary class="acc__btn"><span class="num">2</span> Querying Data</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li><button class="link-lessons" data-target="select">SELECT Queries</button></li>
+                      <li><button class="link-lessons" data-target="joins">JOIN Operations</button></li>
+                      <li><button class="link-lessons" data-target="subqueries">Subqueries</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <!-- Item 3 -->
+              <details class="acc__item">
+                <summary class="acc__btn"><span class="num">3</span> Advanced MySQL</summary>
+                <div class="acc__panel">
+                  <div class="acc__panel-inner">
+                    <ul>
+                      <li><button class="link-lessons" data-target="transactions">Transactions</button></li>
+                      <li><button class="link-lessons" data-target="indexes">Indexes & Optimization</button></li>
+                      <li><button class="link-lessons" data-target="storedprocedures">Stored Procedures</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <!-- Detail pane -->
+          <section>
+            <!-- Intro card -->
+            <article class="card" id="lesson-intro">
+              <h2 class="h">Master MySQL Database</h2>
+              <p class="t">Learn the world's most popular open-source relational database management system for building scalable applications.</p>
+              <div class="stats" aria-label="Course stats">
+                <div class="stat"><div class="ico"><i class="fa-solid fa-book"></i></div><div><strong>30 Lessons</strong><div class="muted">Comprehensive curriculum</div></div></div>
+                <div class="stat"><div class="ico">🗄️</div><div><strong>Data Management</strong><div class="muted">Relational databases</div></div></div>
+                <div class="stat"><div class="ico">⚡</div><div><strong>High Performance</strong><div class="muted">Optimized queries</div></div></div>
+              </div>
+              <h3 style="margin-top:14px;">What You'll Learn</h3>
+              <ul class="t">
+                <li>MySQL installation and configuration</li>
+                <li>Database design and normalization</li>
+                <li>SQL query writing and optimization</li>
+                <li>Advanced JOIN operations and subqueries</li>
+                <li>Database security and administration</li>
+              </ul>
+            </article>
+
+            <!-- Code example cards -->
+            <article class="card" id="lesson-basics">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>MySQL Basics</h3>
+                <button class="copy-btn" data-copy="#code-basics"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Fundamental MySQL commands and operations.</p>
+              <div class="code" id="code-basics">
+<pre><code>-- Create a new database
+CREATE DATABASE company_db;
+USE company_db;
+
+-- Create tables
+CREATE TABLE employees (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    hire_date DATE,
+    salary DECIMAL(10, 2),
+    department_id INT
+);
+
+CREATE TABLE departments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    location VARCHAR(100)
+);
+
+CREATE TABLE projects (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    budget DECIMAL(15, 2),
+    start_date DATE,
+    end_date DATE
+);
+
+CREATE TABLE employee_projects (
+    employee_id INT,
+    project_id INT,
+    role VARCHAR(50),
+    PRIMARY KEY (employee_id, project_id),
+    FOREIGN KEY (employee_id) REFERENCES employees(id),
+    FOREIGN KEY (project_id) REFERENCES projects(id)
+);
+
+-- Insert sample data
+INSERT INTO departments (name, location) VALUES
+('Engineering', 'New York'),
+('Marketing', 'Los Angeles'),
+('Sales', 'Chicago'),
+('HR', 'Boston');
+
+INSERT INTO employees (first_name, last_name, email, hire_date, salary, department_id) VALUES
+('John', 'Doe', 'john.doe@company.com', '2020-01-15', 75000.00, 1),
+('Jane', 'Smith', 'jane.smith@company.com', '2019-03-10', 85000.00, 1),
+('Mike', 'Johnson', 'mike.johnson@company.com', '2021-06-20', 65000.00, 2),
+('Sarah', 'Wilson', 'sarah.wilson@company.com', '2018-11-05', 90000.00, 3),
+('David', 'Brown', 'david.brown@company.com', '2022-02-28', 60000.00, 4);
+
+INSERT INTO projects (name, budget, start_date, end_date) VALUES
+('Website Redesign', 50000.00, '2023-01-01', '2023-06-30'),
+('Mobile App Development', 100000.00, '2023-02-15', '2023-12-15'),
+('Marketing Campaign', 75000.00, '2023-03-01', '2023-09-30');
+
+INSERT INTO employee_projects (employee_id, project_id, role) VALUES
+(1, 1, 'Frontend Developer'),
+(2, 1, 'Backend Developer'),
+(1, 2, 'Team Lead'),
+(3, 3, 'Campaign Manager'),
+(4, 2, 'Project Manager');
+
+-- Basic SELECT queries
+SELECT * FROM employees;
+SELECT first_name, last_name, salary FROM employees;
+SELECT first_name, last_name FROM employees WHERE salary > 70000;
+SELECT * FROM employees WHERE hire_date >= '2020-01-01';
+
+-- UPDATE statements
+UPDATE employees SET salary = 80000.00 WHERE id = 1;
+UPDATE employees SET salary = salary * 1.1 WHERE department_id = 1;
+
+-- DELETE statements
+DELETE FROM employees WHERE id = 5;
+
+-- ALTER TABLE examples
+ALTER TABLE employees ADD phone_number VARCHAR(15);
+ALTER TABLE employees MODIFY salary DECIMAL(12, 2);
+ALTER TABLE employees DROP COLUMN phone_number;
+
+-- DROP TABLE
+DROP TABLE IF EXISTS temporary_data;
+
+-- TRUNCATE TABLE (removes all data but keeps structure)
+TRUNCATE TABLE employee_projects;</code></pre>
+              </div>
+            </article>
+
+            <article class="card" id="lesson-select">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>SELECT Queries</h3>
+                <button class="copy-btn" data-copy="#code-select"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Advanced SELECT query techniques with filtering, sorting, and aggregation.</p>
+              <div class="code" id="code-select">
+<pre><code>-- Basic SELECT with filtering
+SELECT * FROM employees WHERE department_id = 1;
+SELECT first_name, last_name FROM employees WHERE salary BETWEEN 60000 AND 80000;
+SELECT * FROM employees WHERE last_name LIKE 'S%';
+SELECT * FROM employees WHERE hire_date BETWEEN '2020-01-01' AND '2021-12-31';
+
+-- Sorting results
+SELECT * FROM employees ORDER BY last_name ASC;
+SELECT * FROM employees ORDER BY salary DESC;
+SELECT * FROM employees ORDER BY department_id ASC, salary DESC;
+
+-- Limiting results
+SELECT * FROM employees LIMIT 5;
+SELECT * FROM employees ORDER BY hire_date DESC LIMIT 3;
+SELECT * FROM employees LIMIT 5 OFFSET 2; -- Skip first 2, get next 5
+
+-- Aggregate functions
+SELECT COUNT(*) AS total_employees FROM employees;
+SELECT AVG(salary) AS average_salary FROM employees;
+SELECT MAX(salary) AS highest_salary, MIN(salary) AS lowest_salary FROM employees;
+SELECT SUM(salary) AS total_salary_budget FROM employees;
+
+-- GROUP BY with aggregates
+SELECT department_id, COUNT(*) AS employee_count 
+FROM employees 
+GROUP BY department_id;
+
+SELECT department_id, AVG(salary) AS avg_salary 
+FROM employees 
+GROUP BY department_id 
+HAVING AVG(salary) > 70000;
+
+SELECT YEAR(hire_date) AS hire_year, COUNT(*) AS hires 
+FROM employees 
+GROUP BY YEAR(hire_date) 
+ORDER BY hire_year;
+
+-- String functions
+SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM employees;
+SELECT UPPER(first_name), LOWER(last_name) FROM employees;
+SELECT LENGTH(first_name) AS name_length FROM employees;
+SELECT SUBSTRING(email, 1, 5) AS email_prefix FROM employees;
+
+-- Date functions
+SELECT first_name, last_name, DATEDIFF(CURDATE(), hire_date) AS days_employed 
+FROM employees;
+
+SELECT first_name, last_name, 
+       YEAR(hire_date) AS hire_year,
+       MONTH(hire_date) AS hire_month,
+       DAY(hire_date) AS hire_day
+FROM employees;
+
+SELECT * FROM employees 
+WHERE YEAR(hire_date) = 2020;
+
+-- Mathematical functions
+SELECT first_name, last_name, salary, 
+       ROUND(salary * 0.1, 2) AS bonus 
+FROM employees;
+
+SELECT first_name, last_name, 
+       salary, 
+       salary * 12 AS annual_salary 
+FROM employees;
+
+-- Conditional logic with CASE
+SELECT first_name, last_name, salary,
+       CASE 
+           WHEN salary >= 80000 THEN 'High'
+           WHEN salary >= 60000 THEN 'Medium'
+           ELSE 'Low'
+       END AS salary_grade
+FROM employees;
+
+SELECT first_name, last_name, department_id,
+       CASE department_id
+           WHEN 1 THEN 'Engineering'
+           WHEN 2 THEN 'Marketing'
+           WHEN 3 THEN 'Sales'
+           WHEN 4 THEN 'HR'
+           ELSE 'Other'
+       END AS department_name
+FROM employees;
+
+-- DISTINCT values
+SELECT DISTINCT department_id FROM employees;
+SELECT COUNT(DISTINCT department_id) AS unique_departments FROM employees;
+
+-- Combining conditions
+SELECT * FROM employees 
+WHERE (department_id = 1 AND salary > 70000) 
+   OR (department_id = 2 AND salary > 65000);
+
+SELECT * FROM employees 
+WHERE department_id IN (1, 3) 
+AND hire_date >= '2020-01-01';
+
+-- NULL handling
+SELECT * FROM employees WHERE email IS NULL;
+SELECT * FROM employees WHERE email IS NOT NULL;
+
+-- COALESCE for handling NULLs
+SELECT first_name, last_name, 
+       COALESCE(email, 'No email provided') AS email_address 
+FROM employees;</code></pre>
+              </div>
+            </article>
+
+            <article class="card" id="lesson-joins">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>JOIN Operations</h3>
+                <button class="copy-btn" data-copy="#code-joins"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Combining data from multiple tables using various JOIN operations.</p>
+              <div class="code" id="code-joins">
+<pre><code>-- INNER JOIN (most common)
+SELECT e.first_name, e.last_name, d.name AS department_name
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.id;
+
+-- LEFT JOIN (all employees, even if no department)
+SELECT e.first_name, e.last_name, d.name AS department_name
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.id;
+
+-- RIGHT JOIN (all departments, even if no employees)
+SELECT e.first_name, e.last_name, d.name AS department_name
+FROM employees e
+RIGHT JOIN departments d ON e.department_id = d.id;
+
+-- FULL OUTER JOIN (MySQL doesn't support directly, emulate with UNION)
+SELECT e.first_name, e.last_name, d.name AS department_name
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.id
+UNION
+SELECT e.first_name, e.last_name, d.name AS department_name
+FROM employees e
+RIGHT JOIN departments d ON e.department_id = d.id;
+
+-- Multiple JOINs
+SELECT e.first_name, e.last_name, d.name AS department_name, p.name AS project_name
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.id
+INNER JOIN employee_projects ep ON e.id = ep.employee_id
+INNER JOIN projects p ON ep.project_id = p.id;
+
+-- Self JOIN (employees and their managers example)
+-- First, alter table to add manager_id
+ALTER TABLE employees ADD manager_id INT;
+UPDATE employees SET manager_id = 2 WHERE id = 1;
+UPDATE employees SET manager_id = 4 WHERE id = 3;
+
+SELECT e1.first_name AS employee_name, 
+       e1.last_name AS employee_last_name,
+       e2.first_name AS manager_name,
+       e2.last_name AS manager_last_name
+FROM employees e1
+LEFT JOIN employees e2 ON e1.manager_id = e2.id;
+
+-- CROSS JOIN (Cartesian product)
+SELECT e.first_name, d.name
+FROM employees e
+CROSS JOIN departments d;
+
+-- NATURAL JOIN (joins on columns with same name)
+-- Note: Use with caution as it can produce unexpected results
+SELECT e.first_name, d.name
+FROM employees e
+NATURAL JOIN departments d;
+
+-- JOIN with aggregate functions
+SELECT d.name AS department_name, 
+       COUNT(e.id) AS employee_count,
+       AVG(e.salary) AS average_salary
+FROM departments d
+LEFT JOIN employees e ON d.id = e.department_id
+GROUP BY d.id, d.name
+ORDER BY average_salary DESC;
+
+-- JOIN with WHERE clause
+SELECT e.first_name, e.last_name, d.name AS department_name
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.id
+WHERE d.location = 'New York';
+
+-- JOIN with multiple conditions
+SELECT e.first_name, e.last_name, p.name AS project_name, ep.role
+FROM employees e
+INNER JOIN employee_projects ep ON e.id = ep.employee_id
+INNER JOIN projects p ON ep.project_id = p.id
+WHERE p.budget > 50000 AND ep.role = 'Developer';
+
+-- Using table aliases
+SELECT emp.first_name, emp.last_name, dept.name AS department
+FROM employees emp
+JOIN departments dept ON emp.department_id = dept.id;
+
+-- JOIN with subquery
+SELECT e.first_name, e.last_name, dept_stats.avg_salary
+FROM employees e
+JOIN (
+    SELECT department_id, AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department_id
+) dept_stats ON e.department_id = dept_stats.department_id
+WHERE e.salary > dept_stats.avg_salary;
+
+-- Multiple JOIN types in one query
+SELECT e.first_name, e.last_name, 
+       d.name AS department_name,
+       p.name AS project_name,
+       m.first_name AS manager_name
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.id
+LEFT JOIN employee_projects ep ON e.id = ep.employee_id
+LEFT JOIN projects p ON ep.project_id = p.id
+LEFT JOIN employees m ON e.manager_id = m.id;</code></pre>
+              </div>
+            </article>
+
+            <article class="card" id="lesson-transactions">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                <h3>Transactions and ACID Properties</h3>
+                <button class="copy-btn" data-copy="#code-transactions"><i class="fa-regular fa-copy"></i> Copy</button>
+              </div>
+              <p class="t">Managing database transactions with ACID compliance.</p>
+              <div class="code" id="code-transactions">
+<pre><code>-- Start a transaction
+START TRANSACTION;
+
+-- Perform multiple operations
+UPDATE accounts SET balance = balance - 1000 WHERE account_id = 123;
+UPDATE accounts SET balance = balance + 1000 WHERE account_id = 456;
+
+-- Commit the transaction if both operations succeed
+COMMIT;
+
+-- Example with error handling
+START TRANSACTION;
+
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SELECT 'Transaction failed: ' + ERROR_MESSAGE();
+    END;
+
+    -- Transfer money between accounts
+    UPDATE accounts SET balance = balance - 1000 WHERE account_id = 123;
+    UPDATE accounts SET balance = balance + 1000 WHERE account_id = 456;
+    
+    COMMIT;
+    SELECT 'Transaction completed successfully';
+END;
+
+-- Savepoints within transactions
+START TRANSACTION;
+
+UPDATE accounts SET balance = balance - 500 WHERE account_id = 123;
+SAVEPOINT savepoint1;
+
+UPDATE accounts SET balance = balance + 500 WHERE account_id = 456;
+-- If something goes wrong, we can rollback to savepoint1
+-- ROLLBACK TO savepoint1;
+
+COMMIT;
+
+-- Transaction isolation levels
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+START TRANSACTION;
+SELECT * FROM accounts WHERE account_id = 123;
+COMMIT;
+
+-- SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+-- SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+-- Locking within transactions
+START TRANSACTION;
+SELECT * FROM accounts WHERE account_id = 123 FOR UPDATE;
+-- Other transactions cannot modify this row until we commit
+UPDATE accounts SET balance = balance - 200 WHERE account_id = 123;
+COMMIT;
+
+-- Deadlock handling example
+-- Transaction 1
+START TRANSACTION;
+UPDATE accounts SET balance = balance - 100 WHERE account_id = 123;
+-- Transaction 2 (in another session)
+START TRANSACTION;
+UPDATE accounts SET balance = balance - 100 WHERE account_id = 456;
+-- Transaction 1 then tries:
+UPDATE accounts SET balance = balance + 100 WHERE account_id = 456;
+-- Transaction 2 then tries:
+UPDATE accounts SET balance = balance + 100 WHERE account_id = 123;
+-- This would cause a deadlock
+
+-- Using LOCK TABLES (less common, use with caution)
+LOCK TABLES accounts WRITE;
+UPDATE accounts SET balance = balance + 500 WHERE account_id = 123;
+UNLOCK TABLES;
+
+-- Transaction with multiple statements
+START TRANSACTION;
+
+INSERT INTO transactions (from_account, to_account, amount, transaction_date)
+VALUES (123, 456, 1000, NOW());
+
+UPDATE accounts SET balance = balance - 1000 WHERE account_id = 123;
+UPDATE accounts SET balance = balance + 1000 WHERE account_id = 456;
+
+COMMIT;
+
+-- Rollback example
+START TRANSACTION;
+
+DELETE FROM employee_projects WHERE employee_id = 1;
+-- Oops, that was a mistake!
+ROLLBACK;
+
+-- Nested transactions (MySQL doesn't support true nesting, but we can use savepoints)
+START TRANSACTION;
+
+UPDATE accounts SET balance = balance - 1000 WHERE account_id = 123;
+SAVEPOINT nested_transaction;
+
+UPDATE accounts SET balance = balance + 1000 WHERE account_id = 456;
+-- If we need to rollback just the nested part:
+-- ROLLBACK TO SAVEPOINT nested_transaction;
+
+COMMIT;
+
+-- Transaction with error checking in stored procedure
+DELIMITER //
+CREATE PROCEDURE transfer_money(
+    IN from_account INT, 
+    IN to_account INT, 
+    IN amount DECIMAL(10,2)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SELECT 'Transfer failed' AS result;
+    END;
+    
+    START TRANSACTION;
+    
+    -- Check if sufficient balance
+    IF (SELECT balance FROM accounts WHERE account_id = from_account) < amount THEN
+        ROLLBACK;
+        SELECT 'Insufficient balance' AS result;
+    ELSE
+        UPDATE accounts SET balance = balance - amount WHERE account_id = from_account;
+        UPDATE accounts SET balance = balance + amount WHERE account_id = to_account;
+        
+        INSERT INTO transaction_log (from_account, to_account, amount, status)
+        VALUES (from_account, to_account, amount, 'COMPLETED');
+        
+        COMMIT;
+        SELECT 'Transfer successful' AS result;
+    END IF;
+END //
+DELIMITER ;</code></pre>
+              </div>
+            </article>
+
+            <!-- Next Steps card -->
+            <article class="card">
+              <h3>Continue Learning</h3>
+              <p class="t">Explore other database technologies and advanced topics!</p>
+              <div class="cta-row">
+                <button class="btn btn--gradient" id="goMongoDB">Next: Learn MongoDB →</button>
+                <button class="btn btn--gradient alt" id="goPostgreSQL">Learn PostgreSQL →</button>
+                <a class="btn" href="/private/dashboard" id="backAll">Back to All Courses</a>
+              </div>
+            </article>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Chat Floating Button -->
+  <button class="chat-fab" id="chatFab" aria-controls="chatBox" aria-expanded="false">
+    <i class="fa-brands fa-rocketchat"></i>
+    <span class="hide-sm">Get in Touch</span>
+    <img class="hide-img" src="https://i.ibb.co/zT8pQBLR/arsene.jpg" alt="agent" />
+    <img class="hide-img" src="https://i.ibb.co/WN6342yF/donald.jpg" alt="agent" />
+  </button>
+
+  <!-- Chat Modal -->
+  <section class="chat" id="chatBox" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <div class="chat__top">
+      <h2 id="chatTitle" style="margin:0; font-size:1rem;">Get In Touch</h2>
+      <button id="chatClose" aria-label="Close chat" class="btn" style="padding:8px 10px;">
+        <i class="fa-regular fa-circle-xmark"></i>
+      </button>
+    </div>
+    <form class="chat__body" id="contactForm">
+      <div id="formNote" class="sr-only" aria-live="polite"></div>
+      <div class="field">
+        <label for="name">Names *</label>
+        <input class="input" id="name" name="name" type="text" placeholder="Full names" required />
+      </div>
+      <div class="field">
+        <label for="email">E-mail *</label>
+        <input class="input" id="email" name="email" type="email" placeholder="E-mail" required />
+      </div>
+      <div class="field">
+        <label for="subject">Subject *</label>
+        <input class="input" id="subject" name="subject" type="text" placeholder="Subject" required />
+      </div>
+      <div class="field">
+        <label for="message">Message *</label>
+        <textarea class="textarea" id="message" name="message" placeholder="Text a message..." required></textarea>
+      </div>
+      <button class="submit" type="submit">Send</button>
+      <p class="help">* Feedback will get to you in less than 24hrs!</p>
+    </form>
+    <div class="chat__actions">
+      <a href="tel:+250792575986" title="Call"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:katprogrammers@gmail.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.instagram.com/kat_programmers" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section contact-form">
+        <h2 class="footer-title">Contact Us</h2>
+        <form class="contact-form-inner" id="footerContactForm">
+          <div class="form-group">
+            <label for="footerName">Name</label>
+            <input type="text" id="footerName" name="name" placeholder="e.g. Arsene Breezy" required>
+          </div>
+          <div class="form-group">
+            <label for="footerEmail">Email</label>
+            <input type="email" id="footerEmail" name="email" placeholder="e.g. example@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label for="footerMessage">Message</label>
+            <textarea id="footerMessage" name="message" rows="3" placeholder="text message..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Send</button>
+        </form>
+      </div>
+      
+      <div class="footer-section social-media">
+        <h2 class="footer-title">Follow Us</h2>
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/kat_programmers/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="qr">
+          <a href="https://katprogrammers.vercel.app" target="_blank" title="Open kat-programmers on Mobile">
+            <img src="https://i.ibb.co/BKPTj83C/qrcode.png" alt="Kat Programmers QR Code">
+            <p style="margin-top: 10px; font-size: 0.85rem;">Scan to open on mobile</p>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-section map">
+        <h2 class="footer-title">Our Location</h2>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019019858232!2d-122.4194154846817!3d37.77492977975959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c2f8e6e2b%3A0x4a0b8e6e2b8e6e2b!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1628888888888!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Kat-Programmers. All rights reserved.</p>
+      <p style="margin-top: 10px; font-size: 0.8rem;">
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Privacy Policy</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Terms of Service</a> | 
+        <a href="#" style="color: var(--text-secondary); margin: 0 10px;">Contact Support</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== THEME =====
+    (function initTheme() {
+      try {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('themeToggle');
+        if (btn) btn.setAttribute('aria-pressed', theme === 'light');
+      } catch (e) {}
+    })();
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const root = document.documentElement;
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('themeToggle').setAttribute('aria-pressed', next === 'light');
+    });
+
+    // ===== SIDEBAR (mobile off-canvas) =====
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('backdrop');
+
+    function openSidebar() {
+      sidebar.classList.add('sidebar--active');
+      backdrop.classList.add('active');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('sidebar--active');
+      backdrop.classList.remove('active');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+    sidebarToggle.addEventListener('click', () => {
+      const isOpen = sidebar.classList.contains('sidebar--active');
+      isOpen ? closeSidebar() : openSidebar();
+    });
+    backdrop.addEventListener('click', closeSidebar);
+
+    // Close sidebar on wide screens
+    const mq = window.matchMedia('(min-width: 841px)');
+    mq.addEventListener('change', e => { if (e.matches) closeSidebar(); });
+
+    // ===== COPY BUTTONS =====
+    function copyFrom(selector, btn) {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      const text = el.innerText.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = original; }, 1600);
+      }).catch(() => {
+        alert('Copy failed.');
+      });
+    }
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => copyFrom(btn.getAttribute('data-copy'), btn));
+    });
+
+    // ===== CHAT =====
+    const chatFab = document.getElementById('chatFab');
+    const chatBox = document.getElementById('chatBox');
+    const chatClose = document.getElementById('chatClose');
+
+    function openChat() { chatBox.classList.add('active'); chatFab.setAttribute('aria-expanded', 'true'); }
+    function closeChat() { chatBox.classList.remove('active'); chatFab.setAttribute('aria-expanded', 'false'); }
+
+    chatFab.addEventListener('click', () => {
+      if (chatBox.classList.contains('active')) closeChat(); else openChat();
+    });
+    chatClose.addEventListener('click', closeChat);
+
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Message sent successfully! Our team will contact you soon.');
+      e.target.reset();
+      closeChat();
+    });
+
+    // ===== LESSON NAV (example hooks) =====
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.target;
+        const element = document.getElementById(`lesson-${target}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Close sidebar when clicking navigation links
+    document.querySelectorAll('.nav__link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
+    });
+    
+    // Close sidebar when clicking inside the accordion
+    document.querySelectorAll('.link-lessons').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.innerWidth <= 840) {
+          closeSidebar();
+        }
+      });
+    });
+
+    // Fetch user info
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/api/me', {
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const user = await response.json();
+          document.getElementById('userEmail').textContent = user.email;
+        } else {
+          document.querySelector('.user-info').style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+        document.querySelector('.user-info').style.display = 'none';
+      }
+    });
+
+    // ===== CTA buttons (example navigation) =====
+    document.getElementById('goMongoDB').addEventListener('click', () => alert('MongoDB course coming soon!'));
+    document.getElementById('goPostgreSQL').addEventListener('click', () => alert('PostgreSQL course coming soon!'));
+    document.getElementById('backAll').addEventListener('click', (e) => { e.preventDefault(); window.location.href = '/private/dashboard'; });
+
+  </script>
+  <script>
+// Cross-tab logout communication with fallback
+function setupCrossTabLogout() {
+  let logoutChannel;
+  
+  if (typeof BroadcastChannel !== 'undefined') {
+    logoutChannel = new BroadcastChannel('logout-channel');
+    
+    logoutChannel.addEventListener('message', (event) => {
+      if (event.data.type === 'logout') {
+        console.log('Logout detected from another tab via BroadcastChannel');
+        window.location.replace('/login');
+      }
+    });
+  } else {
+    console.log('BroadcastChannel not supported, using localStorage fallback');
+    
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'logout-event' && event.newValue) {
+        console.log('Logout detected from another tab via localStorage');
+        window.location.replace('/login');
+      }
+    });
+    
+    if (localStorage.getItem('logout-event')) {
+      console.log('Logout detected on page load via localStorage');
+      window.location.replace('/login');
+    }
+  }
+
+  async function checkAuthStatus() {
+    try {
+      const response = await fetch('/api/me', {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      if (!response.ok) {
+        window.location.replace('/login');
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      window.location.replace('/login');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', checkAuthStatus);
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+      checkAuthStatus();
+    }
+  });
+  window.addEventListener('focus', checkAuthStatus);
+  
+  setInterval(checkAuthStatus, 30000);
+  
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function() {
+      const originalContent = logoutBtn.innerHTML;
+      logoutBtn.disabled = true;
+      logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+
+      try {
+        const response = await fetch('/sessionLogout', {
+          method: 'POST',
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          if (logoutChannel) {
+            logoutChannel.postMessage({ type: 'logout', timestamp: Date.now() });
+          } else {
+            localStorage.setItem('logout-event', Date.now().toString());
+            setTimeout(() => localStorage.removeItem('logout-event'), 100);
+          }
+          
+          window.location.replace('/login');
+        } else {
+          throw new Error('Logout failed');
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+        logoutBtn.disabled = false;
+        logoutBtn.innerHTML = originalContent;
+        alert('Logout failed. Please try again.');
+      }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', setupCrossTabLogout);
+</script>
 </body>
 </html>
