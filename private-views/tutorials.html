@@ -4,10 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Programming Tutorials Hub</title>
+    <link rel="stylesheet" href="tutorials.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+      <!-- Loading Screen -->
+  <div class="loader-container" id="loader">
+    <div class="floating-elements">
+      <div class="floating-element" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+      <div class="floating-element" style="top: 60%; left: 80%; animation-delay: 1s;"></div>
+      <div class="floating-element" style="top: 40%; left: 50%; animation-delay: 2s;"></div>
+      <div class="floating-element" style="top: 80%; left: 30%; animation-delay: 3s;"></div>
+    </div>
+    
+    <div class="code-symbol">
+      <div class="water-fill" id="waterFill"></div>
+      <div class="waves"></div>
+      &lt;/&gt;
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div class="loading-text">Loading Kat-Programmers</div>
+  </div>
+    <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" id="sidebarToggle">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar--offcanvas" id="sidebar" aria-label="Primary">
+      <div class="sidebar__hdr">
+        <img src="./assets/images/image (1).png" alt="KAT-PROGRAMMERS logo" />
+        <div class="sidebar__title">KAT-PROGRAMMERS</div>
+      </div>
+      
+      <nav class="sidebar__nav" role="navigation">
+        <div class="nav__group" aria-label="Main links">
+          <a class="nav__link" href="/dashboard"  aria-current="page"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+          <a class="nav__link" href="/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
+          <a class="nav__link" href="/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
+          <a class="nav__link" href="/certificate"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
+          <a class="nav__link" href="/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
+        </div>
+
+        <div class="user-info" style="padding: 16px; border-top: 1px solid var(--bg-surface);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center;">
+              <i class="fa-solid fa-user" style="color: white;"></i>
+            </div>
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">Logged in as:</div>
+              <div id="userEmail" style="font-weight: 600; font-size: 0.9rem;"></div>
+              <div><a class="nav__link" href="/private/profile"><span>Manage Account</span></a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar__footer">
+          <a class="nav__link" href="/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
+          <button class="nav__link" id="logoutBtn" style="width:100%; background:transparent; border:0; text-align:left; cursor: pointer;">
+            <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span>Log Out</span>
+          </button>
+        </div>
+        
+        <div class="theme-toggle-row" aria-live="polite">
+          <span>Theme</span>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" aria-pressed="false"></button>
+        </div>
+      </nav>
+    </aside>
+
     <header>
         <div class="header-content">
             <h1>3D Programming Tutorials Hub</h1>
