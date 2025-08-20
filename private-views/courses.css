@@ -147,8 +147,6 @@
           
           /* Ensure cards don't stretch too wide on mobile */
           .card {
-            max-width: 100%;
-            overflow-x: hidden;
             margin-left: 0;
             width: 100%;
             box-sizing: border-box;
@@ -582,4 +580,5 @@
             font-size: 16px; /* Prevents zoom on focus in iOS */
           }
         }
+
 
