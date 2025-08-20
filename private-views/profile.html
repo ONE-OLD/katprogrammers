@@ -9,28 +9,61 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body data-theme="dark">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <img src="https://via.placeholder.com/40" alt="KAT-PROGRAMMERS Logo">
-      <h2>KAT-PROGRAMMERS</h2>
-    </div>
-    <ul class="sidebar-links">
-      <li><a href="home.html" class="home"><span><i class="fa-solid fa-house"></i></span><p>Home</p></a></li>
-      <li><a href="tutorials.html"><span><i class="fa-solid fa-film"></i></span><p>Videos</p></a></li>
-      <li><a href="#"><span><i class="fa-solid fa-newspaper"></i></span><p>News</p></a></li>
-      <li><a href="#"><span><i class="fa-brands fa-uncharted"></i></span><p>Courses</p></a></li>
-      <li><a href="apps.html"><span><i class="fa-brands fa-app-store"></i></span><p>App Store</p></a></li>
-      <div class="sidebar-bottom">
-        <li><a href="/private/profile"><span><i class="fa-solid fa-circle-user"></i></span><p>Profile</p></a></li>
-        <!-- FIXED: unique ID -->
-        <li><button id="sidebarLogoutBtn"><span><i class="fa-solid fa-right-from-bracket"></i></span><p>Log Out</p></button></li>
+    <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" id="sidebarToggle">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar--offcanvas" id="sidebar" aria-label="Primary">
+      <div class="sidebar__hdr">
+        <img src="./assets/images/image (1).png" alt="KAT-PROGRAMMERS logo" />
+        <div class="sidebar__title">KAT-PROGRAMMERS</div>
       </div>
-    </ul>
-    <div class="theme-toggle-container">
-      <button class="theme-toggle" id="themeToggle"></button>
-    </div>
-  </aside>
+      
+      <nav class="sidebar__nav" role="navigation">
+        <div class="nav__group" aria-label="Main links">
+          <a class="nav__link" href="/dashboard"  aria-current="page"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+          <a class="nav__link" href="/tutorials"><span class="nav__icon"><i class="fa-solid fa-film"></i></span><span>Videos</span></a>
+          <a class="nav__link" href="/news"><span class="nav__icon"><i class="fa-solid fa-newspaper"></i></span><span>News</span></a>
+          <a class="nav__link" href="/certificate"><span class="nav__icon"><i class="fa-brands fa-uncharted"></i></span><span>Courses</span></a>
+          <a class="nav__link" href="/apps"><span class="nav__icon"><i class="fa-brands fa-app-store"></i></span><span>App Store</span></a>
+        </div>
+
+        <div class="user-info" style="padding: 16px; border-top: 1px solid var(--bg-surface);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center;">
+              <i class="fa-solid fa-user" style="color: white;"></i>
+            </div>
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">Logged in as:</div>
+              <div id="userEmail" style="font-weight: 600; font-size: 0.9rem;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar__footer">
+          <a class="nav__link" href="/about"><span class="nav__icon"><i class="fa-solid fa-circle-user"></i></span><span>About</span></a>
+          <button class="nav__link" id="logoutBtn" style="width:100%; background:transparent; border:0; text-align:left; cursor: pointer;">
+            <span class="nav__icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span>Log Out</span>
+          </button>
+        </div>
+        
+        <div class="theme-toggle-row" aria-live="polite">
+          <span>Theme</span>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" aria-pressed="false"></button>
+        </div>
+      </nav>
+    </aside>
+<header class="site-hdr">
+        <div class="site-hdr__inner">
+          <div>
+            <h2 style="margin:.4rem 0 0; font-size:1.6rem; font-weight:800; margin-left: 60px;">Dashboard</h2>
+          </div>
+        </div>
+      </header>
 
   <!-- Main Content -->
   <main class="main-content">
@@ -70,7 +103,7 @@
       <hr>
       
       <!-- FIXED: unique ID -->
-      <button id="mainLogoutBtn" class="btn btn-secondary">
+      <button id="logoutBtn" class="btn btn-secondary">
         <i class="fas fa-sign-out-alt"></i> Logout
       </button>
       
@@ -154,27 +187,116 @@
       }
     });
 
-    // Shared logout function
-    async function logout() {
-      await fetch('/api/logout', { method: 'POST', credentials: 'include' });
-      localStorage.removeItem('theme'); // clear theme if needed
-      window.location.href = '/login';
-    }
-
-    // Attach logout to both buttons
-    document.getElementById('sidebarLogoutBtn').addEventListener('click', logout);
-    document.getElementById('mainLogoutBtn').addEventListener('click', logout);
-
-    // Load on page start
-    loadProfile();
-    loadActivity();
-
-    // Prevent going back after logout
-    window.addEventListener('pageshow', (event) => {
-      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        window.location.reload();
+  </script>
+  <script>
+// Cross-tab logout communication with fallback
+function setupCrossTabLogout() {
+  let logoutChannel;
+  
+  // Check if BroadcastChannel is supported
+  if (typeof BroadcastChannel !== 'undefined') {
+    // Use BroadcastChannel (modern browsers)
+    logoutChannel = new BroadcastChannel('logout-channel');
+    
+    // Listen for logout messages from other tabs
+    logoutChannel.addEventListener('message', (event) => {
+      if (event.data.type === 'logout') {
+        console.log('Logout detected from another tab via BroadcastChannel');
+        window.location.replace('/');
       }
     });
-  </script>
+  } else {
+    // Fallback for browsers that don't support BroadcastChannel
+    console.log('BroadcastChannel not supported, using localStorage fallback');
+    
+    // Listen for storage events (logout events from other tabs)
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'logout-event' && event.newValue) {
+        console.log('Logout detected from another tab via localStorage');
+        window.location.replace('/');
+      }
+    });
+    
+    // Also check for logout event on page load as a fallback
+    if (localStorage.getItem('logout-event')) {
+      console.log('Logout detected on page load via localStorage');
+      window.location.replace('/');
+    }
+  }
+
+  // Enhanced authentication check
+  async function checkAuthStatus() {
+    try {
+      const response = await fetch('/api/me', {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      if (!response.ok) {
+        window.location.replace('/login');
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      window.location.replace('/login');
+    }
+  }
+
+  // Check auth on various events
+  document.addEventListener('DOMContentLoaded', checkAuthStatus);
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+      checkAuthStatus();
+    }
+  });
+  window.addEventListener('focus', checkAuthStatus);
+  
+  // Optional: Periodic check (every 30 seconds)
+  setInterval(checkAuthStatus, 30000);
+  
+  // Update the logout button handler
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function() {
+      const originalContent = logoutBtn.innerHTML;
+      logoutBtn.disabled = true;
+      logoutBtn.innerHTML = '<span class="nav__icon"><i class="fa-solid fa-spinner fa-spin"></i></span><span>Logging out...</span>';
+
+      try {
+        const response = await fetch('/sessionLogout', {
+          method: 'POST',
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          // Broadcast logout to other tabs using the available method
+          if (logoutChannel) {
+            // Use BroadcastChannel if available
+            logoutChannel.postMessage({ type: 'logout', timestamp: Date.now() });
+          } else {
+            // Use localStorage fallback
+            localStorage.setItem('logout-event', Date.now().toString());
+            // Immediately remove it to allow detecting future logouts
+            setTimeout(() => localStorage.removeItem('logout-event'), 100);
+          }
+          
+          window.location.replace('/');
+        } else {
+          throw new Error('Logout failed');
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+        logoutBtn.disabled = false;
+        logoutBtn.innerHTML = originalContent;
+        alert('Logout failed. Please try again.');
+      }
+    });
+  }
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', setupCrossTabLogout);
+</script>
 </body>
 </html>
