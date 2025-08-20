@@ -1,0 +1,292 @@
+:root {
+            --html-color: #e34c26;
+            --css-color: #264de4;
+            --js-color: #f0db4f;
+            --py-color: #306998;
+            --cpp-color: #00599c;
+            --mysql-color: #00758f;
+            --header-bg: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #f0f0f0;
+            --accent-color: #0f3460;
+            --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 3rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff8a00, #e52e71, #4f6dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .language-carousel {
+            perspective: 1000px;
+            height: 700px;
+            margin: 3rem auto;
+            position: relative;
+        }
+        
+        .carousel-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: var(--transition);
+        }
+        
+        .carousel-item {
+            position: absolute;
+            width: 80%;
+            height: auto;
+            left: 10%;
+            top: 5%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: var(--transition);
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            backface-visibility: hidden;
+        }
+        
+        .carousel-item.active {
+            transform: rotateY(0deg) translateZ(0px) scale(1);
+            z-index: 10;
+            opacity: 1;
+        }
+        
+        .carousel-item.prev {
+            transform: rotateY(45deg) translateZ(-400px) translateX(-40%) scale(0.8);
+            opacity: 0.7;
+            z-index: 5;
+        }
+        
+        .carousel-item.next {
+            transform: rotateY(-45deg) translateZ(-400px) translateX(40%) scale(0.8);
+            opacity: 0.7;
+            z-index: 5;
+        }
+        
+        .carousel-item.hidden {
+            transform: rotateY(90deg) translateZ(-600px) scale(0.6);
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .carousel-nav {
+            display: inline-flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .nav-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .nav-btn:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-header {
+            padding: 2rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .language-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tutorials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            padding: 2rem;
+            flex-grow: 1;
+            overflow-y: auto;
+            height: 100%;
+        }
+        
+        .tutorial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            transform: translateZ(0);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tutorial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-top: 56.25%;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .card-content p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .beginner { background: linear-gradient(45deg, #4caf50, #8bc34a); }
+        .intermediate { background: linear-gradient(45deg, #2196f3, #03a9f4); }
+        .advanced { background: linear-gradient(45deg, #f44336, #ff9800); }
+        
+        .language-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        .html-indicator { background: var(--html-color); }
+        .css-indicator { background: var(--css-color); }
+        .js-indicator { background: var(--js-color); }
+        .py-indicator { background: var(--py-color); }
+        .cpp-indicator { background: var(--cpp-color); }
+        .mysql-indicator { background: var(--mysql-color); }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 4rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 1100px) {
+            .tutorials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .language-carousel {
+                height: 800px;
+            }
+            
+            .carousel-item {
+                width: 100%;
+                left: 2%;
+            }
+            
+            .carousel-item.prev {
+                transform: rotateY(45deg) translateZ(-300px) translateX(-30%) scale(0.8);
+            }
+            
+            .carousel-item.next {
+                transform: rotateY(-45deg) translateZ(-300px) translateX(30%) scale(0.8);
+            }
+        }
