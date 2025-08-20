@@ -1,4 +1,6 @@
+@import url('courses.css');
 :root {
+            --bg-img: url('https://i.ibb.co/v6nNcKsh/dark.jpg');
             --html-color: #e34c26;
             --css-color: #264de4;
             --js-color: #f0db4f;
@@ -11,6 +13,20 @@
             --accent-color: #0f3460;
             --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+[data-theme="light"] {
+          --bg-img: url('https://i.ibb.co/JRLMTmSV/image-cache.jpg');
+          --html-color: #e34c26;
+            --css-color: #264de4;
+            --js-color: #f0db4f;
+            --py-color: #306998;
+            --cpp-color: #00599c;
+            --mysql-color: #00758f;
+            --header-bg: #eeeeee;
+            --card-bg: #c0c0c0;
+            --text-color: #f0f0f0;
+            --accent-color: #7ab0f1;
+            --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
         
         * {
             margin: 0;
@@ -20,7 +36,10 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+          background-image: var(--bg-img); 
+          background-repeat: no-repeat; 
+          background-size: cover; 
+          background-attachment: fixed;
             color: var(--text-color);
             line-height: 1.6;
             min-height: 100vh;
