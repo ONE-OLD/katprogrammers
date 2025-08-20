@@ -223,6 +223,9 @@ app.get("/private/cpp", requireAuth, (_req, res) => {
 app.get("/private/python", requireAuth, (_req, res) => {
   res.sendFile(path.join(privateDir, "python.html"));
 });
+app.get("/private/tutorials", requireAuth, (_req, res) => {
+  res.sendFile(path.join(privateDir, "tutorials.html"));
+});
 app.get("/private/mysql", requireAuth, (_req, res) => {
   res.sendFile(path.join(privateDir, "mysql.html"));
 });
