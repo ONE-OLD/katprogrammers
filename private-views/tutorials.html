@@ -649,48 +649,65 @@ function setupCrossTabLogout() {
 document.addEventListener('DOMContentLoaded', setupCrossTabLogout);
 </script>
     <script>
-    // Simulate loading process
     document.addEventListener('DOMContentLoaded', function() {
-      const loader = document.getElementById('loader');
-      const content = document.getElementById('content');
-      const waterFill = document.getElementById('waterFill');
-      const progressBar = document.getElementById('progressBar');
-      
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += Math.random() * 5;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(interval);
-          
-          // Hide loader and show content when done
-          setTimeout(() => {
-            loader.classList.add('hidden');
-            content.classList.add('visible');
-          }, 500);
-        }
-        
-        // Update water fill and progress bar
-        waterFill.style.height = `${progress}%`;
-        progressBar.style.width = `${progress}%`;
-      }, 100);
-      
-      // Additional check for window load (images, etc.)
-      window.addEventListener('load', function() {
-        // If the interval is still running, complete it
-        if (progress < 100) {
-          clearInterval(interval);
-          progress = 100;
-          waterFill.style.height = '100%';
-          progressBar.style.width = '100%';
-          
-          setTimeout(() => {
-            loader.classList.add('hidden');
-            content.classList.add('visible');
-          }, 500);
-        }
-      });
-    });
+            const loader = document.getElementById('loader');
+            const progressBar = document.getElementById('progressBar');
+            const waterFill = document.getElementById('waterFill');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Simulate loading process
+            let progress = 0;
+            const loadingInterval = setInterval(() => {
+                progress += Math.random() * 5;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(loadingInterval);
+                    finishLoading();
+                }
+                
+                // Update progress bar and water fill
+                progressBar.style.width = progress + '%';
+                waterFill.style.height = progress + '%';
+            }, 200);
+            
+            // Function to complete loading
+            function finishLoading() {
+                // Add a slight delay before hiding the loader
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    
+                    // Show main content after loader is hidden
+                    setTimeout(() => {
+                        mainContent.style.display = 'block';
+                    }, 800);
+                }, 500);
+            }
+            
+            // Handle page reload (for demonstration)
+            document.querySelector('.btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                loader.classList.remove('hidden');
+                mainContent.style.display = 'none';
+                
+                // Reset progress
+                progress = 0;
+                progressBar.style.width = '0%';
+                waterFill.style.height = '0%';
+                
+                // Restart loading simulation
+                const restartInterval = setInterval(() => {
+                    progress += Math.random() * 5;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(restartInterval);
+                        finishLoading();
+                    }
+                    
+                    progressBar.style.width = progress + '%';
+                    waterFill.style.height = progress + '%';
+                }, 200);
+            });
+        });
   </script>
 
 </body>
