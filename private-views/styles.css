@@ -123,6 +123,7 @@
 /* Main Content Styles */
 .main-content {
   margin-left: 250px;
+  margin-top: 20px;
   flex-grow: 1;
   padding: 2rem;
   max-width: 1200px;
@@ -384,7 +385,7 @@ input:focus {
   }
   
   .main-content {
-    margin-left: 70px;
+    margin: 0;
     width: calc(100% - 70px);
     padding: 1.5rem 1rem;
   }
