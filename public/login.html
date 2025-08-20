@@ -167,7 +167,7 @@
         window.location.href = "/private/dashboard";
       }
     } catch (e) {
-      loginMsg.style.display = 'block';
+      
       loginMsg.textContent = e.message || 'Login failed';
     } finally {
       hideLoading(btn);
