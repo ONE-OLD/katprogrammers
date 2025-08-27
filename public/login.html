@@ -29,8 +29,18 @@
         <div class="front">
           <h1 class="page-title" id="formTitle">Login</h1>
           <div class="auth-form">
-            <h2 class="page-title" id="formTitle">Welcome Back!</h2>
-            <div class="auth-msg" id="loginMsg" style="display: none; color: red; border: 2px solid red; background-color: rgb(255, 0, 0, 0.3); border-radius: 5px; padding-top: 10px; padding-bottom: 10px;"></div>
+            <h2 class="page-title">Welcome Back!</h2>
+            <div class="auth-msg" id="loginMsg" style="display: none; color: red; border: 2px solid red; background-color: rgb(255, 0, 0, 0.3); border-radius: 5px; padding: 10px;"></div>
+                        <!-- Google Login Button -->
+            <div style="margin-top: 1rem; margin-bottom: 1rem; text-align:center;">
+              <button id="googleLoginBtn" class="btn btn-secondary auth-btn" style="width: 100%;">
+                <i class="fab fa-google" style="color:#DB4437;"></i> Continue with Google
+              </button>
+            </div>
+            <div style="text-align: center; margin: 1rem 0;">
+              <h4 style="color: rgb(124, 124, 124); font-family: 'Courier New', Courier, monospace;">-- or --</h4>
+            </div>
+
             <div class="form-group">
               <label for="loginEmail">Email</label>
               <input type="email" id="loginEmail" placeholder="Enter your email">
@@ -43,6 +53,7 @@
               <button id="loginBtn" class="btn btn-primary auth-btn">Sign In</button>
               <button id="gotoSignup" class="btn btn-secondary auth-btn">Sign Up</button>
             </div>
+
             <button id="forgotBtn" class="btn btn-secondary" style="width:100%; margin-top:1rem;">
               <i class="fas fa-key"></i> Forgot Password?
             </button>
@@ -51,10 +62,11 @@
         
         <!-- Signup Form -->
         <div class="back">
-          <h1 class="page-title" id="formTitle">Register</h1>
+          <h1 class="page-title">Register</h1>
           <div class="auth-form">
-            <h1 class="page-title" id="formTitle">Welcome, Let's Get Started</h1>
+            <h1 class="page-title">Welcome, Let's Get Started</h1>
             <div class="auth-msg" id="signupMsg"></div>
+            
             <div class="form-group">
               <label for="signupEmail">Email</label>
               <input type="email" id="signupEmail" placeholder="Enter your email">
@@ -93,23 +105,24 @@
     </div>
   </main>
   
-  <script type="module" src="/js/auth.js"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
+<script type="module" src="/js/auth.js"></script>
+  <!-- Your Auth Logic -->
   <script>
     const flipContainer = document.getElementById('flipContainer');
     const loginMsg = document.getElementById('loginMsg');
     const signupMsg = document.getElementById('signupMsg');
     const forgotMsg = document.getElementById('forgotMsg');
     const forgotPopup = document.getElementById('forgotPopup');
-    // Theme toggle functionality
+
+    // Theme toggle
     const themeToggle = document.getElementById('themeToggle');
     const currentTheme = localStorage.getItem('theme') || 'dark';
-    
     document.body.setAttribute('data-theme', currentTheme);
-    
     themeToggle.addEventListener('click', () => {
-      const currentTheme = document.body.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
+      const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.body.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
     });
@@ -117,99 +130,103 @@
     // Flip to signup
     document.getElementById('gotoSignup').addEventListener('click', () => {
       flipContainer.classList.add('flipped');
-      document.getElementById('formTitle').textContent = 'Signup';
       loginMsg.textContent = '';
     });
-    
     // Flip back to login
     document.getElementById('gotoLogin').addEventListener('click', () => {
       flipContainer.classList.remove('flipped');
-      document.getElementById('formTitle').textContent = 'Login';
       signupMsg.textContent = '';
     });
 
     function showLoading(btn) {
-    btn.disabled = true;
-    btn.dataset.originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="loading-spinner"></span>';
-  }
-
-  function hideLoading(btn) {
-    btn.disabled = false;
-    btn.innerHTML = btn.dataset.originalText;
-  }
-
-  // Login
-  document.getElementById('loginBtn').addEventListener('click', async (e) => {
-    const btn = e.target;
-    showLoading(btn);
-
-    loginMsg.textContent = '';
-    const email = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value;
-    if (!email || !password) { 
-      loginMsg.textContent = 'Email & password required'; 
-      hideLoading(btn);
-      return; 
+      btn.disabled = true;
+      btn.dataset.originalText = btn.innerHTML;
+      btn.innerHTML = '<span class="loading-spinner"></span>';
     }
 
-    try {
-      await window.__auth.loginWithEmail(email, password);
-      const user = window.__auth.auth.currentUser;
-      if (user) {
-        const idToken = await user.getIdToken(true);
-        await fetch("/sessionLogin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify({ idToken })
-        });
-        window.location.href = "/private/dashboard";
+    function hideLoading(btn) {
+      btn.disabled = false;
+      btn.innerHTML = btn.dataset.originalText;
+    }
+
+    window.__auth = {
+      auth: firebase.auth(),
+      loginWithEmail: (email, password) => firebase.auth().signInWithEmailAndPassword(email, password),
+      signupWithEmail: (email, password) => firebase.auth().createUserWithEmailAndPassword(email, password),
+      sendResetEmail: (email) => firebase.auth().sendPasswordResetEmail(email),
+    };
+
+    // 🔹 Login
+    document.getElementById('loginBtn').addEventListener('click', async (e) => {
+      const btn = e.target;
+      showLoading(btn);
+
+      loginMsg.textContent = '';
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      if (!email || !password) { 
+        loginMsg.textContent = 'Email & password required'; 
+        hideLoading(btn);
+        return; 
       }
-    } catch (e) {
-      loginMsg.style.display = 'block';
-      loginMsg.textContent = e.message || 'Login failed';
-    } finally {
-      hideLoading(btn);
-    }
-  });
 
-  // Signup
-  document.getElementById('signupBtn').addEventListener('click', async (e) => {
-    const btn = e.target;
-    showLoading(btn);
+      try {
+        await window.__auth.loginWithEmail(email, password);
+        const user = window.__auth.auth.currentUser;
+        if (user) {
+          const idToken = await user.getIdToken(true);
+          await fetch("/sessionLogin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: 'include',
+            body: JSON.stringify({ idToken })
+          });
+          window.location.href = "/private/dashboard";
+        }
+      } catch (e) {
+        loginMsg.style.display = 'block';
+        loginMsg.textContent = e.message || 'Login failed';
+      } finally {
+        hideLoading(btn);
+      }
+    });
 
-    signupMsg.textContent = '';
-    const email = document.getElementById('signupEmail').value.trim();
-    const password = document.getElementById('signupPassword').value;
-    const confirm = document.getElementById('signupConfirm').value;
-    if (!email || !password || !confirm) { 
-      signupMsg.textContent = 'All fields required'; 
-      hideLoading(btn);
-      return; 
-    }
-    if (password !== confirm) { 
-      signupMsg.textContent = 'Passwords do not match'; 
-      hideLoading(btn);
-      return; 
-    }
+    // 🔹 Signup
+    document.getElementById('signupBtn').addEventListener('click', async (e) => {
+      const btn = e.target;
+      showLoading(btn);
 
-    try {
-      await window.__auth.signupWithEmail(email, password);
-      signupMsg.style.color = 'green';
-      signupMsg.textContent = 'Signup successful! Please login.';
-      setTimeout(() => {
-        flipContainer.classList.remove('flipped');
-        document.getElementById('formTitle').textContent = 'Login';
-        signupMsg.textContent = '';
-      }, 1500);
-    } catch (e) {
-      signupMsg.textContent = e.message || 'Signup failed';
-    } finally {
-      hideLoading(btn);
-    }
-  });
-    // Forgot password popup
+      signupMsg.textContent = '';
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirm = document.getElementById('signupConfirm').value;
+      if (!email || !password || !confirm) { 
+        signupMsg.textContent = 'All fields required'; 
+        hideLoading(btn);
+        return; 
+      }
+      if (password !== confirm) { 
+        signupMsg.textContent = 'Passwords do not match'; 
+        hideLoading(btn);
+        return; 
+      }
+
+      try {
+        await window.__auth.signupWithEmail(email, password);
+        signupMsg.style.color = 'green';
+        signupMsg.textContent = 'Signup successful! Please login.';
+        setTimeout(() => {
+          flipContainer.classList.remove('flipped');
+          signupMsg.textContent = '';
+        }, 1500);
+      } catch (e) {
+        signupMsg.textContent = e.message || 'Signup failed';
+      } finally {
+        hideLoading(btn);
+      }
+    });
+
+    // 🔹 Forgot password popup
     document.getElementById('forgotBtn').addEventListener('click', () => {
       forgotPopup.style.display = 'block';
       forgotMsg.textContent = '';
@@ -229,6 +246,36 @@
       } catch (e) {
         forgotMsg.style.color = 'red';
         forgotMsg.textContent = e.message || 'Failed to send reset email';
+      }
+    });
+
+    // 🔹 Google Sign-In
+    document.getElementById('googleLoginBtn').addEventListener('click', async (e) => {
+      const btn = e.target;
+      showLoading(btn);
+      loginMsg.textContent = '';
+      signupMsg.textContent = '';
+
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const result = await firebase.auth().signInWithPopup(provider);
+        const user = result.user;
+
+        if (user) {
+          const idToken = await user.getIdToken(true);
+          await fetch("/sessionLogin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: 'include',
+            body: JSON.stringify({ idToken })
+          });
+          window.location.href = "/private/dashboard";
+        }
+      } catch (e) {
+        loginMsg.style.display = 'block';
+        loginMsg.textContent = e.message || 'Google sign-in failed';
+      } finally {
+        hideLoading(btn);
       }
     });
   </script>
