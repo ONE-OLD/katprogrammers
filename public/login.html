@@ -287,10 +287,9 @@
       }
     });
 
-    // Google Login
+   // Google Login
 document.getElementById('googleLoginBtn').addEventListener('click', async (e) => {
-  // Always use the button element
-  const btn = e.currentTarget;
+  const btn = e.currentTarget; // ensures we grab the button itself
   showLoading(btn);
 
   loginMsg.textContent = '';
@@ -318,6 +317,7 @@ document.getElementById('googleLoginBtn').addEventListener('click', async (e) =>
     hideLoading(btn);
   }
 });
+
 
   </script>
 </body>
