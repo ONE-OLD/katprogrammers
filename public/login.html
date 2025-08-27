@@ -7,6 +7,30 @@
   <link rel="shortcut icon" href="https://i.ibb.co/NgsStwt4/image-1.png" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Two-column auth + gallery layout */
+    .main-content { padding: 2rem; }
+    .auth-gallery { display: flex; gap: 2rem; width: 100%; max-width: 1100px; margin: 0 auto; }
+    .left-gallery { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .left-gallery img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+    .left-gallery .hero { grid-column: 1 / -1; height: 260px; }
+
+    .right-auth { flex: 1; display: flex; align-items: center; justify-content: center; }
+    .auth-panel { width: 100%; max-width: 420px; }
+
+    /* Keep existing popup above layout */
+    .popup { z-index: 9999; }
+
+    /* Responsive: stack columns on small screens */
+    @media (max-width: 860px) {
+      .auth-gallery { flex-direction: column; }
+      .left-gallery { grid-template-columns: repeat(2, 1fr); }
+      .left-gallery .hero { grid-column: auto; height: 180px; }
+      .left-gallery img { height: 120px; }
+      .right-auth { padding-top: 1rem; }
+    }
+  </style>
 </head>
 <body data-theme="dark">
   <!-- Sidebar -->
@@ -22,84 +46,98 @@
 
   <!-- Main Content -->
   <main class="main-content">
-    
-    <div class="flip-container" id="flipContainer">
-      <div class="flipper">
-        <!-- Login Form -->
-        <div class="front">
-          <h1 class="page-title" id="formTitle">Login</h1>
-          <div class="auth-form">
-            <h2 class="page-title">Welcome Back!</h2>
-            <div class="auth-msg" id="loginMsg" style="display: none; color: red; border: 2px solid red; background-color: rgb(255, 0, 0, 0.3); border-radius: 5px; padding: 10px;"></div>
-                        <!-- Google Login Button -->
-            <div style="margin-top: 1rem; margin-bottom: 1rem; text-align:center;">
-              <button id="googleLoginBtn" class="btn btn-secondary auth-btn" style="width: 100%;">
-                <i class="fab fa-google" style="color:#DB4437;"></i> Continue with Google
-              </button>
-            </div>
-            <div style="text-align: center; margin: 1rem 0;">
-              <h4 style="color: rgb(124, 124, 124); font-family: 'Courier New', Courier, monospace;">-- or --</h4>
-            </div>
-
-            <div class="form-group">
-              <label for="loginEmail">Email</label>
-              <input type="email" id="loginEmail" placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-              <label for="loginPassword">Password</label>
-              <input type="password" id="loginPassword" placeholder="Enter your password">
-            </div>
-            <div class="auth-action">
-              <button id="loginBtn" class="btn btn-primary auth-btn">Sign In</button>
-              <button id="gotoSignup" class="btn btn-secondary auth-btn">Sign Up</button>
-            </div>
-
-            <button id="forgotBtn" class="btn btn-secondary" style="width:100%; margin-top:1rem;">
-              <i class="fas fa-key"></i> Forgot Password?
-            </button>
-          </div>
-        </div>
-        
-        <!-- Signup Form -->
-        <div class="back">
-          <h1 class="page-title">Register</h1>
-          <div class="auth-form">
-            <h1 class="page-title">Welcome, Let's Get Started</h1>
-            <div class="auth-msg" id="signupMsg"></div>
-            
-            <div class="form-group">
-              <label for="signupEmail">Email</label>
-              <input type="email" id="signupEmail" placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-              <label for="signupPassword">Password</label>
-              <input type="password" id="signupPassword" placeholder="Create a password">
-            </div>
-            <div class="form-group">
-              <label for="signupConfirm">Confirm Password</label>
-              <input type="password" id="signupConfirm" placeholder="Confirm your password">
-            </div>
-            <div class="auth-action">
-              <button id="signupBtn" class="btn btn-primary auth-btn">Sign Up</button>
-              <button id="gotoLogin" class="btn btn-secondary auth-btn">Back to Login</button>
-            </div>
-          </div>
-        </div>
+    <div class="auth-gallery">
+      <div class="left-gallery" aria-hidden="false">
+        <img class="hero" src="https://images.unsplash.com/photo-1505685296765-3a2736de412f?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=1" alt="Coding hero">
+        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1" alt="Laptop coding">
+        <img src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1" alt="Developer setup">
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1" alt="Pair programming">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1" alt="Code on screen">
       </div>
-    </div>
-    
-    <!-- Forgot Password Popup -->
-    <div id="forgotPopup" class="popup" style="display: none;">
-      <div class="popup-content">
-        <h3 class="popup-title">Reset Password</h3>
-        <div class="auth-msg" id="forgotMsg"></div>
-        <div class="form-group">
-          <label for="forgotEmail">Email Address</label>
-          <input type="email" id="forgotEmail" placeholder="Enter your email">
-        </div>
-        <div class="popup-actions">
-          <button id="closeForgot" class="btn btn-secondary">Cancel</button>
-          <button id="sendResetBtn" class="btn btn-primary">Send Reset Email</button>
+
+      <div class="right-auth">
+        <div class="auth-panel">
+          <div class="flip-container" id="flipContainer">
+            <div class="flipper">
+              <!-- Login Form -->
+              <div class="front">
+                <h1 class="page-title" id="formTitle">Login</h1>
+                <div class="auth-form">
+                  <h2 class="page-title">Welcome Back!</h2>
+                  <div class="auth-msg" id="loginMsg" style="display: none; color: red; border: 2px solid red; background-color: rgb(255, 0, 0, 0.3); border-radius: 5px; padding: 10px;"></div>
+                  <!-- Google Login Button -->
+                  <div style="margin-top: 1rem; text-align:center;">
+                     <button id="googleLoginBtn" class="btn btn-secondary auth-btn" style="width:100%;">
+                         <i class="fab fa-google"></i> Continue with Google
+                     </button>
+                  </div>
+
+                  <div style="text-align: center; margin: 1rem 0;">
+                    <h4 style="color: rgb(124, 124, 124); font-family: 'Courier New', Courier, monospace;">-- or --</h4>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email">
+                  </div>
+                  <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                  </div>
+                  <div class="auth-action">
+                    <button id="loginBtn" class="btn btn-primary auth-btn">Sign In</button>
+                    <button id="gotoSignup" class="btn btn-secondary auth-btn">Sign Up</button>
+                  </div>
+
+                  <button id="forgotBtn" class="btn btn-secondary" style="width:100%; margin-top:1rem;">
+                    <i class="fas fa-key"></i> Forgot Password?
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Signup Form -->
+              <div class="back">
+                <h1 class="page-title">Register</h1>
+                <div class="auth-form">
+                  <h1 class="page-title">Welcome, Let's Get Started</h1>
+                  <div class="auth-msg" id="signupMsg"></div>
+                  
+                  <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email">
+                  </div>
+                  <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password">
+                  </div>
+                  <div class="form-group">
+                    <label for="signupConfirm">Confirm Password</label>
+                    <input type="password" id="signupConfirm" placeholder="Confirm your password">
+                  </div>
+                  <div class="auth-action">
+                    <button id="signupBtn" class="btn btn-primary auth-btn">Sign Up</button>
+                    <button id="gotoLogin" class="btn btn-secondary auth-btn">Back to Login</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Forgot Password Popup -->
+          <div id="forgotPopup" class="popup" style="display: none;">
+            <div class="popup-content">
+              <h3 class="popup-title">Reset Password</h3>
+              <div class="auth-msg" id="forgotMsg"></div>
+              <div class="form-group">
+                <label for="forgotEmail">Email Address</label>
+                <input type="email" id="forgotEmail" placeholder="Enter your email">
+              </div>
+              <div class="popup-actions">
+                <button id="closeForgot" class="btn btn-secondary">Cancel</button>
+                <button id="sendResetBtn" class="btn btn-primary">Send Reset Email</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -249,35 +287,38 @@
       }
     });
 
-    // 🔹 Google Sign-In
-    document.getElementById('googleLoginBtn').addEventListener('click', async (e) => {
-      const btn = e.target;
-      showLoading(btn);
-      loginMsg.textContent = '';
-      signupMsg.textContent = '';
+    // Google Login
+document.getElementById('googleLoginBtn').addEventListener('click', async (e) => {
+  // Always use the button element
+  const btn = e.currentTarget;
+  showLoading(btn);
 
-      try {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        const result = await firebase.auth().signInWithPopup(provider);
-        const user = result.user;
+  loginMsg.textContent = '';
+  signupMsg.textContent = '';
 
-        if (user) {
-          const idToken = await user.getIdToken(true);
-          await fetch("/sessionLogin", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: 'include',
-            body: JSON.stringify({ idToken })
-          });
-          window.location.href = "/private/dashboard";
-        }
-      } catch (e) {
-        loginMsg.style.display = 'block';
-        loginMsg.textContent = e.message || 'Google sign-in failed';
-      } finally {
-        hideLoading(btn);
-      }
-    });
+  try {
+    const result = await window.__auth.loginWithGoogle();
+    const user = result.user;
+
+    if (user) {
+      const idToken = await user.getIdToken(true);
+      await fetch("/sessionLogin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: 'include',
+        body: JSON.stringify({ idToken })
+      });
+      window.location.href = "/private/dashboard";
+    }
+  } catch (e) {
+    const msg = e.message || 'Google sign-in failed';
+    loginMsg.style.display = 'block';
+    loginMsg.textContent = msg;
+  } finally {
+    hideLoading(btn);
+  }
+});
+
   </script>
 </body>
 </html>
