@@ -191,6 +191,7 @@ a{
 
 .card {
   background: var(--bg-surface);
+  backdrop-filter: blur(20px);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   display: inline-block;
@@ -628,6 +629,7 @@ input:focus {
 /* Footer Styles */
 .footer {
   background: var(--bg-secondary);
+  backdrop-filter: blur(20px);
   color: var(--text-primary);
   padding: 1.5rem 2rem;
   margin-top: 2rem;
