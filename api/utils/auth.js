@@ -1,39 +1,47 @@
 // utils/auth.js
-
 import admin from "firebase-admin";
 
-let initialized = false;
-
 export function initFirebaseAdmin() {
-  if (initialized) return admin;
+  if (admin.apps.length) return admin;
 
-  if (!admin.apps.length) {
-    if (!process.env.FIREBASE_PROJECT_ID || !process.env.FIREBASE_CLIENT_EMAIL || !process.env.FIREBASE_PRIVATE_KEY) {
-      throw new Error("Missing Firebase environment variables");
-    }
-
-    admin.initializeApp({
-      credential: admin.credential.cert({
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n")
-      })
-    });
+  if (
+    !process.env.FIREBASE_PROJECT_ID ||
+    !process.env.FIREBASE_CLIENT_EMAIL ||
+    !process.env.FIREBASE_PRIVATE_KEY
+  ) {
+    throw new Error("Missing Firebase environment variables");
   }
 
-  initialized = true;
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    }),
+  });
+
   return admin;
 }
 
-export async function verifySessionCookie(sessionCookie) {
-  const a = initFirebaseAdmin();
-  return a.auth().verifySessionCookie(sessionCookie, true);
-}
-
 export async function createSessionCookie(idToken) {
-  const a = initFirebaseAdmin();
-  const expiresIn = 1000 * 60 * 60 * 24 * 5; // 5 days
-  return a.auth().createSessionCookie(idToken, { expiresIn });
+  const adminApp = initFirebaseAdmin();
+  const expiresIn = 5 * 24 * 60 * 60 * 1000; // 5 days
+
+  try {
+    return await adminApp.auth().createSessionCookie(idToken, { expiresIn });
+  } catch (err) {
+    console.error("Failed to create session cookie:", err.message);
+    throw err;
+  }
 }
 
+export async function verifySessionCookie(sessionCookie) {
+  const adminApp = initFirebaseAdmin();
 
+  try {
+    return await adminApp.auth().verifySessionCookie(sessionCookie, true);
+  } catch (err) {
+    console.error("Failed to verify session cookie:", err.message);
+    throw err;
+  }
+}
