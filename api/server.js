@@ -15,9 +15,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(cors());
+
+/* ---------------- MIDDLEWARE (ORDER FIXED) ---------------- */
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 app.use(cookieParser());
 app.use(express.json());
+
+// Cache control (must be before routes)
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+  res.set("Pragma", "no-cache");
+  res.set("Expires", "0");
+  res.set("Surrogate-Control", "no-store");
+  next();
+});
 
 // Initialize Firebase Admin
 initFirebaseAdmin();
@@ -31,16 +45,16 @@ const cookieOpts = {
   secure: isProd,
   sameSite: "strict",
   path: "/",
-  maxAge: 1000 * 60 * 60 * 24 * 5 // 5 days
+  maxAge: 1000 * 60 * 60 * 24 * 5
 };
 
-// Auth middleware
+/* ---------------- AUTH MIDDLEWARE ---------------- */
 async function requireAuth(req, res, next) {
   const sessionCookie = req.cookies.session || null;
-  
+
   if (!sessionCookie) {
-    if (req.path.startsWith('/api')) {
-      return res.status(401).json({ error: 'Unauthorized' });
+    if (req.path.startsWith("/api")) {
+      return res.status(401).json({ error: "Unauthorized" });
     }
     return res.redirect("/login");
   }
@@ -48,16 +62,16 @@ async function requireAuth(req, res, next) {
   try {
     const decoded = await verifySessionCookie(sessionCookie);
     req.user = decoded;
-    return next();
+    next();
   } catch {
-    if (req.path.startsWith('/api')) {
-      return res.status(401).json({ error: 'Invalid session' });
+    if (req.path.startsWith("/api")) {
+      return res.status(401).json({ error: "Invalid session" });
     }
     return res.redirect("/login");
   }
 }
 
-// ---------------- AUTH SESSION ----------------
+/* ---------------- AUTH SESSION ---------------- */
 app.post("/sessionLogin", async (req, res) => {
   const { idToken } = req.body || {};
   if (!idToken) return res.status(400).json({ error: "Missing idToken" });
@@ -73,39 +87,31 @@ app.post("/sessionLogin", async (req, res) => {
 
 app.post("/sessionLogout", async (req, res) => {
   const sessionCookie = req.cookies.session || null;
-  
-  // Clear the session cookie first
-  res.clearCookie("session", { 
-    path: "/",
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict"
-  });
-  
-  // Then try to revoke the session (non-blocking)
+
+  res.clearCookie("session", cookieOpts);
+
   if (sessionCookie) {
     try {
-      const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true);
-      await adminAuth.revokeRefreshTokens(decodedClaims.sub);
-    } catch (error) {
-      // Session was already invalid or expired
-      console.log("Session revocation error (non-critical):", error.message);
+      const decoded = await adminAuth.verifySessionCookie(sessionCookie, true);
+      await adminAuth.revokeRefreshTokens(decoded.sub);
+    } catch {
+      // already invalid
     }
   }
-  
+
   return res.json({ ok: true });
 });
 
-// ---------------- USER INFO ----------------
+/* ---------------- USER INFO ---------------- */
 app.get("/api/me", requireAuth, (req, res) => {
-  return res.json({
+  res.json({
     uid: req.user.uid,
     email: req.user.email,
     name: req.user.name || null
   });
 });
 
-// ---------------- ACTIVITY ----------------
+/* ---------------- ACTIVITY ---------------- */
 app.post("/api/logActivity", requireAuth, async (req, res) => {
   try {
     const { type, extra } = req.body;
@@ -115,9 +121,9 @@ app.post("/api/logActivity", requireAuth, async (req, res) => {
       extra: extra || "",
       timestamp: new Date().toISOString()
     });
-    return res.json({ ok: true });
+    res.json({ ok: true });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    res.status(500).json({ error: e.message });
   }
 });
 
@@ -125,24 +131,23 @@ app.get("/api/activity", requireAuth, async (req, res) => {
   try {
     const ref = db.collection("users").doc(req.user.uid).collection("activity");
     const snapshot = await ref.orderBy("timestamp", "desc").limit(50).get();
-    const activities = snapshot.docs.map(doc => doc.data());
-    return res.json(activities);
+    res.json(snapshot.docs.map(d => d.data()));
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    res.status(500).json({ error: e.message });
   }
 });
 
-// ---------------- ACCOUNT ACTIONS ----------------
+/* ---------------- ACCOUNT ACTIONS ---------------- */
 app.post("/api/changePassword", requireAuth, async (req, res) => {
   try {
     const { newPassword } = req.body;
     if (!newPassword) return res.status(400).json({ error: "Missing newPassword" });
-    
+
     await adminAuth.updateUser(req.user.uid, { password: newPassword });
     await logActivity(req.user.uid, "password_changed");
-    return res.json({ ok: true });
+    res.json({ ok: true });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    res.status(500).json({ error: e.message });
   }
 });
 
@@ -150,14 +155,14 @@ app.delete("/api/deleteAccount", requireAuth, async (req, res) => {
   try {
     await adminAuth.deleteUser(req.user.uid);
     await logActivity(req.user.uid, "account_deleted");
-    res.clearCookie("session", { path: "/" });
-    return res.json({ ok: true });
+    res.clearCookie("session", cookieOpts);
+    res.json({ ok: true });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    res.status(500).json({ error: e.message });
   }
 });
 
-// Helper: Log activity internally
+/* ---------------- HELPERS ---------------- */
 async function logActivity(uid, type, extra = "") {
   const ref = db.collection("users").doc(uid).collection("activity");
   await ref.add({
@@ -167,77 +172,50 @@ async function logActivity(uid, type, extra = "") {
   });
 }
 
-// ---------------- CACHE CONTROL ----------------
-app.use((req, res, next) => {
-  res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
-  res.set("Pragma", "no-cache");
-  res.set("Expires", "0");
-  res.set("Surrogate-Control", "no-store");
-  next();
-});
-// Specifically for dashboard and other private pages
-app.get("/private/*", (req, res, next) => {
-  res.set("Cache-Control", "no-store, max-age=0");
-  next();
-});
-
-// ---------------- STATIC FILES ----------------
+/* ---------------- STATIC FILES ---------------- */
 const publicDir = path.join(__dirname, "../public");
 const privateDir = path.join(__dirname, "../private-views");
-app.use('/private', express.static(privateDir));
-
 
 app.use(express.static(publicDir));
 
-app.use((req, res, next) => {
-  res.setHeader('Cache-Control', 'no-store, max-age=0');
-  next();
-});
+/* ---------------- PROTECTED VIEWS ---------------- */
+app.get("/private/dashboard", requireAuth, (_req, res) =>
+  res.sendFile(path.join(privateDir, "dashboard.html"))
+);
+app.get("/private/profile", requireAuth, (_req, res) =>
+  res.sendFile(path.join(privateDir, "profile.html"))
+);
+app.get("/private/html", requireAuth, (_req, res) =>
+  res.sendFile(path.join(privateDir, "html.html"))
+);
+app.get("/private/css", requireAuth, (_req, res) =>
+  res.sendFile(path.join(privateDir, "css.html"))
+);
+app.get("/private/javascript", requireAuth, (_req, res) =>
+  res.sendFile(path.join(privateDir, "javascript.html"))
+);
+app.get("/private/cpp", requireAuth, (_req, res) =>
+  res.sendFile(path.join(privateDir, "cpp.html"))
+);
+app.get("/private/python", requireAuth, (_req, res) =>
+  res.sendFile(path.join(privateDir, "python.html"))
+);
+app.get("/private/tutorials", requireAuth, (_req, res) =>
+  res.sendFile(path.join(privateDir, "tutorials.html"))
+);
+app.get("/private/mysql", requireAuth, (_req, res) =>
+  res.sendFile(path.join(privateDir, "mysql.html"))
+);
 
-app.use(cors({
-  origin: true, // or your specific domain
-  credentials: true // important for cookies
-}));
-
-// Serve protected views without .html
-app.get("/private/dashboard", requireAuth, (_req, res) => {
-  res.sendFile(path.join(privateDir, "dashboard.html"));
-});
-
-app.get("/private/profile", requireAuth, (_req, res) => {
-  res.sendFile(path.join(privateDir, "profile.html"));
-});
-
-app.get("/private/html", requireAuth, (_req, res) => {
-  res.sendFile(path.join(privateDir, "html.html"));
-});
-app.get("/private/css", requireAuth, (_req, res) => {
-  res.sendFile(path.join(privateDir, "css.html"));
-});
-app.get("/private/javascript", requireAuth, (_req, res) => {
-  res.sendFile(path.join(privateDir, "javascript.html"));
-});
-app.get("/private/cpp", requireAuth, (_req, res) => {
-  res.sendFile(path.join(privateDir, "cpp.html"));
-});
-app.get("/private/python", requireAuth, (_req, res) => {
-  res.sendFile(path.join(privateDir, "python.html"));
-});
-app.get("/private/tutorials", requireAuth, (_req, res) => {
-  res.sendFile(path.join(privateDir, "tutorials.html"));
-});
-app.get("/private/mysql", requireAuth, (_req, res) => {
-  res.sendFile(path.join(privateDir, "mysql.html"));
-});
-// Serve login publicly
+/* ---------------- PUBLIC ---------------- */
 app.get("/login", (_req, res) => {
   res.sendFile(path.join(publicDir, "login.html"));
 });
 
-// ---------------- FALLBACK ----------------
+/* ---------------- FALLBACK ---------------- */
 app.get("*", (req, res) => {
-  if (req.path.startsWith('/api/')) {
-    return res.status(404).json({ error: 'Not found' });
+  if (req.path.startsWith("/api/")) {
+    return res.status(404).json({ error: "Not found" });
   }
   res.sendFile(path.join(publicDir, "index.html"));
 });
