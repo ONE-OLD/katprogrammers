@@ -1,6 +1,6 @@
 :root {
   /* Dark Theme (Default) */
-  --bg-img: url('https://i.ibb.co/v6nNcKsh/dark.jpg');
+  --bg-img: url('https://i.ibb.co/DDjH8b6w/dark.jpg');
   --bg-primary: #121212;
   --bg-secondary: #1e1e1ee0;
   --bg-surface: #252525c2;
@@ -18,7 +18,7 @@
 }
 
 [data-theme="light"] {
-  --bg-img: url('https://i.ibb.co/JRLMTmSV/image-cache.jpg');
+  --bg-img: url('https://i.ibb.co/B5ZD71YL/light.png');
   --bg-primary: #f5f5f5;
   --bg-secondary: #e0e0e0a8;
   --bg-surface: #ffffffa9;
